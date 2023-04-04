@@ -29,8 +29,7 @@ class LoginController: UIViewController {
             return
         }
         
-        let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HiController") as! FilmsController
-        destination.name = user.nickname
+        let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
         self.navigationController?.pushViewController(destination, animated: true)
         
     }

@@ -26,7 +26,6 @@ class RegistrationController: UIViewController {
         let user = User(nickname: nicknameTF.text!, login: loginTF.text!, password: passwordTF.text!)
         if Auth().registration(user: user){
             let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HiController") as! FilmsController
-            destination.name = user.nickname
             self.navigationController?.pushViewController(destination, animated: true)
         }else{
             self.present(getAllert(message: "Account already exist"), animated: true)

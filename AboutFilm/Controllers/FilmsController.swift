@@ -1,37 +1,38 @@
-//
-//  testViewController.swift
-//  AboutFilm
-//
-//  Created by илья on 04.04.23.
-//
-
 import UIKit
 
-class FilmsController: UIViewController {
-
-    var name = ""
+class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var greetingsLabel: UILabel!
+    
+    @IBOutlet weak var testLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        greetingsLabel.text!.append(name)
+        
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
     }
-    */
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FilmsCell.id, for: indexPath) as? FilmsCell else {
+            fatalError()
+        }
+        
+        cell.filmsCell.text! = "Hello"
+        
+        return cell
+    }
+    
 
 }
