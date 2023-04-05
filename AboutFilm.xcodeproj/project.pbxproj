@@ -21,7 +21,9 @@
 		692DF4A229D5FFD000B6DA45 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692DF4A129D5FFD000B6DA45 /* Request.swift */; };
 		694598E929DC713F009D5C97 /* FilmsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694598E829DC713F009D5C97 /* FilmsController.swift */; };
 		694598EB29DC8004009D5C97 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694598EA29DC8004009D5C97 /* MainTabBarController.swift */; };
-		694598F029DCA59B009D5C97 /* FilmsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694598EF29DCA59B009D5C97 /* FilmsCell.swift */; };
+		69F751BE29DD7A6C00C387BA /* FilmsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F751BC29DD7A6C00C387BA /* FilmsCell.swift */; };
+		69F751BF29DD7A6C00C387BA /* FilmsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69F751BD29DD7A6C00C387BA /* FilmsCell.xib */; };
+		69F751C129DD7FE900C387BA /* photo_2023-04-05 14.07.24.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 69F751C029DD7FE900C387BA /* photo_2023-04-05 14.07.24.jpeg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +43,9 @@
 		692DF4A129D5FFD000B6DA45 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		694598E829DC713F009D5C97 /* FilmsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsController.swift; sourceTree = "<group>"; };
 		694598EA29DC8004009D5C97 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
-		694598EF29DCA59B009D5C97 /* FilmsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsCell.swift; sourceTree = "<group>"; };
+		69F751BC29DD7A6C00C387BA /* FilmsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsCell.swift; sourceTree = "<group>"; };
+		69F751BD29DD7A6C00C387BA /* FilmsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilmsCell.xib; sourceTree = "<group>"; };
+		69F751C029DD7FE900C387BA /* photo_2023-04-05 14.07.24.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "photo_2023-04-05 14.07.24.jpeg"; path = "../../../../Downloads/photo_2023-04-05 14.07.24.jpeg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,7 @@
 				692DF48829D5FD5700B6DA45 /* SceneDelegate.swift */,
 				692DF48F29D5FD5700B6DA45 /* Assets.xcassets */,
 				692DF49429D5FD5700B6DA45 /* Info.plist */,
+				69F751C029DD7FE900C387BA /* photo_2023-04-05 14.07.24.jpeg */,
 			);
 			path = AboutFilm;
 			sourceTree = "<group>";
@@ -145,9 +150,18 @@
 		694598EE29DCA3DD009D5C97 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				694598EF29DCA59B009D5C97 /* FilmsCell.swift */,
+				69F751BB29DD790C00C387BA /* FilmsListCell */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		69F751BB29DD790C00C387BA /* FilmsListCell */ = {
+			isa = PBXGroup;
+			children = (
+				69F751BC29DD7A6C00C387BA /* FilmsCell.swift */,
+				69F751BD29DD7A6C00C387BA /* FilmsCell.xib */,
+			);
+			path = FilmsListCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,7 +222,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69F751C129DD7FE900C387BA /* photo_2023-04-05 14.07.24.jpeg in Resources */,
 				692DF49329D5FD5700B6DA45 /* LaunchScreen.storyboard in Resources */,
+				69F751BF29DD7A6C00C387BA /* FilmsCell.xib in Resources */,
 				692DF49029D5FD5700B6DA45 /* Assets.xcassets in Resources */,
 				692DF48E29D5FD5700B6DA45 /* Main.storyboard in Resources */,
 			);
@@ -222,7 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				690BB8E329DC5D4B0096EB06 /* RegistrationController.swift in Sources */,
-				694598F029DCA59B009D5C97 /* FilmsCell.swift in Sources */,
+				69F751BE29DD7A6C00C387BA /* FilmsCell.swift in Sources */,
 				692DF49C29D5FD8000B6DA45 /* Film.swift in Sources */,
 				694598EB29DC8004009D5C97 /* MainTabBarController.swift in Sources */,
 				694598E929DC713F009D5C97 /* FilmsController.swift in Sources */,
