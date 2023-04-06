@@ -1,10 +1,3 @@
-//
-//  FilmsCell.swift
-//  AboutFilm
-//
-//  Created by илья on 05.04.23.
-//
-
 import UIKit
 
 class FilmsCell: UITableViewCell {
@@ -22,8 +15,14 @@ class FilmsCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configure(image: UIImage, title: String, shrotDescription: String){
-        
-        
+    func configure(image: Data?, title: String, shortDescription: String){
+        guard let image = image else {
+            titleLabel.text! = title
+            shortDescriptionLabel.text! = shortDescription
+            return
+        }
+        filmImage.image = UIImage(data: image)
+        titleLabel.text! = title
+        shortDescriptionLabel.text! = shortDescription
     }
 }
