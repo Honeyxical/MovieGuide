@@ -1,7 +1,8 @@
 import Foundation
+import UIKit
 
 struct Film: Decodable{
-    let id: Int
+    let id: Int?
     
     let name: String?
     let alternativeName: String?
@@ -28,7 +29,7 @@ struct Film: Decodable{
     
     let premiere: Premiere?
     
-    let poster: Poster?
+    var poster: Poster?
     
     let facts: [Facts]?
     
@@ -43,6 +44,8 @@ struct Film: Decodable{
     let backdrop: Backdrop?
     
     let logo: Logo?
+    
+    var docs: [Docs]?
 }
 
 struct Facts: Decodable {
@@ -82,6 +85,7 @@ struct Premiere: Decodable{
 struct Poster: Decodable{
     let url: String?
     let previewUrl: String?
+    var posterData: Data?
 }
 
 struct Backdrop: Decodable{

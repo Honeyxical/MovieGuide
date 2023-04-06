@@ -20,5 +20,53 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6D398EF0-7A62-47FB-B76B-4485F618E220"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AboutFilm/Requests/Request.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "insertPoster(docs:)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "6D398EF0-7A62-47FB-B76B-4485F618E220 - 15a55ce25391ae54"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AboutFilm.insertPoster(docs: Swift.Array&lt;AboutFilm.Docs&gt;) -&gt; Swift.Array&lt;AboutFilm.Docs&gt;"
+                  moduleName = "AboutFilm"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ila/Documents/Swift%20Projects/AboutFilm/AboutFilm/Requests/Request.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "73"
+                  endingLineNumber = "73"
+                  offsetFromSymbolStart = "256">
+               </Location>
+               <Location
+                  uuid = "6D398EF0-7A62-47FB-B76B-4485F618E220 - ff070de3559915e1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in AboutFilm.insertPoster(docs: Swift.Array&lt;AboutFilm.Docs&gt;) -&gt; Swift.Array&lt;AboutFilm.Docs&gt;"
+                  moduleName = "AboutFilm"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ila/Documents/Swift%20Projects/AboutFilm/AboutFilm/Requests/Request.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "73"
+                  endingLineNumber = "73"
+                  offsetFromSymbolStart = "104">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

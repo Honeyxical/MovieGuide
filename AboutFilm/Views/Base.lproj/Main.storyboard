@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tP3-f1-bc7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ahW-St-fP2">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -187,7 +188,6 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="SId-wc-vsf">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="q4u-FM-CCd" kind="relationship" relationship="viewControllers" id="cbM-Nx-asU"/>
@@ -199,10 +199,10 @@
             </objects>
             <point key="canvasLocation" x="4056" y="-3"/>
         </scene>
-        <!--Item 1-->
+        <!--Home-->
         <scene sceneID="yL9-HE-tI2">
             <objects>
-                <viewController storyboardIdentifier="HiController" id="q4u-FM-CCd" customClass="FilmsController" customModule="AboutFilm" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FilmsController" id="q4u-FM-CCd" customClass="FilmsController" customModule="AboutFilm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oWZ-2i-zR9">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -221,7 +221,9 @@
                             <constraint firstItem="Wq0-fb-Bjb" firstAttribute="bottom" secondItem="Bs7-9h-JUL" secondAttribute="bottom" id="UjJ-HZ-F3d"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="F57-AZ-olB"/>
+                    <tabBarItem key="tabBarItem" title="Home" id="F57-AZ-olB">
+                        <imageReference key="image" image="house" catalog="system" symbolScale="medium"/>
+                    </tabBarItem>
                     <connections>
                         <outlet property="tableView" destination="Bs7-9h-JUL" id="ohk-YD-C5Z"/>
                     </connections>
@@ -230,7 +232,7 @@
             </objects>
             <point key="canvasLocation" x="3191.6030534351144" y="766.90140845070425"/>
         </scene>
-        <!--Item 2-->
+        <!--Random film-->
         <scene sceneID="ouG-3q-pcl">
             <objects>
                 <viewController id="2mt-b0-3ee" sceneMemberID="viewController">
@@ -240,7 +242,9 @@
                         <viewLayoutGuide key="safeArea" id="ppf-SB-UHF"/>
                         <color key="backgroundColor" systemColor="systemTealColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="HpN-4G-aH2"/>
+                    <tabBarItem key="tabBarItem" title="Random film" id="HpN-4G-aH2">
+                        <imageReference key="image" image="film.circle" catalog="system" symbolScale="medium"/>
+                    </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i2S-jH-bXr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -256,7 +260,9 @@
                         <viewLayoutGuide key="safeArea" id="hen-8V-beA"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 3" id="EUC-qx-ysD"/>
+                    <tabBarItem key="tabBarItem" title="Find film" id="EUC-qx-ysD">
+                        <imageReference key="image" image="magnifyingglass" catalog="system" symbolScale="medium"/>
+                    </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XLO-xR-qfy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -264,6 +270,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="film.circle" catalog="system" width="128" height="123"/>
+        <image name="house" catalog="system" width="128" height="104"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -24,7 +24,7 @@ class LoginController: UIViewController {
             self.present(getAllert(message: "Field login or password are empty"), animated: true)
             return
         }
-        guard let user = Auth().login(userLogin: loginTF.text!, userPassword: passwordTF.text!) else {
+        guard let _ = Auth().login(userLogin: loginTF.text!, userPassword: passwordTF.text!) else {
             self.present(getAllert(message: "User not found"), animated: true)
             return
         }
