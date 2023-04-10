@@ -45,7 +45,7 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         guard let film = films[indexPath.row] else {
             return cell
         }
-        cell.configure(image: film.poster!.posterData, title: film.name!, shortDescription: film.shortDescription!)
+        cell.configure(image: film.poster!.posterData, title: film.name!, shortDescription: film.shortDescription ?? "")
         
         return cell
     }

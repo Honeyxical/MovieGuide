@@ -3,7 +3,15 @@ import UIKit
 //MARK: - Переделать экран под скролл, добавить блюр
 
 class FilmDescriptionController: UIViewController {
-    var film: Docs? = getMocksForFilmDescription()
+    let network = NetworkService()
+    let semaphore = DispatchSemaphore(value: 0)
+    
+    var film: Docs? {
+        didSet{
+            semaphore.signal()
+            print(film)
+        }
+    }
     
     @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var backItemNavBar: UIBarButtonItem!
@@ -19,8 +27,15 @@ class FilmDescriptionController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(getLabel(x: 20, y: 130, width: 100, height: 60, text: String((film?.rating?.imdb)!) , isBold: true))
-        self.view.addSubview(getLabel(x: 130, y: 130, width: 100, height: 60, text: convertMTH(min: (film?.movieLength)!), isBold: false))
+        network.getRandomFilm { data in
+            self.film = data
+        }
+        
+        
+        semaphore.wait()
+                
+        self.view.addSubview(getLabel(x: 20, y: 130, width: 100, height: 60, text: "IMDb " + (film?.rating?.imdb!.description ?? "0.0"), isBold: true))
+        self.view.addSubview(getLabel(x: 130, y: 130, width: 100, height: 60, text: convertMTH(min: film?.movieLength! ?? 0), isBold: false))
         titleLabel.text = film?.name!
         configurationImageView()
         configurationDisplayingGenres()
@@ -34,23 +49,26 @@ class FilmDescriptionController: UIViewController {
     
     private func configurationDisplayingGenres(){
         if film?.genres.count == 3{
-            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]?.name)!)
-            genreLabelConfiguration(label: genreLabel2, text: (film?.genres[1]?.name)!)
-            genreLabelConfiguration(label: genreLabel3, text: (film?.genres[2]?.name)!)
+            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
+            genreLabelConfiguration(label: genreLabel2, text: (film?.genres[1]!.name!)!)
+            genreLabelConfiguration(label: genreLabel3, text: (film?.genres[2]!.name!)!)
         }else if film?.genres.count == 2{
-            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]?.name)!)
-            genreLabelConfiguration(label: genreLabel2, text: (film?.genres[1]?.name)!)
+            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
+            genreLabelConfiguration(label: genreLabel2, text: (film?.genres[1]!.name!)!)
             genreLabel3.isHidden = true
-        } else{
-            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]?.name)!)
+        } else if film?.genres.count == 1 {
+            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
             genreLabel2.isHidden = true
             genreLabel3.isHidden = true
+        } else {
+            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
+            genreLabelConfiguration(label: genreLabel2, text: (film?.genres[1]!.name!)!)
+            genreLabelConfiguration(label: genreLabel3, text: (film?.genres[2]!.name!)!)
         }
-        
     }
     
     private func configurationImageView(){
-//        posterImageView.image = UIImage(data: (film?.poster?.posterData)!)
+        posterImageView.image = UIImage(data: (film?.poster?.posterData!)!)
         posterImageView.layer.cornerRadius = 30
         posterImageView.clipsToBounds = true
     }
@@ -72,6 +90,8 @@ class FilmDescriptionController: UIViewController {
         return label
     }
     
+    
+    // MARK: - Переделать под большее количество жанров
     private func genreLabelConfiguration(label: UILabel , text: String){
         label.backgroundColor = UIColor.black.withAlphaComponent(0.2)
         label.layer.cornerRadius = 13
@@ -88,4 +108,5 @@ class FilmDescriptionController: UIViewController {
         descriptionLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.thin)
     }
 }
+
 
