@@ -3,8 +3,11 @@ import UIKit
 class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     private let networkService = NetworkService()
     
-    var films: [Docs] = []{
+    var films: [Docs?] = []{
         didSet{
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -13,9 +16,9 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
             
-//        networkService.getFilms { docs in
-//            self.films = docs
-//        }
+        networkService.getFilms { docs in
+            self.films = docs
+        }
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -28,15 +31,10 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
-        
-        networkService.getFilms { docs in
-            self.films = docs
-        }
     }
     
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return films.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -44,11 +42,24 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         if films.isEmpty {
             return cell
         }
-        let film = films[indexPath.row]
+        guard let film = films[indexPath.row] else {
+            return cell
+        }
         cell.configure(image: film.poster!.posterData, title: film.name!, shortDescription: film.shortDescription!)
         
         return cell
     }
     
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let film = films[indexPath.row] else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FilmDescriptionController") as! FilmDescriptionController
+        
+        destination.film = film
+       
+        tableView.deselectRow(at: indexPath, animated: true)
+        self.navigationController?.pushViewController(destination, animated: true)
+    }
 }

@@ -17,6 +17,10 @@ class LoginController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+
     
     @IBAction func loginButton(_ sender: UIButton) {
         

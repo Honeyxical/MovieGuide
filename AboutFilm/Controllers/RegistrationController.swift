@@ -25,12 +25,16 @@ class RegistrationController: UIViewController {
         }
         let user = User(nickname: nicknameTF.text!, login: loginTF.text!, password: passwordTF.text!)
         if Auth().registration(user: user){
-            let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HiController") as! FilmsController
+            let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
             self.navigationController?.pushViewController(destination, animated: true)
         }else{
             self.present(getAllert(message: "Account already exist"), animated: true)
 
         }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
     
 }

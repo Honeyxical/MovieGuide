@@ -29,15 +29,15 @@ class NetworkService{
     }
     
     func getFilms(completition: @escaping ([Docs]) -> Void){
-        URLSession.shared.dataTask(with: getFilmList(limit: 10)) {data, response, error in
+        URLSession.shared.dataTask(with: getFilmListRequest(limit: 10)) {data, response, error in
             guard let data = data, error == nil else {
-                fatalError("Response error")
+                print(error)
+                return
             }
             
             do{
                 let films = try JSONDecoder().decode(Film.self, from: data)
                 let docs = self.insertPoster(docs: films.docs!)
-                print(docs[0])
                 completition(docs)
             } catch {
                 print(error)
@@ -53,10 +53,9 @@ class NetworkService{
         return request
     }
     
-    func getFilmList(limit: Int) -> URLRequest{
-        let randomPage = Int.random(in: 1...9000)
-        print(randomPage)
-        var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1/movie?selectFields=shortDescription&selectFields=id&selectFields=name&selectFields=poster.url&page=1&limit=\(limit)")!)
+    func getFilmListRequest(limit: Int) -> URLRequest{
+        let randomPage = Int.random(in: 1...50)        
+        var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1/movie?selectFields=id&selectFields=enName&selectFields=poster.url&selectFields=shortDescription&selectFields=description&selectFields=type&selectFields=year&selectFields=rating.imdb&selectFields=movieLength&selectFields=genres.name&selectFields=name&page=\(String(randomPage))&limit=" + String(limit))!)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "accept")
         request.addValue(API_KEY, forHTTPHeaderField: "X-API-KEY")
@@ -79,11 +78,6 @@ class NetworkService{
             }
             
             docs[i].poster!.posterData = try? Data(contentsOf: URL(string: (docs[i].poster?.url)!)!)
-            
-            //        getPoster(url: (docs[i].poster?.url!)!) { data in
-            //            print(data)
-            //            docs[i].poster?.posterData = data
-            //        }
         }
         return docs
     }
