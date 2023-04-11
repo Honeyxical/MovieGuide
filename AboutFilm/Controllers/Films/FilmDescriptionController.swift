@@ -36,6 +36,7 @@ class FilmDescriptionController: UIViewController {
         }
     }
     
+    //MARK: - Добавить кнопку для получения нового фильма
     @IBAction func backBarItem(_ sender: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: true)
     }
