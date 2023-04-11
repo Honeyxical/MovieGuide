@@ -6,6 +6,8 @@ class FilmDescriptionController: UIViewController {
     let network = NetworkService()
     var needToGetData: Bool = true
     var loader: UIView? = nil
+    var navbarTitle = ""
+    var navbarIsHiden = true
     
     var film: Docs? {
         didSet{
@@ -34,6 +36,12 @@ class FilmDescriptionController: UIViewController {
                 self.film = data
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationBar.title = navbarTitle
+        backItemNavBar.isHidden = navbarIsHiden
     }
     
     //MARK: - Добавить кнопку для получения нового фильма

@@ -3,31 +3,6 @@ import Foundation
 class NetworkService{
     let API_KEY = "TN3T3HK-GGE44PM-KAMXMJW-HRQ4X7Q"
     
-//    func getRandomFilm(completition: @escaping (Film) -> Void){
-//        URLSession.shared.dataTask(with: getRequestForRandomFilm()) { data, response, error in
-//            if let error = error {
-//                print(error)
-//                return
-//            }
-//
-//            guard let data = data else { return }
-//
-//            //2020-11-27T00:00:00.000Z
-//
-//            do{
-//                let decoder = JSONDecoder()
-//                let dateFormater = DateFormatter()
-//                dateFormater.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-//                decoder.dateDecodingStrategy = .formatted(dateFormater)
-//
-//                let obj = try decoder.decode(Film.self, from: data)
-//                completition(obj)
-//            }catch{
-//                print(error)
-//            }
-//        }.resume()
-//    }
-    
     func getFilms(completition: @escaping ([Docs]) -> Void){
         URLSession.shared.dataTask(with: getRequestForFilmList(limit: 10)) {data, response, error in
             guard let data = data, error == nil else {
