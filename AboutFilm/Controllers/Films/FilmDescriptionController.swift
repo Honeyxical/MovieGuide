@@ -8,6 +8,7 @@ class FilmDescriptionController: UIViewController {
     var loader: UIView? = nil
     var navbarTitle = ""
     var navbarIsHiden = true
+    var updateButtonIsHiden = false
     
     var film: Docs? {
         didSet{
@@ -17,6 +18,7 @@ class FilmDescriptionController: UIViewController {
     
     @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var backItemNavBar: UIBarButtonItem!
+    @IBOutlet weak var updateBarItem: UIBarButtonItem!
     
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -25,7 +27,7 @@ class FilmDescriptionController: UIViewController {
     @IBOutlet weak var genreLabel1: PaddingLabel!
     @IBOutlet weak var genreLabel2: PaddingLabel!
     @IBOutlet weak var genreLabel3: PaddingLabel!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loader = Loader().getLoader(x: 0, y: 95, width: self.view.bounds.width, height: self.view.bounds.height - 95)
@@ -42,6 +44,7 @@ class FilmDescriptionController: UIViewController {
         super.viewWillAppear(animated)
         navigationBar.title = navbarTitle
         backItemNavBar.isHidden = navbarIsHiden
+        updateBarItem.isHidden = updateButtonIsHiden
     }
     
     //MARK: - Добавить кнопку для получения нового фильма
@@ -49,16 +52,26 @@ class FilmDescriptionController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    
+    @IBAction func updateBarItem(_ sender: UIBarButtonItem) {
+        self.view.addSubview(loader!)
+        network.getRandomFilm { data in
+            self.film = data
+        }
+        updateBarItem.isEnabled = false
+    }
+    
     //MARK: - Добавить анимацию для закрытия лоадера
     func setViewElem(){
         DispatchQueue.main.async { [self] in
-            self.view.addSubview(getLabel(x: 20, y: 130, width: 100, height: 60, text: "IMDb " + (film?.rating?.imdb!.description ?? "0.0"), isBold: true))
-            self.view.addSubview(getLabel(x: 130, y: 130, width: 100, height: 60, text: convertMTH(min: film?.movieLength ?? 0), isBold: false))
+//            self.view.addSubview(getLabel(x: 20, y: 130, width: 100, height: 60, text: "IMDb " + (film?.rating?.imdb!.description ?? "0.0"), isBold: true))
+//            self.view.addSubview(getLabel(x: 130, y: 130, width: 100, height: 60, text: convertMTH(min: film?.movieLength ?? 0), isBold: false))
             titleLabel.text = film?.name!
             configurationImageView()
             configurationDisplayingGenres()
             configurationDescription()
             loader?.removeFromSuperview()
+            updateBarItem.isEnabled = true
         }
     }
     

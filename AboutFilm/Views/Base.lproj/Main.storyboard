@@ -266,11 +266,18 @@
                                 </constraints>
                                 <items>
                                     <navigationItem title="Movie Details" style="browser" id="Nbk-po-HEQ">
-                                        <barButtonItem key="leftBarButtonItem" title="Item" id="czs-yx-M3e">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="czs-yx-M3e">
                                             <imageReference key="image" image="chevron.backward" catalog="system" symbolScale="large"/>
                                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <connections>
                                                 <action selector="backBarItem:" destination="yo6-S3-vbe" id="7e5-g1-9Oo"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Update" id="WXa-V4-ChD">
+                                            <imageReference key="image" image="arrow.clockwise" catalog="system" symbolScale="large"/>
+                                            <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <connections>
+                                                <action selector="updateBarItem:" destination="yo6-S3-vbe" id="R1X-2e-bhs"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -376,7 +383,6 @@
                             <constraint firstItem="Yg4-yz-T3P" firstAttribute="leading" secondItem="4CS-Zb-Rd5" secondAttribute="leading" constant="10" id="6Sv-qV-Tv1"/>
                             <constraint firstItem="E6H-Ln-FyN" firstAttribute="top" secondItem="f9f-pB-od3" secondAttribute="bottom" constant="15" id="Kp7-yk-uhB"/>
                             <constraint firstItem="p3J-qn-fMS" firstAttribute="top" secondItem="Yg4-yz-T3P" secondAttribute="bottom" constant="15" id="MgM-hY-NAZ"/>
-                            <constraint firstItem="E6H-Ln-FyN" firstAttribute="top" secondItem="4CS-Zb-Rd5" secondAttribute="top" constant="51" id="NKb-xv-42a"/>
                             <constraint firstItem="p3J-qn-fMS" firstAttribute="leading" secondItem="4CS-Zb-Rd5" secondAttribute="leading" constant="10" id="RTe-r0-XLU"/>
                             <constraint firstItem="f9f-pB-od3" firstAttribute="trailing" secondItem="4CS-Zb-Rd5" secondAttribute="trailing" id="TFV-NE-rjw"/>
                             <constraint firstItem="jnE-wF-SwN" firstAttribute="trailing" secondItem="4CS-Zb-Rd5" secondAttribute="trailing" constant="-10" id="VFh-Zh-XXD"/>
@@ -405,6 +411,7 @@
                         <outlet property="navigationBar" destination="Nbk-po-HEQ" id="8Za-gs-N4H"/>
                         <outlet property="posterImageView" destination="E6H-Ln-FyN" id="jNe-Zz-d1g"/>
                         <outlet property="titleLabel" destination="jnE-wF-SwN" id="AK5-Kp-j9V"/>
+                        <outlet property="updateBarItem" destination="WXa-V4-ChD" id="mTQ-DM-i0Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GdR-8d-kPa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -424,6 +431,7 @@
         </designable>
     </designables>
     <resources>
+        <image name="arrow.clockwise" catalog="system" width="113" height="128"/>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="film.circle" catalog="system" width="128" height="123"/>
         <image name="house" catalog="system" width="128" height="104"/>

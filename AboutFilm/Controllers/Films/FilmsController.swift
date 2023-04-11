@@ -67,7 +67,7 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         destination.needToGetData = false        
         destination.navbarTitle = "Film description"
         destination.navbarIsHiden = false
-        
+        destination.updateButtonIsHiden = true
         
         tableView.deselectRow(at: indexPath, animated: true)
         self.navigationController?.pushViewController(destination, animated: true)
