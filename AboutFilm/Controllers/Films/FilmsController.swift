@@ -45,7 +45,7 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         guard let film = films[indexPath.row] else {
             return cell
         }
-        cell.configure(image: film.poster!.posterData, title: film.name!, shortDescription: film.shortDescription ?? "")
+        cell.configure(image: film.poster!.posterData, title: film.name!, shortDescription: (film.shortDescription ?? film.description)!)
         
         return cell
     }
@@ -58,6 +58,7 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FilmDescriptionController") as! FilmDescriptionController
         
         destination.film = film
+        destination.needToGetData = false
        
         tableView.deselectRow(at: indexPath, animated: true)
         self.navigationController?.pushViewController(destination, animated: true)

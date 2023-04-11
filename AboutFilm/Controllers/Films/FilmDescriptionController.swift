@@ -4,12 +4,12 @@ import UIKit
 
 class FilmDescriptionController: UIViewController {
     let network = NetworkService()
-    let semaphore = DispatchSemaphore(value: 0)
+    var needToGetData: Bool = true
+    var loader: UIView? = nil
     
     var film: Docs? {
         didSet{
-            semaphore.signal()
-            print(film)
+            setViewElem()
         }
     }
     
@@ -26,25 +26,31 @@ class FilmDescriptionController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loader = Loader().getLoader(x: 0, y: 95, width: self.view.bounds.width, height: self.view.bounds.height - 95)
+        view.addSubview(loader!)
         
-        network.getRandomFilm { data in
-            self.film = data
+        if needToGetData{
+            network.getRandomFilm { data in
+                self.film = data
+            }
         }
-        
-        
-        semaphore.wait()
-                
-        self.view.addSubview(getLabel(x: 20, y: 130, width: 100, height: 60, text: "IMDb " + (film?.rating?.imdb!.description ?? "0.0"), isBold: true))
-        self.view.addSubview(getLabel(x: 130, y: 130, width: 100, height: 60, text: convertMTH(min: film?.movieLength! ?? 0), isBold: false))
-        titleLabel.text = film?.name!
-        configurationImageView()
-        configurationDisplayingGenres()
-        configurationDescription()
-        
     }
     
     @IBAction func backBarItem(_ sender: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    //MARK: - Добавить анимацию для закрытия лоадера
+    func setViewElem(){
+        DispatchQueue.main.async { [self] in
+            self.view.addSubview(getLabel(x: 20, y: 130, width: 100, height: 60, text: "IMDb " + (film?.rating?.imdb!.description ?? "0.0"), isBold: true))
+            self.view.addSubview(getLabel(x: 130, y: 130, width: 100, height: 60, text: convertMTH(min: film?.movieLength ?? 0), isBold: false))
+            titleLabel.text = film?.name!
+            configurationImageView()
+            configurationDisplayingGenres()
+            configurationDescription()
+            loader?.removeFromSuperview()
+        }
     }
     
     private func configurationDisplayingGenres(){
@@ -77,7 +83,7 @@ class FilmDescriptionController: UIViewController {
         let label = UILabel(frame: CGRect(x: x, y: y, width: width, height: height))
         
         label.text = text
-        label.textColor = UIColor.black
+        label.textColor = UIColor.white
         label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.bold)
         label.textAlignment = .center
         
@@ -103,7 +109,7 @@ class FilmDescriptionController: UIViewController {
     
     private func configurationDescription(){
         descriptionLabel.textColor = .black
-        descriptionLabel.text = film?.description!
+        descriptionLabel.text = film?.description ?? film?.shortDescription
         descriptionLabel.numberOfLines = 7
         descriptionLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.thin)
     }
