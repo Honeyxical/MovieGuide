@@ -2,11 +2,13 @@ import UIKit
 
 class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     private let networkService = NetworkService()
+    var loader: UIView? = nil
     
     var films: [Docs?] = []{
         didSet{
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.loader!.removeFromSuperview()
             }
         }
     }
@@ -19,6 +21,10 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         networkService.getFilms { docs in
             self.films = docs
         }
+        
+        loader = Loader().getLoader(x: 0, y: 0, width: tableView.bounds.width, height: tableView.bounds.height + 100)
+        
+        view.addSubview(loader!)
         
         tableView.delegate = self
         tableView.dataSource = self
