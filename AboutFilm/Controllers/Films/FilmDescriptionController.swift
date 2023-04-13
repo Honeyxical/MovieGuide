@@ -4,17 +4,18 @@ import UIKit
 
 class FilmDescriptionController: UIViewController {
     let network = NetworkService()
-    var needToGetData: Bool = true
-    var loader: UIView? = nil
-    var navbarTitle = ""
-    var navbarIsHiden = true
-    var updateButtonIsHiden = false
     
     var film: Docs? {
         didSet{
             setViewElem()
         }
     }
+    
+    var needToGetData: Bool = true
+    var loader: UIView? = nil
+    var navbarTitle = ""
+    var navbarIsHiden = true
+    var updateButtonIsHiden = false
     
     @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var backItemNavBar: UIBarButtonItem!
@@ -42,7 +43,6 @@ class FilmDescriptionController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationBar.title = navbarTitle
         backItemNavBar.isHidden = navbarIsHiden
         updateBarItem.isHidden = updateButtonIsHiden
     }
@@ -55,6 +55,7 @@ class FilmDescriptionController: UIViewController {
     
     @IBAction func updateBarItem(_ sender: UIBarButtonItem) {
         self.view.addSubview(loader!)
+        navigationBar.title = ""
         network.getRandomFilm { data in
             self.film = data
         }
@@ -64,14 +65,12 @@ class FilmDescriptionController: UIViewController {
     //MARK: - Добавить анимацию для закрытия лоадера
     func setViewElem(){
         DispatchQueue.main.async { [self] in
-//            self.view.addSubview(getLabel(x: 20, y: 130, width: 100, height: 60, text: "IMDb " + (film?.rating?.imdb!.description ?? "0.0"), isBold: true))
-//            self.view.addSubview(getLabel(x: 130, y: 130, width: 100, height: 60, text: convertMTH(min: film?.movieLength ?? 0), isBold: false))
-            titleLabel.text = film?.name!
             configurationImageView()
             configurationDisplayingGenres()
             configurationDescription()
             loader?.removeFromSuperview()
             updateBarItem.isEnabled = true
+            navigationBar.title = film?.name!
         }
     }
     
@@ -89,14 +88,14 @@ class FilmDescriptionController: UIViewController {
             genreLabel2.isHidden = true
             genreLabel3.isHidden = true
         } else {
-            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
-            genreLabelConfiguration(label: genreLabel2, text: (film?.genres[1]!.name!)!)
-            genreLabelConfiguration(label: genreLabel3, text: (film?.genres[2]!.name!)!)
+            genreLabel1.isHidden = true
+            genreLabel2.isHidden = true
+            genreLabel3.isHidden = true
         }
     }
     
     private func configurationImageView(){
-        posterImageView.image = UIImage(data: (film?.poster?.posterData!)!)
+        posterImageView.image = UIImage(data: film?.poster?.posterData ?? Data())
         posterImageView.layer.cornerRadius = 30
         posterImageView.clipsToBounds = true
     }
@@ -132,9 +131,7 @@ class FilmDescriptionController: UIViewController {
     private func configurationDescription(){
         descriptionLabel.textColor = .black
         descriptionLabel.text = film?.description ?? film?.shortDescription
-        descriptionLabel.numberOfLines = 7
+        descriptionLabel.numberOfLines = 0
         descriptionLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.thin)
     }
 }
-
-
