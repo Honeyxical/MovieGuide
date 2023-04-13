@@ -28,10 +28,7 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.register(UINib(nibName: "FilmsCell", bundle: nil), forCellReuseIdentifier: "FilmsCell")
-        tableView.reloadData()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
