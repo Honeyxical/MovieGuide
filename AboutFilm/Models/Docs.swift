@@ -11,8 +11,10 @@ struct Docs: Decodable{
     let type: String?
     let year: Int?
     let movieLength: Int?
+    let alternativeName: String?
+    let countries: [String]?
     
-    init(id: Int?, name: String?, shortDescription: String?, description: String?, poster: Poster?, genres: [Generes?], rating: Rating?, type: String?, year: Int?, movieLength: Int?) {
+    init(id: Int?, name: String?, shortDescription: String?, description: String?, poster: Poster? = nil, genres: [Generes?], rating: Rating?, type: String?, year: Int?, movieLength: Int?, alternativeName: String?, countries: [String]?) {
         self.id = id
         self.name = name
         self.shortDescription = shortDescription
@@ -23,5 +25,7 @@ struct Docs: Decodable{
         self.type = type
         self.year = year
         self.movieLength = movieLength
+        self.alternativeName = alternativeName
+        self.countries = countries
     }
 }
