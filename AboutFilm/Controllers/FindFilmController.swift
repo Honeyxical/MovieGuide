@@ -1,27 +1,53 @@
 import UIKit
 
-class FindFilmController: UIViewController {
-
-    
-    @IBAction func btn(_ sender: UIButton) {
-        let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FilmDescriptionController")
-        self.navigationController?.pushViewController(destination, animated: true)
-    }
-    
+class FindFilmController: UIViewController, UITextFieldDelegate {
+    let network = NetworkService()
+    var findTextFiled = UITextField()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        findTextFiled = configureFindTextFiled()
+        
+        view.addSubview(getFindTextFieldView())
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func getFindTextFieldView() -> UIView{
+        let view = UIView(frame: CGRect(x: 15, y: 65, width: 363, height: 60))
+        view.layer.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2).cgColor
+        view.layer.cornerRadius = 5
+        view.addSubview(configureFindTextFiled())
+        view.addSubview(getMagnifyingglass())
+        return view
     }
-    */
+    
+    private func configureFindTextFiled() -> UITextField{
+        let findTextFiled = UITextField(frame: CGRect(x: 40, y: 14, width: 300, height: 31))
+        findTextFiled.delegate = self
+        findTextFiled.placeholder = "Films, serials, anime"
+        findTextFiled.attributedPlaceholder = NSAttributedString(string: "Films, serials, anime", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)])
+        return findTextFiled
+    }
+    
+    private func getMagnifyingglass() ->UIImageView{
+        let magnifyingglass = UIImageView(frame: CGRect(x: 15, y: 20, width: 20, height: 20))
+        magnifyingglass.image = UIImage(systemName: "magnifyingglass")
+        magnifyingglass.tintColor = UIColor.gray
+        return magnifyingglass
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchResultController") as! SearchResultController
+        
+        network.searchFilm(name: textField.text!) { data in
+            destination.films = data
+        }
+        destination.navbarTitle += textField.text!
 
+        self.navigationController?.pushViewController(destination, animated: true)
+        return true
+    }
+    
 }
+
