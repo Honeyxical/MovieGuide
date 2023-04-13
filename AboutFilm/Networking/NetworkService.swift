@@ -11,7 +11,7 @@ class NetworkService{
             
             do{
                 let films = try JSONDecoder().decode(Film.self, from: data)
-                let docs = self.insertPoster(docs: films.docs!)
+                let docs = self.insertPosters(docs: films.docs!)
                 completition(docs)
             } catch {
                 print(error)
@@ -40,6 +40,23 @@ class NetworkService{
         }.resume()
     }
     
+    func searchFilm(name: String, completition: @escaping ([SearchFilmResult]) -> Void){
+        URLSession.shared.dataTask(with: getRequestForSearchFilm(name: name)) { data, response, error in
+            guard let data = data, error == nil else{
+                fatalError()
+            }
+            
+            do{
+                let films = try JSONDecoder().decode(SearchFilmModel.self, from: data)
+                print(films)
+                let docs = self.insertPosters(docs: films.docs!)
+                completition(docs)
+            } catch{
+                print(error)
+            }
+        }.resume()
+    }
+    
     private func getRequestForRandomFilm() -> URLRequest{
         var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1/movie/random")!)
         request.httpMethod = "GET"
@@ -57,6 +74,15 @@ class NetworkService{
         return request
     }
     
+    private func getRequestForSearchFilm(name: String) -> URLRequest{
+        let name = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1.2/movie/search?page=1&limit=10&query=\(name!)")!)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "accept")
+        request.addValue(API_KEY, forHTTPHeaderField: "X-API-KEY")
+        return request
+    }
+    
     private func getPosterUrl(url: String) -> URLRequest{
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
@@ -65,7 +91,7 @@ class NetworkService{
         return request
     }
     
-    private func insertPoster(docs: [Docs]) -> [Docs]{
+    private func insertPosters(docs: [Docs]) -> [Docs]{
         var docs = docs
         for i in 0...docs.count - 1 {
             guard let _ = docs[i].poster?.url else {
@@ -73,6 +99,18 @@ class NetworkService{
             }
             
             docs[i].poster!.posterData = try! Data(contentsOf: URL(string: (docs[i].poster?.url)!)!)
+        }
+        return docs
+    }
+    
+    private func insertPosters(docs: [SearchFilmResult]) -> [SearchFilmResult]{
+        var docs = docs
+        for i in 0...docs.count - 1 {
+            guard let posterUrl = docs[i].poster else {
+                continue
+            }
+            
+            docs[i].posterData = try! Data(contentsOf: URL(string: posterUrl)!)
         }
         return docs
     }
