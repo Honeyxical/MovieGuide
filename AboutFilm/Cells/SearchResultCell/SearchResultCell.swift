@@ -27,7 +27,13 @@ class SearchResultCell: UITableViewCell {
         guard let film = film else {
             return
         }
-        posterImageView.image = UIImage(data: film.posterData ?? Data())
+        
+        if film.posterData != nil{
+            posterImageView.image = UIImage(data: film.posterData!)
+        } else {
+            posterImageView.contentMode = .scaleAspectFill
+            posterImageView.image = Loader().palceholderImage()
+        }
         filmNameLabel.text = film.name!
         secondNameYearLabel.text = film.alternativeName! == "" ? String(film.year!) : "\(film.alternativeName!), \(String(film.year!))"
         countryGenresLabel.text = arrayToString(array: film.countries!) + " • " + arrayToString(array: film.genres!)

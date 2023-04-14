@@ -31,6 +31,7 @@ class FilmDescriptionController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         loader = Loader().getLoader(x: 0, y: 95, width: self.view.bounds.width, height: self.view.bounds.height - 95)
         view.addSubview(loader!)
         
@@ -75,7 +76,7 @@ class FilmDescriptionController: UIViewController {
     }
     
     private func configurationDisplayingGenres(){
-        if film?.genres.count == 3{
+        if film?.genres.count == 3 || (film?.genres.count)! > 3{
             genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
             genreLabelConfiguration(label: genreLabel2, text: (film?.genres[1]!.name!)!)
             genreLabelConfiguration(label: genreLabel3, text: (film?.genres[2]!.name!)!)
@@ -87,7 +88,7 @@ class FilmDescriptionController: UIViewController {
             genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
             genreLabel2.isHidden = true
             genreLabel3.isHidden = true
-        } else {
+        } else if film?.genres.count == 0{
             genreLabel1.isHidden = true
             genreLabel2.isHidden = true
             genreLabel3.isHidden = true
@@ -95,7 +96,12 @@ class FilmDescriptionController: UIViewController {
     }
     
     private func configurationImageView(){
-        posterImageView.image = UIImage(data: film?.poster?.posterData ?? Data())
+        if film?.poster?.posterData != nil{
+            posterImageView.image = UIImage(data: (film?.poster?.posterData)!)
+        } else {
+            posterImageView.contentMode = .scaleAspectFill
+            posterImageView.image = Loader().palceholderImage()
+        }
         posterImageView.layer.cornerRadius = 30
         posterImageView.clipsToBounds = true
     }
