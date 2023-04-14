@@ -105,6 +105,9 @@ class NetworkService{
     
     private func insertPosters(docs: [SearchFilmResult]) -> [SearchFilmResult]{
         var docs = docs
+        if docs.isEmpty{
+            return docs
+        }
         for i in 0...docs.count - 1 {
             guard let posterUrl = docs[i].poster else {
                 continue

@@ -16,12 +16,11 @@ class FilmsCell: UITableViewCell {
     }
     
     func configure(image: Data?, title: String, shortDescription: String){
-        guard let image = image else {
-            titleLabel.text! = title
-            shortDescriptionLabel.text! = shortDescription
-            return
+        if image != nil {
+            filmImage.image = UIImage(data: image!)
+        } else{
+            filmImage.image = Loader().palceholderImage()
         }
-        filmImage.image = UIImage(data: image)
         titleLabel.text! = title
         shortDescriptionLabel.text! = shortDescription
     }

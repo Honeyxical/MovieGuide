@@ -25,6 +25,7 @@ class FindFilmController: UIViewController, UITextFieldDelegate {
         findTextFiled.delegate = self
         findTextFiled.placeholder = "Films, serials, anime"
         findTextFiled.attributedPlaceholder = NSAttributedString(string: "Films, serials, anime", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)])
+        findTextFiled.clearButtonMode = .whileEditing
         return findTextFiled
     }
     
@@ -33,6 +34,10 @@ class FindFilmController: UIViewController, UITextFieldDelegate {
         magnifyingglass.image = UIImage(systemName: "magnifyingglass")
         magnifyingglass.tintColor = UIColor.gray
         return magnifyingglass
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

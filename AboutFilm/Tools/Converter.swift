@@ -30,3 +30,11 @@ func genresToString(array: [Generes?]) -> String{
     }
     return result
 }
+
+func genresStringToGenresObj(genres: [String]) -> [Generes]{
+    var result: [Generes] = []
+    for i in 0...genres.count - 1{
+        result.append(Generes(name: genres[i]))
+    }
+    return result
+}
