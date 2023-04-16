@@ -3,14 +3,14 @@ import Foundation
 class NetworkService{
     let API_KEY = "TN3T3HK-GGE44PM-KAMXMJW-HRQ4X7Q"
     
-    func getFilms(completition: @escaping ([Docs]) -> Void){
+    func getFilmList(completition: @escaping ([FilmShortInfo]) -> Void){
         URLSession.shared.dataTask(with: getRequestForFilmList(limit: 10)) {data, response, error in
             guard let data = data, error == nil else {
                 fatalError()
             }
             
             do{
-                let films = try JSONDecoder().decode(Film.self, from: data)
+                let films = try JSONDecoder().decode(FilmList.self, from: data)
                 let docs = self.insertPosters(docs: films.docs!)
                 completition(docs)
             } catch {
@@ -19,35 +19,35 @@ class NetworkService{
         }.resume()
     }
     
-    func getRandomFilm(completition: @escaping (Docs) -> Void){
-        URLSession.shared.dataTask(with: getRequestForRandomFilm()) { data, response, error in
-            guard let data = data, error == nil else {
-                fatalError()
-            }
-            
-            do{
-                let decoder = JSONDecoder()
-                let dateFormater = DateFormatter()
-                dateFormater.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-                decoder.dateDecodingStrategy = .formatted(dateFormater)
-                
-                var film = try decoder.decode(Docs.self, from: data)
-                film = self.insertPoster(film: film)
-                completition(film)
-            } catch {
-                print(error)
-            }
-        }.resume()
-    }
+//    func getRandomFilm(completition: @escaping (Docs) -> Void){
+//        URLSession.shared.dataTask(with: getRequestForRandomFilm()) { data, response, error in
+//            guard let data = data, error == nil else {
+//                fatalError()
+//            }
+//
+//            do{
+//                let decoder = JSONDecoder()
+//                let dateFormater = DateFormatter()
+//                dateFormater.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+//                decoder.dateDecodingStrategy = .formatted(dateFormater)
+//
+//                var film = try decoder.decode(Docs.self, from: data)
+//                film = self.insertPoster(film: film)
+//                completition(film)
+//            } catch {
+//                print(error)
+//            }
+//        }.resume()
+//    }
     
-    func searchFilm(name: String, completition: @escaping ([SearchFilmResult]) -> Void){
+    func searchFilm(name: String, completition: @escaping ([SearchFilmInfo]) -> Void){
         URLSession.shared.dataTask(with: getRequestForSearchFilm(name: name)) { data, response, error in
             guard let data = data, error == nil else{
                 fatalError()
             }
             
             do{
-                let films = try JSONDecoder().decode(SearchFilmModel.self, from: data)
+                let films = try JSONDecoder().decode(SearchFilmList.self, from: data)
                 print(films)
                 let docs = self.insertPosters(docs: films.docs!)
                 completition(docs)
@@ -91,19 +91,15 @@ class NetworkService{
         return request
     }
     
-    private func insertPosters(docs: [Docs]) -> [Docs]{
+    private func insertPosters(docs: [FilmShortInfo]) -> [FilmShortInfo]{
         var docs = docs
         for i in 0...docs.count - 1 {
-            guard let _ = docs[i].poster?.url else {
-                continue
-            }
-            
-            docs[i].poster!.posterData = try! Data(contentsOf: URL(string: (docs[i].poster?.url)!)!)
+            docs[i].posterData = try! Data(contentsOf: URL(string: ((docs[i].poster?.previewUrl ?? docs[i].poster?.url)!))!)
         }
         return docs
     }
     
-    private func insertPosters(docs: [SearchFilmResult]) -> [SearchFilmResult]{
+    private func insertPosters(docs: [SearchFilmInfo]) -> [SearchFilmInfo]{
         var docs = docs
         if docs.isEmpty{
             return docs
@@ -116,11 +112,5 @@ class NetworkService{
             docs[i].posterData = try! Data(contentsOf: URL(string: posterUrl)!)
         }
         return docs
-    }
-    
-    private func insertPoster(film: Docs) -> Docs{
-        var film = film
-        film.poster!.posterData = try! Data(contentsOf: URL(string: (film.poster?.url)!)!)
-        return film
     }
 }

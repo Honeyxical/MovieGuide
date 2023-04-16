@@ -4,7 +4,7 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     private let networkService = NetworkService()
     var loader: UIView? = nil
     
-    var films: [Docs?] = []{
+    var films: [FilmShortInfo?] = []{
         didSet{
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -18,7 +18,7 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
             
-        networkService.getFilms { docs in
+        networkService.getFilmList { docs in
             self.films = docs
         }
         
@@ -42,13 +42,16 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FilmsCell") as! FilmsCell
+        
         if films.isEmpty {
             return cell
         }
+        
         guard let film = films[indexPath.row] else {
             return cell
         }
-        cell.configure(image: film.poster!.posterData, title: film.name!, shortDescription: (film.shortDescription ?? film.description)!)
+        
+        cell.configure(image: film.posterData!, title: film.name!, shortDescription: (film.shortDescription ?? film.description)!)
         
         return cell
     }
@@ -60,9 +63,8 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
         let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FilmDescriptionController") as! FilmDescriptionController
         
-        destination.film = film
-        destination.needToGetData = false        
-        destination.navbarTitle = "Film description"
+        destination.needToGetData = false
+        destination.navbarTitle = film.name!
         destination.navbarIsHiden = false
         destination.updateButtonIsHiden = true
         

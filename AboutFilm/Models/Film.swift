@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-struct Film: Decodable{
+struct FilmFullInfo: Decodable{
     let id: Int?
     
     let name: String?
@@ -44,8 +44,6 @@ struct Film: Decodable{
     let backdrop: Backdrop?
     
     let logo: Logo?
-    
-    var docs: [Docs]?
 }
 
 struct Facts: Decodable {

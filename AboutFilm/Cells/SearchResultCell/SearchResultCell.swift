@@ -2,7 +2,7 @@ import UIKit
 
 class SearchResultCell: UITableViewCell {
     
-    var film: SearchFilmResult? = nil
+    var film: SearchFilmInfo? = nil
 
     @IBOutlet weak private var posterImageView: UIImageView!
     

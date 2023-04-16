@@ -5,11 +5,11 @@ import UIKit
 class FilmDescriptionController: UIViewController {
     let network = NetworkService()
     
-    var film: Docs? {
-        didSet{
-            setViewElem()
-        }
-    }
+//    var film: Docs? {
+//        didSet{
+//            setViewElem()
+//        }
+//    }
     
     var needToGetData: Bool = true
     var loader: UIView? = nil
@@ -35,11 +35,11 @@ class FilmDescriptionController: UIViewController {
         loader = Loader().getLoader(x: 0, y: 95, width: self.view.bounds.width, height: self.view.bounds.height - 95)
         view.addSubview(loader!)
         
-        if needToGetData{
-            network.getRandomFilm { data in
-                self.film = data
-            }
-        }
+//        if needToGetData{
+//            network.getRandomFilm { data in
+//                self.film = data
+//            }
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,54 +57,54 @@ class FilmDescriptionController: UIViewController {
     @IBAction func updateBarItem(_ sender: UIBarButtonItem) {
         self.view.addSubview(loader!)
         navigationBar.title = ""
-        network.getRandomFilm { data in
-            self.film = data
-        }
+//        network.getRandomFilm { data in
+//            self.film = data
+//        }
         updateBarItem.isEnabled = false
     }
     
     //MARK: - Добавить анимацию для закрытия лоадера
     func setViewElem(){
         DispatchQueue.main.async { [self] in
-            configurationImageView()
-            configurationDisplayingGenres()
+//            configurationImageView()
+//            configurationDisplayingGenres()
             configurationDescription()
             loader?.removeFromSuperview()
             updateBarItem.isEnabled = true
-            navigationBar.title = film?.name!
+//            navigationBar.title = film?.name!
         }
     }
     
-    private func configurationDisplayingGenres(){
-        if film?.genres.count == 3 || (film?.genres.count)! > 3{
-            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
-            genreLabelConfiguration(label: genreLabel2, text: (film?.genres[1]!.name!)!)
-            genreLabelConfiguration(label: genreLabel3, text: (film?.genres[2]!.name!)!)
-        }else if film?.genres.count == 2{
-            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
-            genreLabelConfiguration(label: genreLabel2, text: (film?.genres[1]!.name!)!)
-            genreLabel3.isHidden = true
-        } else if film?.genres.count == 1 {
-            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
-            genreLabel2.isHidden = true
-            genreLabel3.isHidden = true
-        } else if film?.genres.count == 0{
-            genreLabel1.isHidden = true
-            genreLabel2.isHidden = true
-            genreLabel3.isHidden = true
-        }
-    }
+//    private func configurationDisplayingGenres(){
+//        if film?.genres.count == 3 || (film?.genres.count)! > 3{
+//            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
+//            genreLabelConfiguration(label: genreLabel2, text: (film?.genres[1]!.name!)!)
+//            genreLabelConfiguration(label: genreLabel3, text: (film?.genres[2]!.name!)!)
+//        }else if film?.genres.count == 2{
+//            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
+//            genreLabelConfiguration(label: genreLabel2, text: (film?.genres[1]!.name!)!)
+//            genreLabel3.isHidden = true
+//        } else if film?.genres.count == 1 {
+//            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
+//            genreLabel2.isHidden = true
+//            genreLabel3.isHidden = true
+//        } else if film?.genres.count == 0{
+//            genreLabel1.isHidden = true
+//            genreLabel2.isHidden = true
+//            genreLabel3.isHidden = true
+//        }
+//    }
     
-    private func configurationImageView(){
-        if film?.poster?.posterData != nil{
-            posterImageView.image = UIImage(data: (film?.poster?.posterData)!)
-        } else {
-            posterImageView.contentMode = .scaleAspectFill
-            posterImageView.image = Loader().palceholderImage()
-        }
-        posterImageView.layer.cornerRadius = 30
-        posterImageView.clipsToBounds = true
-    }
+//    private func configurationImageView(){
+//        if film?.poster?.posterData != nil{
+//            posterImageView.image = UIImage(data: (film?.poster?.posterData)!)
+//        } else {
+//            posterImageView.contentMode = .scaleAspectFill
+//            posterImageView.image = Loader().palceholderImage()
+//        }
+//        posterImageView.layer.cornerRadius = 30
+//        posterImageView.clipsToBounds = true
+//    }
     
     private func getLabel(x: Int, y: Int, width: Int, height: Int, text: String, isBold: Bool) -> UILabel{
         let label = UILabel(frame: CGRect(x: x, y: y, width: width, height: height))
@@ -136,7 +136,7 @@ class FilmDescriptionController: UIViewController {
     
     private func configurationDescription(){
         descriptionLabel.textColor = .black
-        descriptionLabel.text = film?.description ?? film?.shortDescription
+//        descriptionLabel.text = film?.description ?? film?.shortDescription
         descriptionLabel.numberOfLines = 0
         descriptionLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.thin)
     }
