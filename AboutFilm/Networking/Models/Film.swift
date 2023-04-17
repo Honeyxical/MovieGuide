@@ -31,8 +31,6 @@ struct FilmFullInfo: Decodable{
     
     var poster: Poster?
     
-    let facts: [Facts]?
-    
     let genres: [Generes]?
     
     let countries: [Countries]?
@@ -44,12 +42,6 @@ struct FilmFullInfo: Decodable{
     let backdrop: Backdrop?
     
     let logo: Logo?
-}
-
-struct Facts: Decodable {
-    let value: String?
-    let type: String?
-    let spoiler: Bool?
 }
 
 struct Rating: Decodable{

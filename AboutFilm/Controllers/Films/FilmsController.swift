@@ -1,7 +1,6 @@
 import UIKit
 
 class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    private let networkService = NetworkService()
     var loader: UIView? = nil
     
     var films: [FilmShortInfo?] = []{
@@ -18,7 +17,7 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
             
-        networkService.getFilmList { docs in
+        NetworkService.network.getFilmList { docs in
             self.films = docs
         }
         
@@ -52,7 +51,6 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
         
         cell.configure(image: film.posterData!, title: film.name!, shortDescription: (film.shortDescription ?? film.description)!)
-        
         return cell
     }
     

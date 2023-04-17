@@ -2,6 +2,8 @@ import Foundation
 import UIKit
 
 struct Loader{
+    static let loader = Loader()
+    
     func getLoader(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat) -> UIView{
         let view = UIView(frame: CGRect(x: x, y: y, width: width, height: height))
         let activityIndicator = UIActivityIndicatorView(style: .medium)

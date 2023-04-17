@@ -14,6 +14,7 @@ class SearchResultCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureImageView()
         configureFilmNameLabel()
         configureSecondNameYearLabel()
         configureCountryGenresLabel()
@@ -27,12 +28,8 @@ class SearchResultCell: UITableViewCell {
         guard let film = film else {
             return
         }
-        
         if film.posterData != nil{
             posterImageView.image = UIImage(data: film.posterData!)
-        } else {
-            posterImageView.contentMode = .scaleAspectFill
-            posterImageView.image = Loader().palceholderImage()
         }
         filmNameLabel.text = film.name!
         secondNameYearLabel.text = film.alternativeName! == "" ? String(film.year!) : "\(film.alternativeName!), \(String(film.year!))"
@@ -54,5 +51,10 @@ class SearchResultCell: UITableViewCell {
         countryGenresLabel.textColor = UIColor.gray
         countryGenresLabel.numberOfLines = 2
         countryGenresLabel.font = UIFont.systemFont(ofSize: 14)
+    }
+    
+    private func configureImageView(){
+        posterImageView.image = Loader.loader.palceholderImage()
+        posterImageView.contentMode = .scaleAspectFill
     }
 }
