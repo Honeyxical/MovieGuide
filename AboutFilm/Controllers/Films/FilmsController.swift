@@ -61,10 +61,10 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
         let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FilmDescriptionController") as! FilmDescriptionController
         
-        destination.needToGetData = false
-        destination.navbarTitle = film.name!
-        destination.navbarIsHiden = false
-        destination.updateButtonIsHiden = true
+//        destination.needToGetData = false
+//        destination.navbarTitle = film.name!
+//        destination.navbarIsHiden = false
+//        destination.updateButtonIsHiden = true
         
         tableView.deselectRow(at: indexPath, animated: true)
         self.navigationController?.pushViewController(destination, animated: true)

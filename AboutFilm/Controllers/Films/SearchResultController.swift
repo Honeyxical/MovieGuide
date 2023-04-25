@@ -55,9 +55,9 @@ class SearchResultController: UIViewController, UITableViewDataSource, UITableVi
         let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FilmDescriptionController") as! FilmDescriptionController
         
 //        destination.film = Docs(id: nil, name: film.name!, shortDescription: film.shortDescription!, description: film.description!, poster: Poster(url: "", previewUrl: "", posterData: film.posterData), genres: genresStringToGenresObj(genres: film.genres!), rating: nil, type: nil, year: film.year, movieLength: film.movieLength, alternativeName: nil, countries: nil)
-        destination.needToGetData = false
-        destination.navbarIsHiden = false
-        destination.updateButtonIsHiden = true
+//        destination.needToGetData = false
+//        destination.navbarIsHiden = false
+//        destination.updateButtonIsHiden = true
         
         tableView.deselectRow(at: indexPath, animated: true)
         self.navigationController?.pushViewController(destination, animated: true)

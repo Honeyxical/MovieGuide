@@ -192,6 +192,7 @@
 		694598EE29DCA3DD009D5C97 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				6985E26629F004D1001DA6B3 /* ActorCell */,
 				69AC4FD129E8012C006A5B18 /* SearchResultCell */,
 				69F751BB29DD790C00C387BA /* FilmsListCell */,
 			);
@@ -205,6 +206,13 @@
 				692DF48629D5FD5700B6DA45 /* AppDelegate.swift */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		6985E26629F004D1001DA6B3 /* ActorCell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ActorCell;
 			sourceTree = "<group>";
 		};
 		69AC4FD129E8012C006A5B18 /* SearchResultCell */ = {

@@ -1,143 +1,149 @@
 import UIKit
 
-//MARK: - Переделать экран под скролл, добавить блюр
-
 class FilmDescriptionController: UIViewController {
-    let network = NetworkService()
     
-//    var film: Docs? {
-//        didSet{
-//            setViewElem()
-//        }
-//    }
+    let film: FilmFullInfo = getFilmMocks()
     
-    var needToGetData: Bool = true
-    var loader: UIView? = nil
-    var navbarTitle = ""
-    var navbarIsHiden = true
-    var updateButtonIsHiden = false
+    private let navigationBar: UIView = {
+        let navBar = UIView()
+        navBar.translatesAutoresizingMaskIntoConstraints = false
+        return navBar
+    }()
     
-    @IBOutlet weak var navigationBar: UINavigationItem!
-    @IBOutlet weak var backItemNavBar: UIBarButtonItem!
-    @IBOutlet weak var updateBarItem: UIBarButtonItem!
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.alwaysBounceVertical = true
+        scrollView.frame = view.bounds
+        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 400)
+        return scrollView
+    }()
     
-    @IBOutlet weak var posterImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
+    private let imageView: UIImageView = {
+        let image = UIImageView(image: UIImage(named: "PlaceholderImage"))
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleToFill
+        return image
+    }()
     
-    @IBOutlet weak var genreLabel1: PaddingLabel!
-    @IBOutlet weak var genreLabel2: PaddingLabel!
-    @IBOutlet weak var genreLabel3: PaddingLabel!
+    private let filmsParamLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "2019, боевик, драма, комедия, 1 сезон \nСША, 30 мин, 18+"
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 13)
+        label.textColor = .systemGray
+        return label
+    }()
+    
+    private let actorsLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        let attributedText = NSMutableAttributedString(string: "В ролях: Ами Косимидзу, Ая Судзаки, Тосихико Сэки, Синъитиро Мики ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13), NSAttributedString.Key.foregroundColor: UIColor.systemGray])
+        attributedText.append(NSAttributedString(string: "и другие", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13, weight: .bold)]))
+        
+        label.attributedText = attributedText
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private let controllStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .horizontal
+        stack.spacing = 10
+        stack.alignment = .fill
+        stack.layer.borderWidth = 1
+        return stack
+    }()
+    
+    
+    private let descriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.textContainer.maximumNumberOfLines = 7
+        textView.textAlignment = .left
+        textView.font = .systemFont(ofSize: 14)
+        textView.text = "Home is where we feel comfortable, safe, and loved. It's a place where we create memories with our family and friends. Home can be a physical structure or a feeling. It's where we relax, recharge, and find solace from the outside world. We decorate it with our personal items, fill it with the scents of home-cooked meals, and make it our own. Home is not just a place; it's a sense of belonging, a sanctuary from the chaos of life, and a reflection of who we are."
+        return textView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupSrollLayout()
+    }
+    
+    private func setupSrollLayout() {
+        let imageViewContainer = UIView()
+        imageViewContainer.translatesAutoresizingMaskIntoConstraints = false
         
-        loader = Loader().getLoader(x: 0, y: 95, width: self.view.bounds.width, height: self.view.bounds.height - 95)
-        view.addSubview(loader!)
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.text = "FilmTitle"
         
-//        if needToGetData{
-//            network.getRandomFilm { data in
-//                self.film = data
-//            }
-//        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        backItemNavBar.isHidden = navbarIsHiden
-        updateBarItem.isHidden = updateButtonIsHiden
-    }
-    
-    //MARK: - Добавить кнопку для получения нового фильма
-    @IBAction func backBarItem(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    
-    @IBAction func updateBarItem(_ sender: UIBarButtonItem) {
-        self.view.addSubview(loader!)
-        navigationBar.title = ""
-//        network.getRandomFilm { data in
-//            self.film = data
-//        }
-        updateBarItem.isEnabled = false
-    }
-    
-    //MARK: - Добавить анимацию для закрытия лоадера
-    func setViewElem(){
-        DispatchQueue.main.async { [self] in
-//            configurationImageView()
-//            configurationDisplayingGenres()
-            configurationDescription()
-            loader?.removeFromSuperview()
-            updateBarItem.isEnabled = true
-//            navigationBar.title = film?.name!
-        }
-    }
-    
-//    private func configurationDisplayingGenres(){
-//        if film?.genres.count == 3 || (film?.genres.count)! > 3{
-//            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
-//            genreLabelConfiguration(label: genreLabel2, text: (film?.genres[1]!.name!)!)
-//            genreLabelConfiguration(label: genreLabel3, text: (film?.genres[2]!.name!)!)
-//        }else if film?.genres.count == 2{
-//            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
-//            genreLabelConfiguration(label: genreLabel2, text: (film?.genres[1]!.name!)!)
-//            genreLabel3.isHidden = true
-//        } else if film?.genres.count == 1 {
-//            genreLabelConfiguration(label: genreLabel1, text: (film?.genres[0]!.name!)!)
-//            genreLabel2.isHidden = true
-//            genreLabel3.isHidden = true
-//        } else if film?.genres.count == 0{
-//            genreLabel1.isHidden = true
-//            genreLabel2.isHidden = true
-//            genreLabel3.isHidden = true
-//        }
-//    }
-    
-//    private func configurationImageView(){
-//        if film?.poster?.posterData != nil{
-//            posterImageView.image = UIImage(data: (film?.poster?.posterData)!)
-//        } else {
-//            posterImageView.contentMode = .scaleAspectFill
-//            posterImageView.image = Loader().palceholderImage()
-//        }
-//        posterImageView.layer.cornerRadius = 30
-//        posterImageView.clipsToBounds = true
-//    }
-    
-    private func getLabel(x: Int, y: Int, width: Int, height: Int, text: String, isBold: Bool) -> UILabel{
-        let label = UILabel(frame: CGRect(x: x, y: y, width: width, height: height))
+//        navigationBar.addSubview(title)
         
-        label.text = text
-        label.textColor = UIColor.white
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.bold)
-        label.textAlignment = .center
+        view.addSubview(scrollView)
+//        view.addSubview(navigationBar)
         
-        label.backgroundColor = UIColor.black.withAlphaComponent(0.2)
-        label.layer.cornerRadius = 15
-        label.clipsToBounds = true
+        scrollView.addSubview(imageViewContainer)
+        scrollView.addSubview(filmsParamLabel)
+        scrollView.addSubview(actorsLabel)
+        scrollView.addSubview(descriptionTextView)
+        scrollView.addSubview(controllStackView)
+        scrollView.addSubview(imageViewContainer)
         
-        label.font = isBold ? UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.bold) : UIFont.systemFont(ofSize: 14)
+        imageViewContainer.addSubview(imageView)
         
-        return label
+        NSLayoutConstraint.activate([
+//            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+//            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            navigationBar.heightAnchor.constraint(equalToConstant: 50),
+            
+//            title.centerXAnchor.constraint(equalTo: navigationBar.centerXAnchor),
+//            title.centerYAnchor.constraint(equalTo: navigationBar.centerYAnchor),
+//
+            
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            
+            imageViewContainer.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            imageViewContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageViewContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            imageViewContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            imageViewContainer.heightAnchor.constraint(equalToConstant: 670),
+            
+            imageView.centerXAnchor.constraint(equalTo: imageViewContainer.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor),
+            imageView.heightAnchor.constraint(equalToConstant: 470),
+            imageView.widthAnchor.constraint(equalToConstant: 300),
+            
+            filmsParamLabel.topAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: 10),
+            filmsParamLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            filmsParamLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            filmsParamLabel.heightAnchor.constraint(equalToConstant: 50),
+            
+            actorsLabel.topAnchor.constraint(equalTo: filmsParamLabel.bottomAnchor),
+            actorsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            actorsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            actorsLabel.heightAnchor.constraint(equalToConstant: 50),
+            
+            controllStackView.topAnchor.constraint(equalTo: actorsLabel.bottomAnchor, constant: 10),
+            controllStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            controllStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            controllStackView.heightAnchor.constraint(equalToConstant: 60),
+            
+            descriptionTextView.topAnchor.constraint(equalTo: controllStackView.bottomAnchor, constant: 10),
+            descriptionTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            descriptionTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            descriptionTextView.heightAnchor.constraint(equalToConstant: 150)
+        ])
     }
     
-    
-    // MARK: - Переделать под большее количество жанров
-    private func genreLabelConfiguration(label: UILabel , text: String){
-        label.backgroundColor = UIColor.black.withAlphaComponent(0.2)
-        label.layer.cornerRadius = 13
-        label.clipsToBounds = true
-        label.text = text
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.light)
-    }
-    
-    private func configurationDescription(){
-        descriptionLabel.textColor = .black
-//        descriptionLabel.text = film?.description ?? film?.shortDescription
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.thin)
-    }
 }

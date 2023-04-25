@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ahW-St-fP2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yo6-S3-vbe">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -258,154 +259,14 @@
                     <view key="view" opaque="NO" contentMode="scaleToFill" id="ffq-U4-ali">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9f-pB-od3">
-                                <rect key="frame" x="0.0" y="55" width="393" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="tUk-hL-yS8"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem style="browser" id="Nbk-po-HEQ">
-                                        <barButtonItem key="leftBarButtonItem" title="Back" id="czs-yx-M3e">
-                                            <imageReference key="image" image="chevron.backward" catalog="system" symbolScale="large"/>
-                                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <connections>
-                                                <action selector="backBarItem:" destination="yo6-S3-vbe" id="7e5-g1-9Oo"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Update" id="WXa-V4-ChD">
-                                            <imageReference key="image" image="arrow.clockwise" catalog="system" symbolScale="large"/>
-                                            <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <connections>
-                                                <action selector="updateBarItem:" destination="yo6-S3-vbe" id="R1X-2e-bhs"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="E6H-Ln-FyN">
-                                <rect key="frame" x="10" y="110" width="373" height="450"/>
-                                <color key="backgroundColor" systemColor="systemGray3Color"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="450" id="zSw-Nw-2s6"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3J-qn-fMS">
-                                <rect key="frame" x="10" y="635" width="373" height="142.33333333333337"/>
-                                <string key="text">Description labelDescription labelDescription labelDescription labelDescription labelDescription labelDescription labelDescription labelDescription labelDescription labelDescription labelDescription labelDescription labelDescription label</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre label 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yg4-yz-T3P" customClass="PaddingLabel" customModule="AboutFilm" customModuleProvider="target">
-                                <rect key="frame" x="9.9999999999999929" y="580" width="120.33333333333331" height="40"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="Sem-Zf-mNI"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingTop">
-                                        <real key="value" value="9"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
-                                        <real key="value" value="11"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
-                                        <real key="value" value="11"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingBottom">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </label>
-                            <label userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Genre label 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xdi-XS-1qd" customClass="PaddingLabel" customModule="AboutFilm" customModuleProvider="target">
-                                <rect key="frame" x="140.33333333333334" y="580" width="122.66666666666666" height="40"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="TYj-SS-GmD"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingTop">
-                                        <real key="value" value="9"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
-                                        <real key="value" value="11"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
-                                        <real key="value" value="11"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingBottom">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </label>
-                            <label userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Genre label 3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Kw-x9-3qt" customClass="PaddingLabel" customModule="AboutFilm" customModuleProvider="target">
-                                <rect key="frame" x="273" y="580" width="123.33333333333331" height="40"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="RBj-KI-a3N"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingTop">
-                                        <real key="value" value="9"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
-                                        <real key="value" value="11"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
-                                        <real key="value" value="11"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingBottom">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </label>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="4CS-Zb-Rd5"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                        <constraints>
-                            <constraint firstItem="f9f-pB-od3" firstAttribute="leading" secondItem="4CS-Zb-Rd5" secondAttribute="leading" id="5Hk-ho-3Qh"/>
-                            <constraint firstItem="Yg4-yz-T3P" firstAttribute="leading" secondItem="4CS-Zb-Rd5" secondAttribute="leading" constant="10" id="6Sv-qV-Tv1"/>
-                            <constraint firstItem="p3J-qn-fMS" firstAttribute="top" secondItem="Yg4-yz-T3P" secondAttribute="bottom" constant="15" id="I0M-Td-VXf"/>
-                            <constraint firstItem="Xdi-XS-1qd" firstAttribute="top" secondItem="E6H-Ln-FyN" secondAttribute="bottom" constant="20" id="JnO-kb-cEH"/>
-                            <constraint firstItem="E6H-Ln-FyN" firstAttribute="top" secondItem="f9f-pB-od3" secondAttribute="bottom" constant="15" id="Kp7-yk-uhB"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0Kw-x9-3qt" secondAttribute="trailing" constant="-3.3333333333333144" id="P2B-Oo-3uQ"/>
-                            <constraint firstItem="p3J-qn-fMS" firstAttribute="leading" secondItem="4CS-Zb-Rd5" secondAttribute="leading" constant="10" id="RTe-r0-XLU"/>
-                            <constraint firstItem="f9f-pB-od3" firstAttribute="trailing" secondItem="4CS-Zb-Rd5" secondAttribute="trailing" id="TFV-NE-rjw"/>
-                            <constraint firstItem="4CS-Zb-Rd5" firstAttribute="trailing" secondItem="p3J-qn-fMS" secondAttribute="trailing" constant="10" id="h55-tC-RW6"/>
-                            <constraint firstItem="Xdi-XS-1qd" firstAttribute="leading" secondItem="Yg4-yz-T3P" secondAttribute="trailing" constant="10" id="luB-J1-ng2"/>
-                            <constraint firstItem="E6H-Ln-FyN" firstAttribute="leading" secondItem="4CS-Zb-Rd5" secondAttribute="leading" constant="10" id="mxb-hT-Squ"/>
-                            <constraint firstItem="Xdi-XS-1qd" firstAttribute="baseline" secondItem="Yg4-yz-T3P" secondAttribute="baseline" id="ngm-OQ-Gqi"/>
-                            <constraint firstItem="0Kw-x9-3qt" firstAttribute="leading" secondItem="Xdi-XS-1qd" secondAttribute="trailing" constant="10" id="poD-zy-su8"/>
-                            <constraint firstItem="Xdi-XS-1qd" firstAttribute="baseline" secondItem="0Kw-x9-3qt" secondAttribute="baseline" id="tgp-X9-xbV"/>
-                            <constraint firstItem="f9f-pB-od3" firstAttribute="top" secondItem="ffq-U4-ali" secondAttribute="top" constant="55" id="w5T-b9-hFp"/>
-                            <constraint firstItem="E6H-Ln-FyN" firstAttribute="trailing" secondItem="4CS-Zb-Rd5" secondAttribute="trailing" constant="-10" id="zNk-GH-e0K"/>
-                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Random film" id="7xf-DI-HXL">
                         <imageReference key="image" image="film.circle" catalog="system" symbolScale="medium"/>
                     </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="backItemNavBar" destination="czs-yx-M3e" id="bSW-cO-BRG"/>
-                        <outlet property="descriptionLabel" destination="p3J-qn-fMS" id="gW7-VB-3lt"/>
-                        <outlet property="genreLabel1" destination="Yg4-yz-T3P" id="TQb-x2-RkP"/>
-                        <outlet property="genreLabel2" destination="Xdi-XS-1qd" id="AFW-dp-Wmj"/>
-                        <outlet property="genreLabel3" destination="0Kw-x9-3qt" id="X9M-ou-79R"/>
-                        <outlet property="navigationBar" destination="Nbk-po-HEQ" id="8Za-gs-N4H"/>
-                        <outlet property="posterImageView" destination="E6H-Ln-FyN" id="jNe-Zz-d1g"/>
-                        <outlet property="updateBarItem" destination="WXa-V4-ChD" id="mTQ-DM-i0Z"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GdR-8d-kPa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -464,29 +325,13 @@
             <point key="canvasLocation" x="4865" y="1421"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="0Kw-x9-3qt">
-            <size key="intrinsicContentSize" width="123.33333333333333" height="39.333333333333329"/>
-        </designable>
-        <designable name="Xdi-XS-1qd">
-            <size key="intrinsicContentSize" width="122.66666666666667" height="39.333333333333329"/>
-        </designable>
-        <designable name="Yg4-yz-T3P">
-            <size key="intrinsicContentSize" width="120.33333333333333" height="39.333333333333329"/>
-        </designable>
-    </designables>
     <resources>
-        <image name="arrow.clockwise" catalog="system" width="113" height="128"/>
-        <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="film.circle" catalog="system" width="128" height="123"/>
         <image name="house" catalog="system" width="128" height="104"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray3Color">
-            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
