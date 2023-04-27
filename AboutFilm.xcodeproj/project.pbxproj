@@ -34,6 +34,7 @@
 		69F751C729DEC2B800C387BA /* FilmDescriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F751C629DEC2B800C387BA /* FilmDescriptionController.swift */; };
 		69F751CD29E094E600C387BA /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F751CC29E094E600C387BA /* AuthController.swift */; };
 		69F751CF29E178AE00C387BA /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F751CE29E178AE00C387BA /* PaddingLabel.swift */; };
+		8D915ED429F9428D0072A919 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D915ED329F9428D0072A919 /* UIColor+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		69F751C629DEC2B800C387BA /* FilmDescriptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmDescriptionController.swift; sourceTree = "<group>"; };
 		69F751CC29E094E600C387BA /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		69F751CE29E178AE00C387BA /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		8D915ED329F9428D0072A919 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 		692DF48529D5FD5700B6DA45 /* AboutFilm */ = {
 			isa = PBXGroup;
 			children = (
+				8D915ED229F942570072A919 /* Extension */,
 				697497A329EC08EC00176BAD /* Application */,
 				692DF4A029D5FFB300B6DA45 /* Networking */,
 				690BB8DB29DC4AF50096EB06 /* Storages */,
@@ -242,6 +245,14 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
+		8D915ED229F942570072A919 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				8D915ED329F9428D0072A919 /* UIColor+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -332,6 +343,7 @@
 				692DF48729D5FD5700B6DA45 /* AppDelegate.swift in Sources */,
 				692DF48929D5FD5700B6DA45 /* SceneDelegate.swift in Sources */,
 				69AC4FD429E8016C006A5B18 /* SearchResultCell.swift in Sources */,
+				8D915ED429F9428D0072A919 /* UIColor+Extension.swift in Sources */,
 				690BB8E129DC5D3D0096EB06 /* LoginController.swift in Sources */,
 				690BB8DD29DC4B120096EB06 /* Storage.swift in Sources */,
 				69F751C329DDFCFC00C387BA /* Docs.swift in Sources */,
