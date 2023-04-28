@@ -12,22 +12,11 @@ struct FilmFullInfo: Decodable{
     let shortDescription: String?
     let slogan: String?
     
-    let type: String?
-    let typeNumber: Int?
-    
     let year: Int?
     let ageRating: Int?
     let movieLength: Int?
-    let ratingMpaa: String?
-    
-    let videos: Videos?
-    
-    let externalId: ExternalId?
     
     let rating: Rating?
-    let votes: Votes?
-    
-    let premiere: Premiere?
     
     var poster: Poster?
     
@@ -35,11 +24,9 @@ struct FilmFullInfo: Decodable{
     
     let countries: [Countries]?
     
-    let persons: [Persons]?
+    let persons: [Person]?
     
     let similarMovies: [SimilarMovies]?
-    
-    let backdrop: Backdrop?
     
     let logo: Logo?
 }
@@ -87,7 +74,7 @@ struct Logo: Decodable {
     let url: String?
 }
 
-struct Persons: Decodable{
+struct Person: Decodable{
     let id: Int?
     let photo: String?
     let name: String?
