@@ -16,7 +16,15 @@ struct Loader{
     
     func getBlur(for object: AnyObject, style: UIBlurEffect.Style) -> UIVisualEffectView{
         let blur = UIVisualEffectView(effect: UIBlurEffect(style: style))
-        blur.frame = object.bounds
+        blur.translatesAutoresizingMaskIntoConstraints = false
+        object.addSubview(blur)
+        NSLayoutConstraint.activate([
+            blur.topAnchor.constraint(equalTo: object.topAnchor),
+            blur.leadingAnchor.constraint(equalTo: object.leadingAnchor),
+            blur.trailingAnchor.constraint(equalTo: object.trailingAnchor),
+            blur.bottomAnchor.constraint(equalTo: object.bottomAnchor)
+        ])
+        
         return blur
     }
     
