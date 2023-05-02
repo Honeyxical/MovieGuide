@@ -13,7 +13,7 @@ class NetworkService{
             
             do{
                 var films = try JSONDecoder().decode(FilmList.self, from: data)
-                films.docs = self.insertPosters(docs: films.docs!)
+//                films.docs = self.insertPosters(docs: films.docs!)
                 completition(films.docs!)
             } catch {
                 print(error)
@@ -21,28 +21,28 @@ class NetworkService{
         }.resume()
     }
     
-    //    func getRandomFilm(completition: @escaping (Docs) -> Void){
-    //        URLSession.shared.dataTask(with: getRequestForRandomFilm()) { data, response, error in
-    //            guard let data = data, error == nil else {
-    //                fatalError()
-    //            }
-    //
-    //            do{
-    //                let decoder = JSONDecoder()
-    //                let dateFormater = DateFormatter()
-    //                dateFormater.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-    //                decoder.dateDecodingStrategy = .formatted(dateFormater)
-    //
-    //                var film = try decoder.decode(Docs.self, from: data)
-    //                film = self.insertPoster(film: film)
-    //                completition(film)
-    //            } catch {
-    //                print(error)
-    //            }
-    //        }.resume()
-    //    }
+    func getRandomFilm(completition: @escaping (FilmFullInfo) -> Void){
+        URLSession.shared.dataTask(with: getRequestForRandomFilm()) { [self] data, response, error in
+            guard let data = data, error == nil else {
+                print(response)
+                fatalError()
+            }
+            
+            do{
+                var film = try JSONDecoder().decode(FilmFullInfo.self, from: data)
+                getImage(url: film.poster!.url!) { data in
+                    film.poster!.posterData = data
+                }
+                film.similarMovies = insertPosterForSimilarMovies(array: film.similarMovies!)
+                film.persons = insertPersonsImage(array: film.persons!)
+                completition(film)
+            } catch {
+                print(error)
+            }
+        }.resume()
+    }
     
-    func searchFilm(name: String, completition: @escaping ([SearchFilmInfo]) -> Void){
+    func searchFilm(name: String, completition: @escaping ([SearchFilmInfo]) -> Void) {
         URLSession.shared.dataTask(with: getRequestForSearchFilm(name: name)) { data, response, error in
             guard let data = data, error == nil else{
                 fatalError()
@@ -58,12 +58,15 @@ class NetworkService{
         }.resume()
     }
     
-    func getImage(url: String) -> Data?{
-        if url == "" {
-            return nil
-        }
-        
-        return try! Data(contentsOf: URL(string: url)!)
+    func getImage(url: String, completition: @escaping (Data) -> Void) {
+        URLSession.shared.dataTask(with: URL(string: url)!) {data, response, error in
+            guard let data = data, error == nil  else {
+                print("\n\nError download image\n")
+                fatalError()
+            }
+            print("poster downloaded: \(data)")
+            completition(data)
+        }.resume()
     }
     
     //MARK: - Private func
@@ -94,10 +97,12 @@ class NetworkService{
         return request
     }
     
-    private func insertPosters(docs: [FilmShortInfo]) -> [FilmShortInfo]{
+    private func insertPosters(docs: [FilmShortInfo]) -> [FilmShortInfo] {
         var docs = docs
         for i in 0...docs.count - 1 {
-            docs[i].posterData = getImage(url: (docs[i].poster?.previewUrl ?? docs[i].poster?.url ?? ""))
+            getImage(url: docs[i].poster!.previewUrl ?? docs[i].poster!.url!) { data in
+                docs[i].poster!.posterData = data
+            }
         }
         return docs
     }
@@ -111,8 +116,42 @@ class NetworkService{
             guard let posterUrl = docs[i].poster else {
                 continue
             }
-            docs[i].posterData = getImage(url: posterUrl)
+            getImage(url: posterUrl) { data in
+                docs[i].posterData = data
+            }
         }
         return docs
+    }
+    
+    private func insertPosterForSimilarMovies(array: [SimilarMovies]) -> [SimilarMovies]{
+        if array.isEmpty {
+            return array
+        }
+        var array = array
+        
+        for i in 0...array.count - 1 {
+            getImage(url: array[i].poster!.previewUrl ?? array[i].poster!.url!) { data in
+                array[i].posterData = data
+            }
+        }
+        return array
+    }
+    
+    private func insertPersonsImage(array: [Person]) -> [Person] {
+        if array.isEmpty{
+            return array
+        }
+        var array = array
+        
+        for i in 0...array.count - 1 {
+            guard let personImageUrl = array[i].photo else {
+                continue
+            }
+            getImage(url: personImageUrl) { data in
+                array[i].photoData = data
+            }
+        }
+        
+        return array
     }
 }

@@ -24,8 +24,13 @@ func arrayToString(array: [String?]) -> String {
 }
 
 func genresToString(array: [Generes], count: Int) -> String {
+    if array.isEmpty {
+        return ""
+    }
+    
     var result = ""
-    for i in 0...count {
+    
+    for i in 0...array.count - 1 {
         if i == count{
             result.append(array[i].name!)
             continue

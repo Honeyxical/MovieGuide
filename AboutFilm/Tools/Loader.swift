@@ -14,6 +14,23 @@ struct Loader{
         return view
     }
     
+    static func getLoader() -> UIView{
+        let loader = UIView()
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        
+        loader.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        loader.addSubview(activityIndicator)
+        
+        activityIndicator.centerXAnchor.constraint(equalTo: loader.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: loader.centerYAnchor).isActive = true
+        
+        activityIndicator.startAnimating()
+        
+        return loader
+    }
+    
     func getBlur(for object: AnyObject, style: UIBlurEffect.Style) -> UIVisualEffectView{
         let blur = UIVisualEffectView(effect: UIBlurEffect(style: style))
         blur.translatesAutoresizingMaskIntoConstraints = false
@@ -27,6 +44,8 @@ struct Loader{
         
         return blur
     }
+    
+    
     
     func palceholderImage()-> UIImage{
         return UIImage(named: "PlaceholderImage")!

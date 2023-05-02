@@ -10,7 +10,7 @@ struct FilmShortInfo: Decodable {
     let alternativeName: String?
     let description: String?
     let shortDescription: String?
-    let poster: Poster?
+    var poster: Poster?
     var posterData: Data?
 }
 

@@ -7,32 +7,62 @@ class FilmDescriptionController: UIViewController {
             guard let film = film else {
                 return
             }
-            
-            filmsParamLabel.text = "\(String(film.year!)), \(genresToString(array: film.genres!, count: 2)) \n\(film.countries![0].name!), \(film.movieLength!) мин, \(film.ageRating!)+"
-            
-            let rolesAttributedString = NSMutableAttributedString(string: "В ролях: \(actorsToString(array: film.persons!, count: 3))", attributes: [
-                    NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13),
-                    NSAttributedString.Key.foregroundColor: UIColor.systemGray])
-            
-            rolesAttributedString.append(NSAttributedString(string: " и другие", attributes: [
-                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13, weight: .bold),
-                NSAttributedString.Key.foregroundColor : UIColor.gray
-            ]))
-            
-            actorsListLabel.attributedText = rolesAttributedString
+            DispatchQueue.main.async { [self] in
+                loader.removeFromSuperview()
+                
+//                imageView.image = UIImage(data: (film.poster?.posterData))
+                
+                filmsParamLabel.text = "\(String(film.year!)), \(genresToString(array: film.genres!, count: 3)) \n\(film.countries![0].name!), \(film.movieLength ?? 0) мин, \(film.ageRating ?? 6)+"
+                
+                if film.description == nil {
+                    descriptionTextView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                    scrollView.contentSize.height -= 105
+                }else {
+                    descriptionTextView.text = film.description!
+                }
+                
+                if film.rating!.await != 0 || film.rating!.filmCritics != 0 || film.rating!.imdb != 0 || film.rating!.kp != 0 || film.rating!.russianFilmCritics != 0 {
+                    ratingStackView = getStackView(arrangedSubviews: getRatingArray(rating: film.rating!))
 
-            let descriptionAttributedString = NSMutableAttributedString(string: film.shortDescription!, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .bold)])
-            descriptionAttributedString.append(NSAttributedString(string: "\n\n" + film.description!, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]))
-            
-            descriptionTextView.attributedText = descriptionAttributedString
-            
-            ratingStackView = getStackView(arrangedSubviews: getRatingArray(rating: film.rating!))
-            
-            actorsCounter.text = String(film.persons!.count)
-            
-            relatedMoviesCounter.text = String(film.similarMovies!.count)
-            
-            relatedMoviesStack = getStackView(arrangedSubviews: getMoviesArray(array: film.similarMovies!))
+                } else {
+                    ratingScrollView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                    ratingLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                    scrollView.contentSize.height -= 140
+                }
+                
+                if film.persons!.isEmpty {
+                    actorLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                    actorsCollection.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                    actorsCounter.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                    actorsListLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                    scrollView.contentSize.height -= 430
+                } else {
+                    let rolesAttributedString = NSMutableAttributedString(string: "В ролях: \(actorsToString(array: film.persons!, count: 3))", attributes: [
+                        NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13),
+                        NSAttributedString.Key.foregroundColor: UIColor.systemGray])
+                    
+                    rolesAttributedString.append(NSAttributedString(string: " и другие", attributes: [
+                        NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13, weight: .bold),
+                        NSAttributedString.Key.foregroundColor : UIColor.gray
+                    ]))
+                    
+                    actorsListLabel.attributedText = rolesAttributedString
+                    
+                    actorsCounter.text = String(film.persons!.count)
+
+                }
+                
+                if film.similarMovies!.isEmpty {
+                    relatedMoviesLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                    relatedMoviesScroll.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                    relatedMoviesCounter.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                } else {
+                    relatedMoviesCounter.text = String(film.similarMovies!.count)
+                    relatedMoviesStack = getStackView(arrangedSubviews: getMoviesArray(array: film.similarMovies!))
+                    scrollView.contentSize.height += 350
+                }
+                setupScrollLayout()
+            }
         }
     }
     
@@ -53,13 +83,13 @@ class FilmDescriptionController: UIViewController {
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 1350)
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 950)
         return scrollView
     }()
     
     private lazy var imageViewContainer: UIView = {
-        let imageViewContainer = UIImageView(image: UIImage(named: "PlaceholderImage"))
+        let imageViewContainer = UIImageView(image: imageView.image)
         imageViewContainer.addSubview(Loader.loader.getBlur(for: imageViewContainer, style: .extraLight))
         imageViewContainer.translatesAutoresizingMaskIntoConstraints = false
         return imageViewContainer
@@ -127,22 +157,17 @@ class FilmDescriptionController: UIViewController {
         textView.isSelectable = false
         textView.isEditable = false
         textView.textAlignment = .left
-        
-        let attributedString = NSMutableAttributedString(string: "Гениальный ученый втягивает внука в безумные авантюры. Выдающийся анимационный сериал Дэна Хармона", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .bold)])
-        attributedString.append(NSAttributedString(string: "\n\nВ центре сюжета - школьник по имени Морти и его дедушка Рик. Морти - самый обычный мальчик, который ничем не отличается от своих сверстников. А вот его дедуля занимается необычными научными исследованиями и зачастую полностью неадекватен. Он может в любое время дня и ночи схватить внука и отправиться вместе с ним в безумные приключения с помощью построенной из разного хлама летающей тарелки, которая способна перемещаться сквозь межпространственный тоннель. Каждый раз эта парочка оказывается в самых неожиданных местах и самых нелепых ситуациях.", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]))
-        
-        textView.attributedText = attributedString
         return textView
     }()
     
     //MARK: - Rating view
-    
+    private lazy var ratingLabel = getLabel(text: "Rating")
     private lazy var ratingScrollView: UIScrollView = getScrollView()
-    
     private lazy var ratingStackView: UIStackView = getStackView(arrangedSubviews: [])
     
     //MARK: - Actors view
     
+    private lazy var actorLabel = getLabel(text: "Actors")
     private lazy var actorsCollection: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout())
         collection.translatesAutoresizingMaskIntoConstraints = false
@@ -153,7 +178,7 @@ class FilmDescriptionController: UIViewController {
     }()
     
     //MARK: - Posters view
-    
+    private lazy var posterLabel = getLabel(text: "Posters")
     private lazy var posterScrollView: UIScrollView = getScrollView()
     private lazy var posterStackView: UIStackView = getStackView(arrangedSubviews: [getImage(),getImage(),getImage()])
     
@@ -164,7 +189,7 @@ class FilmDescriptionController: UIViewController {
     
     //MARK: - Related movies label
     
-    private lazy var relatedMoviesLabel: UILabel = getLabel(text: "Related movies")
+    private lazy var relatedMoviesLabel: UILabel = getLabel(text: "Similar movies")
     private lazy var relatedMoviesCounter: UILabel = getCounter(count: "89")
     
     //MARK: - Related movies view
@@ -174,15 +199,30 @@ class FilmDescriptionController: UIViewController {
     
     //MARK: - viewDidLoad
     
+    private let loader = Loader.getLoader()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        film = getFilmMocks()
-        setupScrollLayout()
-        setupScrollView(scrollView: ratingScrollView, stackView: ratingStackView)
-        setupScrollView(scrollView: posterScrollView, stackView: posterStackView)
-        setupScrollView(scrollView: relatedMoviesScroll, stackView: relatedMoviesStack)
+        
+        view.addSubview(loader)
+        configureLoader()
+        
+        NetworkService.network.getRandomFilm { film in
+            self.film = film
+        }
+        
+//        film = getFilmMocks()
+        
         actorsCollection.register(ActorCell.self, forCellWithReuseIdentifier: "Item")
         actorsCollection.dataSource = self
+    }
+    
+    private func configureLoader() {
+        loader.heightAnchor.constraint(equalToConstant: view.bounds.height).isActive = true
+        loader.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
+        loader.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loader.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+//        scrollView.isScrollEnabled = false
     }
     
     //MARK: - setupScrollLayout
@@ -193,10 +233,6 @@ class FilmDescriptionController: UIViewController {
         controllStackView.translatesAutoresizingMaskIntoConstraints = false
         controllStackView.axis = .horizontal
         controllStackView.distribution = .fillEqually
-        
-        let ratingLabel = getLabel(text: "Rating")
-        let actorLabel = getLabel(text: "Actors")
-        let imageLabel = getLabel(text: "Posters")
         
         view.addSubview(scrollView)
         view.addSubview(navigationBar)
@@ -214,7 +250,7 @@ class FilmDescriptionController: UIViewController {
         scrollView.addSubview(actorLabel)
         scrollView.addSubview(actorsCounter)
         scrollView.addSubview(actorsCollection)
-        scrollView.addSubview(imageLabel)
+        scrollView.addSubview(posterLabel)
         scrollView.addSubview(imageCounter)
         scrollView.addSubview(posterScrollView)
         scrollView.addSubview(relatedMoviesLabel)
@@ -222,6 +258,10 @@ class FilmDescriptionController: UIViewController {
         scrollView.addSubview(relatedMoviesScroll)
             
         imageViewContainer.addSubview(imageView)
+        
+        setupScrollView(scrollView: ratingScrollView, stackView: ratingStackView)
+        setupScrollView(scrollView: posterScrollView, stackView: posterStackView)
+        setupScrollView(scrollView: relatedMoviesScroll, stackView: relatedMoviesStack)
         
         NSLayoutConstraint.activate([
             navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -239,6 +279,7 @@ class FilmDescriptionController: UIViewController {
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             
             imageViewContainer.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: -60),
+            imageViewContainer.topAnchor.constraint(equalTo: scrollView.topAnchor),
             imageViewContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageViewContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             imageViewContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -264,10 +305,10 @@ class FilmDescriptionController: UIViewController {
             controllStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
             controllStackView.heightAnchor.constraint(equalToConstant: 60),
             
-            descriptionTextView.topAnchor.constraint(equalTo: controllStackView.bottomAnchor, constant: 10),
+            descriptionTextView.topAnchor.constraint(equalTo: controllStackView.bottomAnchor),
             descriptionTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             descriptionTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            descriptionTextView.heightAnchor.constraint(equalToConstant: 150),
+            descriptionTextView.heightAnchor.constraint(equalToConstant: 105),
             
             ratingLabel.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 15),
             ratingLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
@@ -291,15 +332,15 @@ class FilmDescriptionController: UIViewController {
             actorsCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             actorsCollection.heightAnchor.constraint(equalToConstant: 340),
             
-            imageLabel.topAnchor.constraint(equalTo: actorsCollection.bottomAnchor, constant: 15),
-            imageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            imageLabel.heightAnchor.constraint(equalToConstant: 40),
+            posterLabel.topAnchor.constraint(equalTo: actorsCollection.bottomAnchor, constant: 15),
+            posterLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            posterLabel.heightAnchor.constraint(equalToConstant: 40),
 
             imageCounter.topAnchor.constraint(equalTo: actorsCollection.bottomAnchor, constant: 15),
             imageCounter.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
             imageCounter.heightAnchor.constraint(equalToConstant: 40),
             
-            posterScrollView.topAnchor.constraint(equalTo: imageLabel.bottomAnchor, constant: 15),
+            posterScrollView.topAnchor.constraint(equalTo: posterLabel.bottomAnchor, constant: 15),
             posterScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             posterScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             posterScrollView.heightAnchor.constraint(equalToConstant: 150),
@@ -390,6 +431,13 @@ class FilmDescriptionController: UIViewController {
         ])
         
         return image
+    }
+    
+    private func getScrollViewHeightSize() -> CGFloat{
+         let number = imageViewContainer.frame.height + filmsParamLabel.frame.height + actorsListLabel.frame.height + 40 + descriptionTextView.frame.height + 40 + ratingScrollView.frame.height + actorsCounter.frame.height + actorsCollection.frame.height + imageCounter.frame.height + posterScrollView.frame.height + relatedMoviesLabel.frame.height + relatedMoviesScroll.frame.height
+        
+        print(number)
+        return number
     }
     
 }

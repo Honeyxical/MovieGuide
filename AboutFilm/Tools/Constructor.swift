@@ -1,6 +1,9 @@
 import UIKit
 
 func getMoviesArray(array: [SimilarMovies]) -> [UIView] {
+    if array.isEmpty {
+        return []
+    }
     var resultArray: [UIView] = []
     
     for i in 0...array.count - 1 {
@@ -12,19 +15,19 @@ func getMoviesArray(array: [SimilarMovies]) -> [UIView] {
 func getRatingArray(rating: Rating) -> [UIView] {
     var resultArray: [UIView] = []
     
-    if rating.kinopoisk != 0 {
-        resultArray.append(getRating(rating: String(rating.kinopoisk!), nameRating: "Kinopoisk"))
+    if rating.kp != nil, rating.kp != 0{
+        resultArray.append(getRating(rating: String(rating.kp!), nameRating: "Kinopoisk"))
     }
-    if rating.imdb != 0 {
+    if rating.imdb != nil, rating.imdb != 0 {
         resultArray.append(getRating(rating: String(rating.imdb!), nameRating: "IMDb"))
     }
-    if rating.filmCritics != 0 {
+    if rating.filmCritics != nil, rating.filmCritics != 0 {
         resultArray.append(getRating(rating: String(rating.filmCritics!), nameRating: "Film critics"))
     }
-    if rating.russianFilmCritics != 0 {
+    if rating.russianFilmCritics != nil, rating.russianFilmCritics != 0 {
         resultArray.append(getRating(rating: String(rating.russianFilmCritics!), nameRating: "Russian film critics"))
     }
-    if rating.await != 0 {
+    if rating.await != nil, rating.await != 0 {
         resultArray.append(getRating(rating: String(rating.await!), nameRating: "Await"))
     }
     
@@ -49,11 +52,10 @@ private func getRating(rating: String, nameRating: String) -> UIView {
     numLabel.translatesAutoresizingMaskIntoConstraints = false
     descLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    numLabel.text = rating
+    numLabel.text = String(rating.prefix(4))
     numLabel.font = .boldSystemFont(ofSize: 30)
     numLabel.textAlignment = .center
     numLabel.backgroundColor = .mainGray
-    numLabel.contentMode = .scaleAspectFit
     
     descLabel.text = nameRating
     descLabel.font = .systemFont(ofSize: 18)

@@ -25,14 +25,14 @@ struct FilmFullInfo: Decodable{
     
     let countries: [Countries]?
     
-    let persons: [Person]?
+    var persons: [Person]?
     
-    let similarMovies: [SimilarMovies]?
+    var similarMovies: [SimilarMovies]?
     
 }
 
 struct Rating: Decodable{
-    let kinopoisk: Double?
+    let kp: Double?
     let imdb: Double?
     let filmCritics: Double?
     let russianFilmCritics: Double?

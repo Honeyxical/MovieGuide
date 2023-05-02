@@ -2,9 +2,26 @@ import UIKit
 
 class FilmsCell: UITableViewCell {
     
-    @IBOutlet weak var filmImage: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var shortDescriptionLabel: UILabel!
+    var film: FilmShortInfo? {
+        didSet{
+            
+            guard let film = film else {
+                return
+            }
+            
+            DispatchQueue.main.async { [self] in
+                if film.poster?.posterData != nil {
+                    filmImage.image = UIImage(data: film.poster!.posterData!)
+                }
+                titleLabel.text! = film.name!
+                shortDescriptionLabel.text! = film.shortDescription!
+            }
+        }
+    }
+    
+    @IBOutlet weak private var filmImage: UIImageView!
+    @IBOutlet weak private var titleLabel: UILabel!
+    @IBOutlet weak private var shortDescriptionLabel: UILabel!
     
     
     override func awakeFromNib() {
@@ -12,15 +29,4 @@ class FilmsCell: UITableViewCell {
         filmImage.image = Loader().palceholderImage()
         filmImage.contentMode = .scaleAspectFill
     }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
-    func configure(image: Data, title: String, shortDescription: String){
-        filmImage.image = UIImage(data: image)
-        titleLabel.text! = title
-        shortDescriptionLabel.text! = shortDescription
-    }
-    
 }
