@@ -49,9 +49,9 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         guard let film = films[indexPath.row] else {
             return cell
         }
-        self.films[indexPath.row]?.poster?.posterData = NetworkService.network.getImage(url: film.poster?.previewUrl, completition: { data in
-            self.films[indexPath.row]?.poster?.posterData
-        })
+//        self.films[indexPath.row]?.poster?.posterData = NetworkService.network.getImage(url: film.poster?.previewUrl, completition: { data in
+//            self.films[indexPath.row]?.poster?.posterData
+//        })
         
         cell.film = film
         
