@@ -14,6 +14,14 @@ class ActorCell: UICollectionViewCell {
             attributedString.append(NSAttributedString(string: "\n" + (unwrPerson.enProfession ?? unwrPerson.profession)!, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .thin), NSAttributedString.Key.foregroundColor : UIColor.gray]))
             
             nameTextView.attributedText = attributedString
+            
+            guard let photoData = unwrPerson.photoData else {
+                return
+            }
+            DispatchQueue.main.async {
+                self.photoImageView.image = UIImage(data: photoData)
+
+            }
         }
     }
     
@@ -35,7 +43,7 @@ class ActorCell: UICollectionViewCell {
             NSAttributedString.Key.foregroundColor : UIColor.gray]))
         
         textView.attributedText = attributedString
-        textView.textContainer.maximumNumberOfLines = 2
+        textView.textContainer.maximumNumberOfLines = 3
         textView.isEditable = false
         textView.isSelectable = false
         textView.isScrollEnabled = false

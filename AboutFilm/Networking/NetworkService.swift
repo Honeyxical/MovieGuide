@@ -5,6 +5,23 @@ class NetworkService{
     
     private let API_KEY = "TN3T3HK-GGE44PM-KAMXMJW-HRQ4X7Q"
     
+    func getFilmById(id: Int, completiton: @escaping (FilmFullInfo) -> Void) {
+        URLSession.shared.dataTask(with: getRequestForFilmById(id: id)) { data, response, error in
+            guard let data = data, error == nil else {
+                print("\n\n Error to get film by Id")
+                fatalError()
+            }
+            
+            do{
+                let film = try JSONDecoder().decode(FilmFullInfo.self, from: data)
+                completiton(film)
+            } catch {
+                print(error)
+            }
+            
+        }.resume()
+    }
+    
     func getFilmList(completition: @escaping ([FilmShortInfo]) -> Void){
         URLSession.shared.dataTask(with: getRequestForFilmList(limit: 10)) {data, response, error in
             guard let data = data, error == nil else {
@@ -13,7 +30,7 @@ class NetworkService{
             
             do{
                 var films = try JSONDecoder().decode(FilmList.self, from: data)
-                films.docs = self.insertPosters(docs: films.docs!)
+//                films.docs = self.insertPosters(docs: films.docs!)
                 completition(films.docs!)
             } catch {
                 print(error)
@@ -33,8 +50,8 @@ class NetworkService{
                 getImage(url: film.poster!.url!) { data in
                     film.poster!.posterData = data
                 }
-                film.similarMovies = insertPosterForSimilarMovies(array: film.similarMovies!)
-                film.persons = insertPersonsImage(array: film.persons!)
+//                film.similarMovies = insertPosterForSimilarMovies(array: film.similarMovies!)
+//                film.persons = insertPersonsImage(array: film.persons!)
                 completition(film)
             } catch {
                 print(error)
@@ -70,6 +87,14 @@ class NetworkService{
     }
     
     //MARK: - Private func
+    
+    private func getRequestForFilmById(id: Int) -> URLRequest{
+        var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1.3/movie/\(id)")!)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "accept")
+        request.addValue(API_KEY, forHTTPHeaderField: "X-API-KEY")
+        return request
+    }
     
     private func getRequestForRandomFilm() -> URLRequest{
         var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1/movie/random")!)

@@ -123,5 +123,5 @@ func getFilmMocks() -> FilmFullInfo{
                                           type: "animated-series",
                                           poster: Poster(url: "https://avatars.mds.yandex.net/get-kinopoisk-image/1704946/8997def3-7896-48c4-85db-b600eca3f983/orig",
                                                          previewUrl: "https://avatars.mds.yandex.net/get-kinopoisk-image/1704946/8997def3-7896-48c4-85db-b600eca3f983/x1000"))
-                        ])
+                        ], statusCode: 200, message: "", error: "")
 }

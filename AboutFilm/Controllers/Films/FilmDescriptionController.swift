@@ -2,21 +2,25 @@ import UIKit
 
 class FilmDescriptionController: UIViewController {
     
+    var filmId: Int = 0
+    var backButtonIsHidden = true
+    var updateButtonIsHidden = false
+    
     var film: FilmFullInfo? {
         didSet{
             guard var film = film else {
                 return
             }
             DispatchQueue.main.async { [self] in
+                updatebutton.isEnabled = true
+                self.loader.removeFromSuperview()
                 
                 if let url = film.poster?.url {
                     NetworkService.network.getImage(url: url) { [self] data in
                         film.poster?.posterData = data
                         DispatchQueue.main.async { [self] in
-                            imageView.image = UIImage(data: film.poster!.posterData!)
-                            imageViewContainer = UIImageView(image: UIImage(data: film.poster!.posterData!))
-                            loader.removeFromSuperview()
-                            
+                            imageView.image = UIImage(data: data)
+                            imageViewContainer = UIImageView(image: imageView.image)
                         }
                     }
                 }
@@ -32,7 +36,7 @@ class FilmDescriptionController: UIViewController {
                 
                 if film.rating!.await != 0 || film.rating!.filmCritics != 0 || film.rating!.imdb != 0 || film.rating!.kp != 0 || film.rating!.russianFilmCritics != 0 {
                     ratingStackView = getStackView(arrangedSubviews: getRatingArray(rating: film.rating!))
-
+                    
                 } else {
                     ratingScrollView.heightAnchor.constraint(equalToConstant: 0).isActive = true
                     ratingLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
@@ -59,7 +63,7 @@ class FilmDescriptionController: UIViewController {
                     actorsListLabel.attributedText = rolesAttributedString
                     
                     actorsCounter.text = String(film.persons!.count)
-
+                    
                 }
                 
                 if film.similarMovies!.isEmpty {
@@ -79,16 +83,55 @@ class FilmDescriptionController: UIViewController {
     private let navigationBar: UIView = {
         let navBar = UIView()
         navBar.translatesAutoresizingMaskIntoConstraints = false
+        navBar.layer.borderWidth = 0.5
         return navBar
     }()
     
-    private lazy var navBarTitle: UILabel = {
+    private let navBarTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "FilmTitle"
         label.textAlignment = .center
         return label
     }()
+    
+    //MARK: - backButton
+    
+    private lazy var backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        button.tintColor = .darkGray
+        button.addTarget(self, action: #selector(backButtonHandler), for: .touchUpInside)
+        button.isHidden = backButtonIsHidden
+        return button
+    }()
+    
+    @objc private func backButtonHandler() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    //MARK: - updateButton
+    
+    private lazy var updatebutton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+        button.tintColor = .darkGray
+        button.addTarget(self, action: #selector(updatebuttonHandler), for: .touchUpInside)
+        button.isHidden = updateButtonIsHidden
+        return button
+    }()
+    
+    @objc private func updatebuttonHandler() {
+        updatebutton.isEnabled = false
+        view.addSubview(loader)
+        NetworkService.network.getRandomFilm { film in
+            self.film = film
+        }
+    }
+    
+    //MARK: - scrollView
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -98,12 +141,16 @@ class FilmDescriptionController: UIViewController {
         return scrollView
     }()
     
+    //MARK: - imageViewContainer
+    
     private lazy var imageViewContainer: UIView = {
         let imageViewContainer = UIImageView(image: imageView.image)
         imageViewContainer.addSubview(Loader.loader.getBlur(for: imageViewContainer, style: .extraLight))
         imageViewContainer.translatesAutoresizingMaskIntoConstraints = false
         return imageViewContainer
     }()
+    
+    //MARK: - imageView
     
     private let imageView: UIImageView = {
         let image = UIImageView(image: UIImage(named: "PlaceholderImage"))
@@ -213,15 +260,19 @@ class FilmDescriptionController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.addSubview(loader)
         configureLoader()
+        updatebutton.isEnabled = false
         
-        NetworkService.network.getRandomFilm { film in
-            self.film = film
+        if filmId > 0 {
+            NetworkService.network.getFilmById(id: filmId) { film in
+                self.film = film
+            }
+        } else {
+            NetworkService.network.getRandomFilm { film in
+                self.film = film
+            }
         }
-        
-//        film = getFilmMocks()
         
         actorsCollection.register(ActorCell.self, forCellWithReuseIdentifier: "Item")
         actorsCollection.dataSource = self
@@ -232,13 +283,11 @@ class FilmDescriptionController: UIViewController {
         loader.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
         loader.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         loader.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-//        scrollView.isScrollEnabled = false
     }
     
     //MARK: - setupScrollLayout
     
     private func setupScrollLayout() {
-        
         let controllStackView = UIStackView(arrangedSubviews: [buttonLike, buttonBookMark, buttonShare])
         controllStackView.translatesAutoresizingMaskIntoConstraints = false
         controllStackView.axis = .horizontal
@@ -248,6 +297,7 @@ class FilmDescriptionController: UIViewController {
         view.addSubview(navigationBar)
         
         navigationBar.addSubview(navBarTitle)
+        navigationBar.addSubview(backButton)
         
         
         scrollView.addSubview(imageViewContainer)
@@ -266,7 +316,7 @@ class FilmDescriptionController: UIViewController {
         scrollView.addSubview(relatedMoviesLabel)
         scrollView.addSubview(relatedMoviesCounter)
         scrollView.addSubview(relatedMoviesScroll)
-            
+        
         imageViewContainer.addSubview(imageView)
         
         setupScrollView(scrollView: ratingScrollView, stackView: ratingStackView)
@@ -274,14 +324,23 @@ class FilmDescriptionController: UIViewController {
         setupScrollView(scrollView: relatedMoviesScroll, stackView: relatedMoviesStack)
         
         NSLayoutConstraint.activate([
-            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            navigationBar.topAnchor.constraint(equalTo: view.topAnchor),
             navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            navigationBar.heightAnchor.constraint(equalToConstant: 50),
-
+            navigationBar.heightAnchor.constraint(equalToConstant: 100),
+            
+            backButton.leadingAnchor.constraint(equalTo: navigationBar.leadingAnchor, constant: 15),
+            backButton.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -10),
+            backButton.heightAnchor.constraint(equalToConstant: 30),
+            backButton.widthAnchor.constraint(equalToConstant: 30),
+            
             navBarTitle.centerXAnchor.constraint(equalTo: navigationBar.centerXAnchor),
-            navBarTitle.centerYAnchor.constraint(equalTo: navigationBar.centerYAnchor),
-//
+            navBarTitle.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -10),
+            
+            updatebutton.trailingAnchor.constraint(equalTo: navigationBar.trailingAnchor, constant: -15),
+            updatebutton.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -10),
+            updatebutton.heightAnchor.constraint(equalToConstant: 30),
+            updatebutton.widthAnchor.constraint(equalToConstant: 30),
             
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -336,7 +395,7 @@ class FilmDescriptionController: UIViewController {
             actorsCounter.topAnchor.constraint(equalTo: ratingScrollView.bottomAnchor, constant: 15),
             actorsCounter.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
             actorsCounter.heightAnchor.constraint(equalToConstant: 40),
-
+            
             actorsCollection.topAnchor.constraint(equalTo: actorLabel.bottomAnchor, constant: 15),
             actorsCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             actorsCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -345,7 +404,7 @@ class FilmDescriptionController: UIViewController {
             posterLabel.topAnchor.constraint(equalTo: actorsCollection.bottomAnchor, constant: 15),
             posterLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             posterLabel.heightAnchor.constraint(equalToConstant: 40),
-
+            
             imageCounter.topAnchor.constraint(equalTo: actorsCollection.bottomAnchor, constant: 15),
             imageCounter.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
             imageCounter.heightAnchor.constraint(equalToConstant: 40),
@@ -444,7 +503,7 @@ class FilmDescriptionController: UIViewController {
     }
     
     private func getScrollViewHeightSize() -> CGFloat{
-         let number = imageViewContainer.frame.height + filmsParamLabel.frame.height + actorsListLabel.frame.height + 40 + descriptionTextView.frame.height + 40 + ratingScrollView.frame.height + actorsCounter.frame.height + actorsCollection.frame.height + imageCounter.frame.height + posterScrollView.frame.height + relatedMoviesLabel.frame.height + relatedMoviesScroll.frame.height
+        let number = imageViewContainer.frame.height + filmsParamLabel.frame.height + actorsListLabel.frame.height + 40 + descriptionTextView.frame.height + 40 + ratingScrollView.frame.height + actorsCounter.frame.height + actorsCollection.frame.height + imageCounter.frame.height + posterScrollView.frame.height + relatedMoviesLabel.frame.height + relatedMoviesScroll.frame.height
         
         print(number)
         return number
@@ -468,7 +527,7 @@ extension FilmDescriptionController: UICollectionViewDataSource {
         guard let person = film?.persons![indexPath.item] else {
             return cell
         }
-    
+        
         cell.person = person
         return cell
     }
@@ -478,7 +537,9 @@ extension FilmDescriptionController: UICollectionViewDataSource {
         guard let count = film?.persons!.count else {
             return 0
         }
+        collectionView.reloadData()
         return count
     }
-
+    
 }
+

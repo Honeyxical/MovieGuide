@@ -28,6 +28,9 @@ struct FilmFullInfo: Decodable{
     
     var similarMovies: [SimilarMovies]?
     
+    let statusCode: Int?
+    let message: String?
+    let error: String?
 }
 
 struct Rating: Decodable{

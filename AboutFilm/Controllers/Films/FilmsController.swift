@@ -5,7 +5,7 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     var films: [FilmShortInfo?] = []{
         didSet{
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [self] in
                 self.tableView.reloadData()
                 self.loader!.removeFromSuperview()
             }
@@ -17,10 +17,9 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
             
-//        NetworkService.network.getFilmList { docs in
-//            self.films = docs
-//        }
-        films = getObject()
+        NetworkService.network.getFilmList { docs in
+            self.films = docs
+        }
         
         loader = Loader().getLoader(x: 0, y: 0, width: tableView.bounds.width, height: tableView.bounds.height + 100)
         
@@ -57,16 +56,16 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let film = films[indexPath.row] else {
+        guard let film = films[indexPath.row], let filmId = film.id else {
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
         let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FilmDescriptionController") as! FilmDescriptionController
         
-//        destination.needToGetData = false
+        destination.filmId = filmId
 //        destination.navbarTitle = film.name!
-//        destination.navbarIsHiden = false
-//        destination.updateButtonIsHiden = true
+        destination.backButtonIsHidden = false
+        destination.updateButtonIsHidden = true
         
         tableView.deselectRow(at: indexPath, animated: true)
         self.navigationController?.pushViewController(destination, animated: true)
