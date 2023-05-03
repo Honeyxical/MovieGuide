@@ -4,13 +4,22 @@ class FilmDescriptionController: UIViewController {
     
     var film: FilmFullInfo? {
         didSet{
-            guard let film = film else {
+            guard var film = film else {
                 return
             }
             DispatchQueue.main.async { [self] in
-                loader.removeFromSuperview()
                 
-//                imageView.image = UIImage(data: (film.poster?.posterData))
+                if let url = film.poster?.url {
+                    NetworkService.network.getImage(url: url) { [self] data in
+                        film.poster?.posterData = data
+                        DispatchQueue.main.async { [self] in
+                            imageView.image = UIImage(data: film.poster!.posterData!)
+                            imageViewContainer = UIImageView(image: UIImage(data: film.poster!.posterData!))
+                            loader.removeFromSuperview()
+                            
+                        }
+                    }
+                }
                 
                 filmsParamLabel.text = "\(String(film.year!)), \(genresToString(array: film.genres!, count: 3)) \n\(film.countries![0].name!), \(film.movieLength ?? 0) мин, \(film.ageRating ?? 6)+"
                 
@@ -37,6 +46,7 @@ class FilmDescriptionController: UIViewController {
                     actorsListLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
                     scrollView.contentSize.height -= 430
                 } else {
+                    
                     let rolesAttributedString = NSMutableAttributedString(string: "В ролях: \(actorsToString(array: film.persons!, count: 3))", attributes: [
                         NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13),
                         NSAttributedString.Key.foregroundColor: UIColor.systemGray])

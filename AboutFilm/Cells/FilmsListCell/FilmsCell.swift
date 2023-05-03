@@ -14,7 +14,7 @@ class FilmsCell: UITableViewCell {
                     filmImage.image = UIImage(data: film.poster!.posterData!)
                 }
                 titleLabel.text! = film.name!
-                shortDescriptionLabel.text! = film.shortDescription!
+                shortDescriptionLabel.text! = film.shortDescription ?? film.description!
             }
         }
     }

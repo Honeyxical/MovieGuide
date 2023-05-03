@@ -17,9 +17,10 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
             
-        NetworkService.network.getFilmList { docs in
-            self.films = docs
-        }
+//        NetworkService.network.getFilmList { docs in
+//            self.films = docs
+//        }
+        films = getObject()
         
         loader = Loader().getLoader(x: 0, y: 0, width: tableView.bounds.width, height: tableView.bounds.height + 100)
         
@@ -49,9 +50,6 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         guard let film = films[indexPath.row] else {
             return cell
         }
-//        self.films[indexPath.row]?.poster?.posterData = NetworkService.network.getImage(url: film.poster?.previewUrl, completition: { data in
-//            self.films[indexPath.row]?.poster?.posterData
-//        })
         
         cell.film = film
         

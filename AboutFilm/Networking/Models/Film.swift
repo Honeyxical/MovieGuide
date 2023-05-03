@@ -19,7 +19,6 @@ struct FilmFullInfo: Decodable{
     let rating: Rating?
     
     var poster: Poster?
-    var posterData: Data?
     
     let genres: [Generes]?
     
@@ -51,11 +50,6 @@ struct Poster: Decodable{
     var posterData: Data?
 }
 
-struct Backdrop: Decodable{
-    let url: String?
-    let previewUrl: String?
-}
-
 struct Person: Decodable{
     let id: Int?
     let photo: String?
@@ -72,8 +66,7 @@ struct SimilarMovies: Decodable{
     let enName: String?
     let alternativeName: String?
     let type: String?
-    let poster: Poster?
-    var posterData: Data?
+    var poster: Poster?
 }
 
 struct Generes: Decodable{

@@ -13,7 +13,7 @@ class NetworkService{
             
             do{
                 var films = try JSONDecoder().decode(FilmList.self, from: data)
-//                films.docs = self.insertPosters(docs: films.docs!)
+                films.docs = self.insertPosters(docs: films.docs!)
                 completition(films.docs!)
             } catch {
                 print(error)
@@ -131,7 +131,7 @@ class NetworkService{
         
         for i in 0...array.count - 1 {
             getImage(url: array[i].poster!.previewUrl ?? array[i].poster!.url!) { data in
-                array[i].posterData = data
+                array[i].poster?.posterData = data
             }
         }
         return array

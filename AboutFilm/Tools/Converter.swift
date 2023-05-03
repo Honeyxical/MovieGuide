@@ -42,6 +42,9 @@ func genresToString(array: [Generes], count: Int) -> String {
 
 func actorsToString(array: [Person], count: Int) -> String {
     var result = ""
+    
+    let count = count > array.count ? array.count : count
+    
     for i in 0...count {
         if i == count{
             result.append(array[i].enName ?? array[i].name!)
