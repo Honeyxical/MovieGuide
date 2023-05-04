@@ -160,7 +160,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "45"
             endingLineNumber = "45"
-            landmarkName = "searchFilm(name:completition:)"
+            landmarkName = "getRandomFilm(completition:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -176,7 +176,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "90"
             endingLineNumber = "90"
-            landmarkName = "getRequestForSearchFilm(name:)"
+            landmarkName = "getRequestForFilmById(id:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -240,7 +240,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "99"
             endingLineNumber = "99"
-            landmarkName = "insertPosters(docs:)"
+            landmarkName = "getRequestForRandomFilm()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

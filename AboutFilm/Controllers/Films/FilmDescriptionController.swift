@@ -13,6 +13,7 @@ class FilmDescriptionController: UIViewController {
             }
             DispatchQueue.main.async { [self] in
                 updatebutton.isEnabled = true
+                scrollView.isScrollEnabled = true
                 self.loader.removeFromSuperview()
                 
                 if let url = film.poster?.url {
@@ -20,9 +21,15 @@ class FilmDescriptionController: UIViewController {
                         film.poster?.posterData = data
                         DispatchQueue.main.async { [self] in
                             imageView.image = UIImage(data: data)
-                            imageViewContainer = UIImageView(image: imageView.image)
                         }
                     }
+                }
+                
+                if film.name != "" && film.name != nil{
+                    filmTitleLabel.text = film.enName ?? film.name!
+                } else {
+                    filmTitleLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                    scrollView.contentSize.height -= 60
                 }
                 
                 filmsParamLabel.text = "\(String(film.year!)), \(genresToString(array: film.genres!, count: 3)) \n\(film.countries![0].name!), \(film.movieLength ?? 0) мин, \(film.ageRating ?? 6)+"
@@ -83,14 +90,12 @@ class FilmDescriptionController: UIViewController {
     private let navigationBar: UIView = {
         let navBar = UIView()
         navBar.translatesAutoresizingMaskIntoConstraints = false
-        navBar.layer.borderWidth = 0.5
         return navBar
     }()
     
     private let navBarTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "FilmTitle"
         label.textAlignment = .center
         return label
     }()
@@ -125,6 +130,8 @@ class FilmDescriptionController: UIViewController {
     
     @objc private func updatebuttonHandler() {
         updatebutton.isEnabled = false
+        ratingStackView.removeFromSuperview()
+        scrollView.removeFromSuperview()
         view.addSubview(loader)
         NetworkService.network.getRandomFilm { film in
             self.film = film
@@ -137,7 +144,7 @@ class FilmDescriptionController: UIViewController {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
-        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 950)
+        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 1010)
         return scrollView
     }()
     
@@ -145,6 +152,7 @@ class FilmDescriptionController: UIViewController {
     
     private lazy var imageViewContainer: UIView = {
         let imageViewContainer = UIImageView(image: imageView.image)
+        imageViewContainer.contentMode = .scaleAspectFill
         imageViewContainer.addSubview(Loader.loader.getBlur(for: imageViewContainer, style: .extraLight))
         imageViewContainer.translatesAutoresizingMaskIntoConstraints = false
         return imageViewContainer
@@ -157,6 +165,17 @@ class FilmDescriptionController: UIViewController {
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleToFill
         return image
+    }()
+    
+    //MARK: - filmTitleLabel
+    
+    private let filmTitleLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 2
+        label.font = .labelFont
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     //MARK: - filmsParamLabel
@@ -298,9 +317,11 @@ class FilmDescriptionController: UIViewController {
         
         navigationBar.addSubview(navBarTitle)
         navigationBar.addSubview(backButton)
+        navigationBar.addSubview(updatebutton)
         
         
         scrollView.addSubview(imageViewContainer)
+        scrollView.addSubview(filmTitleLabel)
         scrollView.addSubview(filmsParamLabel)
         scrollView.addSubview(actorsListLabel)
         scrollView.addSubview(descriptionTextView)
@@ -348,10 +369,10 @@ class FilmDescriptionController: UIViewController {
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             
             imageViewContainer.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: -60),
-            imageViewContainer.topAnchor.constraint(equalTo: scrollView.topAnchor),
             imageViewContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageViewContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             imageViewContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            imageViewContainer.widthAnchor.constraint(equalToConstant: view.bounds.width),
             imageViewContainer.heightAnchor.constraint(equalToConstant: 770),
             
             imageView.centerXAnchor.constraint(equalTo: imageViewContainer.centerXAnchor),
@@ -359,7 +380,12 @@ class FilmDescriptionController: UIViewController {
             imageView.heightAnchor.constraint(equalToConstant: 470),
             imageView.widthAnchor.constraint(equalToConstant: 300),
             
-            filmsParamLabel.topAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: 15),
+            filmTitleLabel.topAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: 15),
+            filmTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            filmTitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
+            filmTitleLabel.heightAnchor.constraint(equalToConstant: 60),
+            
+            filmsParamLabel.topAnchor.constraint(equalTo: filmTitleLabel.bottomAnchor, constant: 5),
             filmsParamLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             filmsParamLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
             filmsParamLabel.heightAnchor.constraint(equalToConstant: 50),

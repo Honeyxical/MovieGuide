@@ -29,7 +29,7 @@ class NetworkService{
             }
             
             do{
-                var films = try JSONDecoder().decode(FilmList.self, from: data)
+                let films = try JSONDecoder().decode(FilmList.self, from: data)
 //                films.docs = self.insertPosters(docs: films.docs!)
                 completition(films.docs!)
             } catch {
@@ -42,8 +42,7 @@ class NetworkService{
         URLSession.shared.dataTask(with: getRequestForRandomFilm()) { [self] data, response, error in
             guard let data = data, error == nil else {
                 print(response)
-                fatalError()
-            }
+                return            }
             
             do{
                 var film = try JSONDecoder().decode(FilmFullInfo.self, from: data)

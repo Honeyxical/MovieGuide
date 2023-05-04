@@ -19,6 +19,8 @@ struct Loader{
         let activityIndicator = UIActivityIndicatorView(style: .medium)
         
         loader.translatesAutoresizingMaskIntoConstraints = false
+        loader.backgroundColor = .white
+        
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         
         loader.addSubview(activityIndicator)
