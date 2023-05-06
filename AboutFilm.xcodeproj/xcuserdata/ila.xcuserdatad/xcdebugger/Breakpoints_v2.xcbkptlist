@@ -174,8 +174,8 @@
             filePath = "AboutFilm/Networking/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "getRequestForFilmById(id:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -190,10 +190,10 @@
             filePath = "AboutFilm/Controllers/Films/FilmDescriptionController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
-            landmarkName = "getLabel(x:y:width:height:text:isBold:)"
-            landmarkType = "7">
+            startingLineNumber = "116"
+            endingLineNumber = "116"
+            landmarkName = "updatebutton"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -206,24 +206,24 @@
             filePath = "AboutFilm/Controllers/Films/FilmDescriptionController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "FilmDescriptionController"
-            landmarkType = "3">
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "film"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "C08AD25A-EBE3-4F90-95AB-20366C3757F5"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AboutFilm/Controllers/Films/FilmsController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -238,9 +238,120 @@
             filePath = "AboutFilm/Networking/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "getRequestForRandomFilm()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "74E957BD-A0A8-4C84-B0E3-3FDDECE3B68E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AboutFilm/Controllers/Films/FilmDescriptionController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "292"
+            endingLineNumber = "292"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "03C53AE6-3E4C-4C83-8AC0-45CDE433BD83"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AboutFilm/Controllers/Films/FilmDescriptionController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "521"
+            endingLineNumber = "521"
+            landmarkName = "getMovie(filmTitle:filmType:posterData:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "67562C83-6BD8-4712-AA31-AE4D55B54D7C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AboutFilm/Controllers/Films/FilmDescriptionController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "film"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "67562C83-6BD8-4712-AA31-AE4D55B54D7C - 9080595253261c36"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AboutFilm.FilmDescriptionController.film.didset : Swift.Optional&lt;AboutFilm.FilmFullInfo&gt;"
+                  moduleName = "AboutFilm"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ila/Documents/Swift%20Projects/AboutFilm/AboutFilm/Controllers/Films/FilmDescriptionController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "3116">
+               </Location>
+               <Location
+                  uuid = "67562C83-6BD8-4712-AA31-AE4D55B54D7C - 9080595253261c36"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AboutFilm.FilmDescriptionController.film.didset : Swift.Optional&lt;AboutFilm.FilmFullInfo&gt;"
+                  moduleName = "AboutFilm"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ila/Documents/Swift%20Projects/AboutFilm/AboutFilm/Controllers/Films/FilmDescriptionController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "3152">
+               </Location>
+               <Location
+                  uuid = "67562C83-6BD8-4712-AA31-AE4D55B54D7C - f78ef1d83d165c0a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;Foundation.Data&gt;) -&gt; () in AboutFilm.FilmDescriptionController.film.didset : Swift.Optional&lt;AboutFilm.FilmFullInfo&gt;"
+                  moduleName = "AboutFilm"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ila/Documents/Swift%20Projects/AboutFilm/AboutFilm/Controllers/Films/FilmDescriptionController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "60">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CE304570-A79C-4F5F-9CEA-BECF58CCD952"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AboutFilm/Networking/NetworkService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "getFilmPosters(id:completition:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

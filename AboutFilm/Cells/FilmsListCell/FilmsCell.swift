@@ -8,11 +8,8 @@ class FilmsCell: UITableViewCell {
             guard let film = film else {
                 return
             }
-            
             DispatchQueue.main.async { [self] in
-                if film.poster?.posterData != nil {
-                    filmImage.image = UIImage(data: film.poster!.posterData!)
-                }
+                setPoster()
                 titleLabel.text! = film.name!
                 shortDescriptionLabel.text! = film.shortDescription ?? film.description!
             }
@@ -28,5 +25,19 @@ class FilmsCell: UITableViewCell {
         super.awakeFromNib()
         filmImage.image = Loader().palceholderImage()
         filmImage.contentMode = .scaleAspectFill
+    }
+}
+
+extension FilmsCell {
+    private func setPoster() {
+        guard let posterUrl = film?.poster?.previewUrl ?? film?.poster?.url! else { return }
+        
+        URLSession.shared.dataTask(with: URLRequest(url: URL(string: posterUrl)!)) { data, response, error in
+            guard let data = data, error == nil else { return }
+            
+            DispatchQueue.main.async { [self] in
+                filmImage.image = UIImage(data: data)
+            }
+        }.resume()
     }
 }

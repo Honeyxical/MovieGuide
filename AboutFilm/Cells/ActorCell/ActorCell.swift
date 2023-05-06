@@ -14,14 +14,7 @@ class ActorCell: UICollectionViewCell {
             attributedString.append(NSAttributedString(string: "\n" + (unwrPerson.enProfession ?? unwrPerson.profession)!, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .thin), NSAttributedString.Key.foregroundColor : UIColor.gray]))
             
             nameTextView.attributedText = attributedString
-            
-            guard let photoData = unwrPerson.photoData else {
-                return
-            }
-            DispatchQueue.main.async {
-                self.photoImageView.image = UIImage(data: photoData)
-
-            }
+            getImage()
         }
     }
     
@@ -65,7 +58,7 @@ class ActorCell: UICollectionViewCell {
             photoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
             photoImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             photoImageView.widthAnchor.constraint(equalToConstant: 60),
-
+            
             nameTextView.centerYAnchor.constraint(equalTo: centerYAnchor),
             nameTextView.leadingAnchor.constraint(equalTo: photoImageView.trailingAnchor, constant: 10),
             nameTextView.trailingAnchor.constraint(equalTo: trailingAnchor)
@@ -76,3 +69,20 @@ class ActorCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension ActorCell {
+    func getImage(){
+        guard let photoUrl = person?.photo else { return }
+        URLSession.shared.dataTask(with: URLRequest(url: URL(string: photoUrl)!)) { data, response, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            let image = UIImage(data: data)
+            
+            DispatchQueue.main.async { [self] in
+                photoImageView.image = image
+            }
+        }.resume()
+    }
+}
+

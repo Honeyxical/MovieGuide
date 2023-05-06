@@ -49,8 +49,6 @@ class NetworkService{
                 getImage(url: film.poster!.url!) { data in
                     film.poster!.posterData = data
                 }
-//                film.similarMovies = insertPosterForSimilarMovies(array: film.similarMovies!)
-//                film.persons = insertPersonsImage(array: film.persons!)
                 completition(film)
             } catch {
                 print(error)
@@ -74,6 +72,22 @@ class NetworkService{
         }.resume()
     }
     
+    func getFilmPosters(id: Int, completition: @escaping ([Data]) -> Void) {
+        URLSession.shared.dataTask(with: getRequestForFilmPosters(id: id, limit: 15)) { [self] data, response, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            
+            do{
+                let posters = try JSONDecoder().decode(FilmPosters.self, from: data)
+                print(posters)
+                completition(getPosters(array: posters.docs!))
+            } catch {
+                print(error)
+            }
+        }.resume()
+    }
+    
     func getImage(url: String, completition: @escaping (Data) -> Void) {
         URLSession.shared.dataTask(with: URL(string: url)!) {data, response, error in
             guard let data = data, error == nil  else {
@@ -86,6 +100,14 @@ class NetworkService{
     }
     
     //MARK: - Private func
+    
+    private func getRequestForFilmPosters(id: Int, limit: Int) -> URLRequest {
+        var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1/image?page=1&limit=\(limit)&movieId=\(id)&type=screenshot")!)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "accept")
+        request.addValue(API_KEY, forHTTPHeaderField: "X-API-KEY")
+        return request
+    }
     
     private func getRequestForFilmById(id: Int) -> URLRequest{
         var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1.3/movie/\(id)")!)
@@ -177,5 +199,16 @@ class NetworkService{
         }
         
         return array
+    }
+    
+    private func getPosters(array: [PostersURL]) -> [Data] {
+        var resultArray: [Data] = []
+        for elem in array {
+            getImage(url: elem.previewUrl ?? elem.url!) { data in
+                resultArray.append(data)
+            }
+        }
+        print("return array images")
+        return resultArray
     }
 }

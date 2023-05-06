@@ -29,12 +29,11 @@ struct SearchFilmInfo: Decodable {
     var posterData: Data?
 }
 
-struct FilmImages: Decodable {
-    var docs: [PostersImage]?
+struct FilmPosters: Decodable {
+    var docs: [PostersURL]?
 }
 
-struct PostersImage: Decodable {
+struct PostersURL: Decodable {
     let url: String?
     let previewUrl: String?
-    var imageData: Data?
 }

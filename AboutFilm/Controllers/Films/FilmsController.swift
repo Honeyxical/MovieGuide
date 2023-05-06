@@ -25,6 +25,8 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         view.addSubview(loader!)
         
+        URLCache.shared = URLCache(memoryCapacity: 500 * 1024 * 1024, diskCapacity: 500 * 1024 * 1024)
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "FilmsCell", bundle: nil), forCellReuseIdentifier: "FilmsCell")
