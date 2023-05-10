@@ -2,7 +2,12 @@ import UIKit
 
 class SearchResultCell: UITableViewCell {
     
-    var film: SearchFilmInfo? = nil
+    var film: SearchFilmInfo? {
+        didSet {
+            setPoster()
+            
+        }
+    }
 
     @IBOutlet weak private var posterImageView: UIImageView!
     
@@ -28,9 +33,6 @@ class SearchResultCell: UITableViewCell {
         guard let film = film else {
             return
         }
-        if film.posterData != nil{
-            posterImageView.image = UIImage(data: film.posterData!)
-        }
         filmNameLabel.text = film.name!
         secondNameYearLabel.text = film.alternativeName! == "" ? String(film.year!) : "\(film.alternativeName!), \(String(film.year!))"
         countryGenresLabel.text = arrayToString(array: film.countries!) + " • " + arrayToString(array: film.genres!)
@@ -54,7 +56,21 @@ class SearchResultCell: UITableViewCell {
     }
     
     private func configureImageView(){
-        posterImageView.image = Loader.loader.palceholderImage()
+        posterImageView.image = UIImage(named: "PlaceholderImage")
         posterImageView.contentMode = .scaleAspectFill
+    }
+}
+
+extension SearchResultCell {
+    private func setPoster() {
+        guard let posterUrl = film?.poster else { return }
+        
+        URLSession.shared.dataTask(with: URLRequest(url: URL(string: posterUrl)!)) { data, response, error in
+            guard let data = data, error == nil else { return }
+            
+            DispatchQueue.main.async { [self] in
+                posterImageView.image = UIImage(data: data)
+            }
+        }.resume()
     }
 }

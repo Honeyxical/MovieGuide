@@ -4,6 +4,7 @@ class NetworkService{
     static let network = NetworkService()
     
     private let API_KEY = "TN3T3HK-GGE44PM-KAMXMJW-HRQ4X7Q"
+    private let RESERVE_API_KEY = "T7P5MRK-8ZG4FAC-N3ZRJWE-6VT9V3N"
     
     func getFilmById(id: Int, completiton: @escaping (FilmFullInfo) -> Void) {
         URLSession.shared.dataTask(with: getRequestForFilmById(id: id)) { data, response, error in
@@ -41,7 +42,6 @@ class NetworkService{
     func getRandomFilm(completition: @escaping (FilmFullInfo) -> Void){
         URLSession.shared.dataTask(with: getRequestForRandomFilm()) { [self] data, response, error in
             guard let data = data, error == nil else {
-                print(response)
                 return            }
             
             do{
@@ -72,23 +72,22 @@ class NetworkService{
         }.resume()
     }
     
-    func getFilmPosters(id: Int, completition: @escaping ([Data]) -> Void) {
-        URLSession.shared.dataTask(with: getRequestForFilmPosters(id: id, limit: 15)) { [self] data, response, error in
+    func getFilmPostersURL(id: Int, completition: @escaping ([PostersURL]) -> Void) {
+        URLSession.shared.dataTask(with: getRequestForFilmPosters(id: id, limit: 15)) { data, response, error in
             guard let data = data, error == nil else {
                 return
             }
             
             do{
                 let posters = try JSONDecoder().decode(FilmPosters.self, from: data)
-                print(posters)
-                completition(getPosters(array: posters.docs!))
+                completition(posters.docs!)
             } catch {
                 print(error)
             }
         }.resume()
     }
     
-    func getImage(url: String, completition: @escaping (Data) -> Void) {
+   private func getImage(url: String, completition: @escaping (Data) -> Void) {
         URLSession.shared.dataTask(with: URL(string: url)!) {data, response, error in
             guard let data = data, error == nil  else {
                 print("\n\nError download image\n")
@@ -105,7 +104,7 @@ class NetworkService{
         var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1/image?page=1&limit=\(limit)&movieId=\(id)&type=screenshot")!)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "accept")
-        request.addValue(API_KEY, forHTTPHeaderField: "X-API-KEY")
+        request.addValue(RESERVE_API_KEY, forHTTPHeaderField: "X-API-KEY")
         return request
     }
     
@@ -113,7 +112,7 @@ class NetworkService{
         var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1.3/movie/\(id)")!)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "accept")
-        request.addValue(API_KEY, forHTTPHeaderField: "X-API-KEY")
+        request.addValue(RESERVE_API_KEY, forHTTPHeaderField: "X-API-KEY")
         return request
     }
     
@@ -121,7 +120,7 @@ class NetworkService{
         var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1/movie/random")!)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "accept")
-        request.addValue(API_KEY, forHTTPHeaderField: "X-API-KEY")
+        request.addValue(RESERVE_API_KEY, forHTTPHeaderField: "X-API-KEY")
         return request
     }
     
@@ -130,7 +129,7 @@ class NetworkService{
         var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1/movie?selectFields=id&selectFields=enName&selectFields=poster.url&selectFields=shortDescription&selectFields=description&selectFields=type&selectFields=year&selectFields=rating.imdb&selectFields=movieLength&selectFields=genres.name&selectFields=name&page=\(String(randomPage))&limit=" + String(limit))!)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "accept")
-        request.addValue(API_KEY, forHTTPHeaderField: "X-API-KEY")
+        request.addValue(RESERVE_API_KEY, forHTTPHeaderField: "X-API-KEY")
         return request
     }
     
@@ -139,7 +138,7 @@ class NetworkService{
         var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1.2/movie/search?page=1&limit=10&query=\(name!)")!)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "accept")
-        request.addValue(API_KEY, forHTTPHeaderField: "X-API-KEY")
+        request.addValue(RESERVE_API_KEY, forHTTPHeaderField: "X-API-KEY")
         return request
     }
     
@@ -201,7 +200,7 @@ class NetworkService{
         return array
     }
     
-    private func getPosters(array: [PostersURL]) -> [Data] {
+    func getPosters(array: [PostersURL]) -> [Data] {
         var resultArray: [Data] = []
         for elem in array {
             getImage(url: elem.previewUrl ?? elem.url!) { data in

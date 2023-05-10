@@ -1,29 +1,34 @@
-//
-//  LoginController.swift
-//  AboutFilm
-//
-//  Created by илья on 04.04.23.
-//
-
 import UIKit
 
 class LoginController: UIViewController {
-    @IBOutlet weak var loginTF: UITextField!
-    @IBOutlet weak var passwordTF: UITextField!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
+    private let loginTF: UITextField = {
+        let tf = UITextField()
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.placeholder = "Login"
+        tf.borderStyle = .roundedRect
+        tf.autocorrectionType = .no
+        return tf
+    }()
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
-
+    private let passwordTF: UITextField = {
+        let tf = UITextField()
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.placeholder = "Password"
+        tf.borderStyle = .roundedRect
+        tf.isSecureTextEntry = true
+        return tf
+    }()
     
-    @IBAction func loginButton(_ sender: UIButton) {
-        
+    private let loginButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setTitle("Login", for: .normal)
+        btn.addTarget(self, action: #selector(login), for: .touchUpInside)
+        return btn
+    }()
+    
+    @objc private func login() {
         if loginTF.text! == "" || passwordTF.text! == ""{
             self.present(getAllert(message: "Field login or password are empty"), animated: true)
             return
@@ -33,9 +38,34 @@ class LoginController: UIViewController {
             return
         }
         
-        let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
-        self.navigationController?.pushViewController(destination, animated: true)
-        
+        self.navigationController?.pushViewController(TabBarController(), animated: true)
+        self.navigationController?.navigationBar.isHidden = true
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        setupLayout()
+    }
+    
+    private func setupLayout() {
+        view.addSubview(loginTF)
+        view.addSubview(passwordTF)
+        view.addSubview(loginButton)
+        
+        NSLayoutConstraint.activate([
+            loginTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginTF.topAnchor.constraint(equalTo: view.topAnchor, constant: 385),
+            loginTF.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            loginTF.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+            
+            passwordTF.topAnchor.constraint(equalTo: loginTF.bottomAnchor, constant: 10),
+            passwordTF.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            passwordTF.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+            
+            loginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -200),
+            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginButton.widthAnchor.constraint(equalToConstant: 200)
+        ])
+    }
 }

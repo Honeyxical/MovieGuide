@@ -1,11 +1,12 @@
 import UIKit
 
-class FindFilmController: UIViewController, UITextFieldDelegate {
+class FindFilmController: UIViewController {
     let network = NetworkService()
     var findTextFiled = UITextField()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         findTextFiled = configureFindTextFiled()
         
         view.addSubview(getFindTextFieldView())
@@ -36,16 +37,16 @@ class FindFilmController: UIViewController, UITextFieldDelegate {
         return magnifyingglass
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
+}
+
+extension FindFilmController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
-        let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchResultController") as! SearchResultController
+        let destination = SearchResultController()
         
-        network.searchFilm(name: textField.text!) { data in
+        NetworkService.network.searchFilm(name: textField.text!) { data in
             destination.films = data
         }
         destination.navbarTitle += textField.text!
@@ -54,5 +55,8 @@ class FindFilmController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
 }
 

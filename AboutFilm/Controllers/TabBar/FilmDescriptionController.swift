@@ -2,20 +2,21 @@ import UIKit
 
 class FilmDescriptionController: UIViewController {
     
-    var filmId: Int = 4518766
+    var filmId: Int = 685246
     var backButtonIsHidden = true
     var updateButtonIsHidden = false
     
     var film: FilmFullInfo? {
         didSet{
-            guard var film = film, let filmId = film.id else {
+            guard let film = film, let filmId = film.id else {
                 return
             }
-            
-            setPoster()
-            print(film.similarMovies)
+            setFilmPoster()
+            setPosters(id: filmId)
             
             DispatchQueue.main.async { [self] in
+                actorsCollection.reloadData()
+
                 updatebutton.isEnabled = true
                 scrollView.isScrollEnabled = true
                 self.loader.removeFromSuperview()
@@ -36,9 +37,8 @@ class FilmDescriptionController: UIViewController {
                     descriptionTextView.text = film.description!
                 }
                 
-                if film.rating!.await != 0 || film.rating!.filmCritics != 0 || film.rating!.imdb != 0 || film.rating!.kp != 0 || film.rating!.russianFilmCritics != 0 {
+                if let _ = film.rating {
                     ratingStackView = getStackView(arrangedSubviews: getRatingArray(rating: film.rating!))
-                    
                 } else {
                     ratingScrollView.heightAnchor.constraint(equalToConstant: 0).isActive = true
                     ratingLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
@@ -68,15 +68,6 @@ class FilmDescriptionController: UIViewController {
                     
                 }
                 setSimilarMovieImage()
-                scrollView.contentSize.height += 350
-//                if film.similarMovies!.isEmpty {
-//                    relatedMoviesLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
-//                    relatedMoviesScroll.heightAnchor.constraint(equalToConstant: 0).isActive = true
-//                    relatedMoviesCounter.heightAnchor.constraint(equalToConstant: 0).isActive = true
-//                } else {
-//                    setSimilarMovieImage()
-//                    scrollView.contentSize.height += 350
-//                }
                 setupScrollLayout()
             }
         }
@@ -126,16 +117,22 @@ class FilmDescriptionController: UIViewController {
     @objc private func updatebuttonHandler() {
         updatebutton.isEnabled = false
         ratingStackView.removeFromSuperview()
-        imageViewContainer.removeFromSuperview()
-        imageView.removeFromSuperview()
+        imageViewContainer.image = UIImage(named: "PlaceholderImage")
+        imageView.image = UIImage(named: "PlaceholderImage")
         actorsCollection.removeFromSuperview()
         posterStackView.removeFromSuperview()
+        similarMoviesStack.removeFromSuperview()
+        similarMoviesStack = getStackView(arrangedSubviews: [])
+        print(similarMoviesStack)
         scrollView.removeFromSuperview()
+        scrollView.scrollToTop()
         
         view.addSubview(loader)
         NetworkService.network.getRandomFilm { film in
             self.film = film
         }
+        
+        scrollView.contentSize.height = view.frame.height + 1050
     }
     
     //MARK: - scrollView
@@ -144,7 +141,7 @@ class FilmDescriptionController: UIViewController {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
-        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 1120)
+        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 1020)
         return scrollView
     }()
     
@@ -153,7 +150,7 @@ class FilmDescriptionController: UIViewController {
     private lazy var imageViewContainer: UIImageView = {
         let imageViewContainer = UIImageView(image: UIImage(named: "PlaceholderImage"))
         imageViewContainer.contentMode = .scaleAspectFill
-        imageViewContainer.addSubview(Loader.loader.getBlur(for: imageViewContainer, style: .light))
+        imageViewContainer.addSubview(Loader.getBlur(for: imageViewContainer, style: .light))
         imageViewContainer.translatesAutoresizingMaskIntoConstraints = false
         return imageViewContainer
     }()
@@ -260,25 +257,34 @@ class FilmDescriptionController: UIViewController {
     
     //MARK: - Counters
     
-    private lazy var actorsCounter = getCounter(count: "0")
-    private lazy var posterCounter = getCounter(count: "0")
+    private lazy var actorsCounter = getCounter(count: "")
+    private lazy var posterCounter = getCounter(count: "")
     
-    //MARK: - Related movies label
+    //MARK: - Similar movies label
     
     private lazy var similarMoviesLabel: UILabel = getLabel(text: "Similar movies")
-    private lazy var similarMoviesCounter: UILabel = getCounter(count: "0")
+    private lazy var similarMoviesCounter: UILabel = getCounter(count: "")
     
-    //MARK: - Related movies view
+    //MARK: - Similar movies view
     
     private lazy var similarMoviesScroll: UIScrollView = getScrollView()
-    private lazy var relatedMoviesStack: UIStackView = getStackView(arrangedSubviews: [])
+    private lazy var similarMoviesStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [])
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+        stack.spacing = 15
+        return stack
+    }()
     
     //MARK: - viewDidLoad
     
-    private let loader = Loader.getLoader()
+    private lazy var loader = Loader.getLoader()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isHidden = true
+        view.backgroundColor = .systemBackground
         view.addSubview(loader)
         configureLoader()
         updatebutton.isEnabled = false
@@ -344,7 +350,7 @@ class FilmDescriptionController: UIViewController {
         
         setupScrollView(scrollView: ratingScrollView, stackView: ratingStackView)
         setupScrollView(scrollView: posterScrollView, stackView: posterStackView)
-        setupScrollView(scrollView: similarMoviesScroll, stackView: relatedMoviesStack)
+        setupScrollView(scrollView: similarMoviesScroll, stackView: similarMoviesStack)
         
         NSLayoutConstraint.activate([
             navigationBar.topAnchor.constraint(equalTo: view.topAnchor),
@@ -485,6 +491,7 @@ class FilmDescriptionController: UIViewController {
         return stack
     }
     
+    
     //MARK: - getScrollView
     
     private func getScrollView() -> UIScrollView {
@@ -518,10 +525,11 @@ class FilmDescriptionController: UIViewController {
     
     //MARK: - getImage
     
-    private func getMovie(filmTitle: String, filmType: String, posterData: Data) -> UIView {
-        let container = UIView()
+    private func getMovie(id: Int, filmTitle: String, filmType: String, posterData: Data) -> UIButton {
+        let container = UIButton(type: .custom)
         let image = UIImageView(image: UIImage(data: posterData))
         let textView = UITextView()
+        container.titleLabel?.text = String(id)
         
         container.translatesAutoresizingMaskIntoConstraints = false
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -529,6 +537,8 @@ class FilmDescriptionController: UIViewController {
         
         container.addSubview(image)
         container.addSubview(textView)
+        
+        container.addTarget(self, action: #selector(openSimilarFilm(sender:)), for: .touchUpInside)
         
         image.contentMode = .scaleToFill
         
@@ -553,6 +563,15 @@ class FilmDescriptionController: UIViewController {
         ])
         
         return container
+    }
+    
+    @objc func openSimilarFilm(sender: UIButton) {
+        let destination = FilmDescriptionController()
+        destination.backButtonIsHidden = false
+        destination.updateButtonIsHidden = true
+        destination.filmId = Int(sender.titleLabel!.text!)!
+        
+        navigationController?.pushViewController(destination, animated: true)
     }
 }
 
@@ -589,24 +608,70 @@ extension FilmDescriptionController: UICollectionViewDataSource {
 }
 
 extension FilmDescriptionController {
-    func setPoster() {
+    
+    private func setFilmPoster() {
         guard let posterUrl = film?.poster?.url else { return }
         URLSession.shared.dataTask(with: URLRequest(url: URL(string: posterUrl)!)) { data, response, error in
             guard let data = data, error == nil else { return }
             
-            let image = UIImage(data: data)
-            
             DispatchQueue.main.async { [self] in
-                imageView.image = image
-                imageViewContainer.image = image
-//                imageViewContainer.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
-//                imageViewContainer.widthAnchor.constraint(equalToConstant: 770).isActive = true
+                imageView.image = UIImage(data: data)
+                imageViewContainer.image = UIImage(data: data)
             }
         }.resume()
     }
     
-    func setSimilarMovieImage() {
-        guard let similarMovie = film?.similarMovies else { return }
+    private func setPosters(id: Int) {
+        var postersUrl: [PostersURL]? {
+            didSet{
+                for elem in postersUrl! {
+                    guard let posterUrl = elem.previewUrl ?? elem.url else { return }
+                    
+                    URLSession.shared.dataTask(with: URLRequest(url: URL(string: posterUrl)!)) { [self] data, response, error in
+                        guard let data = data, error == nil else { return }
+                        
+                        DispatchQueue.main.async { [self] in
+                            posterStackView.addArrangedSubview(getImage(data: data))
+                        }
+                    }.resume()
+                }
+                DispatchQueue.main.async {
+                    self.posterCounter.text = String(postersUrl!.count)
+                }
+            }
+        }
+        NetworkService.network.getFilmPostersURL(id: id, completition: { data in
+            postersUrl = data
+        })
+        
+        if let _ = postersUrl {} else {
+            DispatchQueue.main.async { [self] in
+                posterLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                posterCounter.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                posterScrollView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                scrollView.contentSize.height -= 200
+            }
+        }
+    }
+    
+    private func getImage(data: Data) -> UIImageView {
+        let image = UIImageView(image: UIImage(data: data))
+        image.contentMode = .scaleToFill
+        image.translatesAutoresizingMaskIntoConstraints = false
+        
+        image.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        
+        return image
+    }
+    
+    private func setSimilarMovieImage() {
+        guard let similarMovie = film?.similarMovies, !similarMovie.isEmpty else {
+            similarMoviesLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            similarMoviesScroll.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            similarMoviesCounter.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            return
+        }
+        scrollView.contentSize.height += 350
         similarMoviesCounter.text = String(similarMovie.count)
         for elem in similarMovie {
             guard let posterURL = elem.poster?.previewUrl ?? elem.poster?.url! else { return }
@@ -614,7 +679,7 @@ extension FilmDescriptionController {
                 guard let data = data, error == nil else { return }
                 
                 DispatchQueue.main.async { [self] in
-                    relatedMoviesStack.addArrangedSubview(getMovie(filmTitle: elem.name!, filmType: elem.type!, posterData: data))
+                    similarMoviesStack.addArrangedSubview(getMovie(id: elem.id!, filmTitle: elem.name!, filmType: elem.type!, posterData: data))
                 }
             }.resume()
         }

@@ -23,7 +23,7 @@ class FilmsCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        filmImage.image = Loader().palceholderImage()
+        filmImage.image = UIImage(named: "PlaceholderImage")
         filmImage.contentMode = .scaleAspectFill
     }
 }

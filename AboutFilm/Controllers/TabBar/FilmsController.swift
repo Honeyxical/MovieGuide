@@ -1,35 +1,55 @@
 import UIKit
 
 class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var loader: UIView? = nil
-    
     var films: [FilmShortInfo?] = []{
         didSet{
             DispatchQueue.main.async { [self] in
                 self.tableView.reloadData()
-                self.loader!.removeFromSuperview()
+                self.loader.removeFromSuperview()
+                setupLayout()
             }
         }
     }
     
-    @IBOutlet weak var tableView: UITableView!
+    private let tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .none
+        tableView.register(UINib(nibName: "FilmsCell", bundle: nil), forCellReuseIdentifier: "FilmsCell")
+        return tableView
+    }()
+    
+    private lazy var loader = Loader.getLoader()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            
+        view.backgroundColor = .systemBackground
+        view.addSubview(loader)
+        configureLoader()
+        
         NetworkService.network.getFilmList { docs in
             self.films = docs
         }
-        
-        loader = Loader().getLoader(x: 0, y: 0, width: tableView.bounds.width, height: tableView.bounds.height + 100)
-        
-        view.addSubview(loader!)
         
         URLCache.shared = URLCache(memoryCapacity: 500 * 1024 * 1024, diskCapacity: 500 * 1024 * 1024)
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "FilmsCell", bundle: nil), forCellReuseIdentifier: "FilmsCell")
+    }
+    
+    private func configureLoader() {
+        loader.heightAnchor.constraint(equalToConstant: view.bounds.height).isActive = true
+        loader.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
+        loader.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loader.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+    
+    private func setupLayout() {
+        view.addSubview(tableView)
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,10 +82,9 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        let destination = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FilmDescriptionController") as! FilmDescriptionController
+        let destination = FilmDescriptionController()
         
         destination.filmId = filmId
-//        destination.navbarTitle = film.name!
         destination.backButtonIsHidden = false
         destination.updateButtonIsHidden = true
         
