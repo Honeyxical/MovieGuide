@@ -1,6 +1,6 @@
 import UIKit
 
-class FilmDescriptionController: UIViewController {
+class FilmController: UIViewController {
     
     var filmId: Int = 685246
     var backButtonIsHidden = true
@@ -567,7 +567,7 @@ class FilmDescriptionController: UIViewController {
     }
     
     @objc func openSimilarFilm(sender: UIButton) {
-        let destination = FilmDescriptionController()
+        let destination = FilmController()
         destination.backButtonIsHidden = false
         destination.updateButtonIsHidden = true
         destination.filmId = Int(sender.titleLabel!.text!)!
@@ -576,7 +576,7 @@ class FilmDescriptionController: UIViewController {
     }
 }
 
-extension FilmDescriptionController: UICollectionViewDataSource {
+extension FilmController: UICollectionViewDataSource {
     
     func collectionLayout() -> UICollectionViewFlowLayout{
         let layout = UICollectionViewFlowLayout()
@@ -608,7 +608,7 @@ extension FilmDescriptionController: UICollectionViewDataSource {
     
 }
 
-extension FilmDescriptionController {
+extension FilmController {
     
     private func setFilmPoster() {
         guard let posterUrl = film?.poster?.url else { return }

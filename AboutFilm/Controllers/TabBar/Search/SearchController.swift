@@ -1,6 +1,6 @@
 import UIKit
 
-class FindFilmController: UIViewController {
+class SearchController: UIViewController {
     let network = NetworkService()
     var findTextFiled = UITextField()
     
@@ -39,7 +39,7 @@ class FindFilmController: UIViewController {
     
 }
 
-extension FindFilmController: UITextFieldDelegate {
+extension SearchController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

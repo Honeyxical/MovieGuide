@@ -1,6 +1,6 @@
 import UIKit
 
-class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var films: [FilmShortInfo?] = []{
         didSet{
             DispatchQueue.main.async { [self] in
@@ -82,7 +82,7 @@ class FilmsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        let destination = FilmDescriptionController()
+        let destination = FilmController()
         
         destination.filmId = filmId
         destination.backButtonIsHidden = false

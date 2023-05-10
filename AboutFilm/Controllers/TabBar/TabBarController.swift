@@ -8,9 +8,9 @@ class TabBarController: UITabBarController {
     
     func setupVCs() {
             viewControllers = [
-                createNavController(for: FilmsController(), title: "Home", image: UIImage(systemName: "house")!),
-                createNavController(for: FilmDescriptionController(), title: "Random film", image: UIImage(systemName: "film.circle")!),
-                createNavController(for: FindFilmController(), title: "Search", image: UIImage(systemName: "magnifyingglass")!),
+                createNavController(for: HomeController(), title: "Home", image: UIImage(systemName: "house")!),
+                createNavController(for: FilmController(), title: "Random film", image: UIImage(systemName: "film.circle")!),
+                createNavController(for: SearchController(), title: "Search", image: UIImage(systemName: "magnifyingglass")!),
             ]
         }
     
