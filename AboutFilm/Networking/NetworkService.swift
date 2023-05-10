@@ -101,7 +101,7 @@ class NetworkService{
     //MARK: - Private func
     
     private func getRequestForFilmPosters(id: Int, limit: Int) -> URLRequest {
-        var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1/image?page=1&limit=\(limit)&movieId=\(id)&type=screenshot")!)
+        var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1/image?page=1&limit=\(limit)&movieId=\(id)")!)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "accept")
         request.addValue(RESERVE_API_KEY, forHTTPHeaderField: "X-API-KEY")

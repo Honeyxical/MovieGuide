@@ -134,7 +134,6 @@
 				8D915ED229F942570072A919 /* Extension */,
 				692DF4A029D5FFB300B6DA45 /* Networking */,
 				690BB8DB29DC4AF50096EB06 /* Storages */,
-				692DF49F29D5FDA100B6DA45 /* Views */,
 				694598EE29DCA3DD009D5C97 /* Cells */,
 				692DF49E29D5FD9000B6DA45 /* Controllers */,
 				69F751C829DF420400C387BA /* Resource */,
@@ -161,13 +160,6 @@
 				694598EA29DC8004009D5C97 /* TabBarController.swift */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		692DF49F29D5FDA100B6DA45 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		692DF4A029D5FFB300B6DA45 /* Networking */ = {
