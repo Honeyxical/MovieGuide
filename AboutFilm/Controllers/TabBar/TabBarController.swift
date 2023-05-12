@@ -11,6 +11,7 @@ class TabBarController: UITabBarController {
                 createNavController(for: HomeController(), title: "Home", image: UIImage(systemName: "house")!),
                 createNavController(for: FilmController(), title: "Random film", image: UIImage(systemName: "film.circle")!),
                 createNavController(for: SearchController(), title: "Search", image: UIImage(systemName: "magnifyingglass")!),
+                createNavController(for: ProfileController(), title: "Profile", image: UIImage(systemName: "person")!),
             ]
         }
     

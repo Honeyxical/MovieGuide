@@ -8,7 +8,7 @@ protocol AuthProtocol{
 }
 
 struct Auth: AuthProtocol{
-    var users: UserDefaults = UserDefaults.standard
+    internal var users: UserDefaults = UserDefaults.standard
     
     func registration(user: UserProtocol) -> Bool {
         if users.object(forKey: user.login) == nil{
@@ -25,9 +25,20 @@ struct Auth: AuthProtocol{
         }
         let user = unarchiveObject(data: userFromStorage)
         if user.password == userPassword{
+            setCurrentUserHash(hash: user.xash)
             return user
         }
         return nil
+    }
+    
+//    func getUser() -> User?{
+//        guard let userFromStorage = users.data(forKey: userLogin) else {
+//            return nil
+//        }
+//    }
+    
+    private func setCurrentUserHash(hash: Int){
+        users.set(hash, forKey: "currentUser")
     }
     
     private func archiveObject(object: UserProtocol) -> Data?{
