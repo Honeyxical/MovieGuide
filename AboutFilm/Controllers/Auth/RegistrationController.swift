@@ -31,7 +31,7 @@ class RegistrationController: UIViewController {
         let btn = UIButton(type: .system)
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setTitle("Registration", for: .normal)
-        btn.addTarget(self, action: #selector(registrationButton), for: .touchUpInside)
+        btn.addTarget(nil, action: #selector(registrationButton), for: .touchUpInside)
         return btn
     }()
     
@@ -39,8 +39,7 @@ class RegistrationController: UIViewController {
         if nicknameTF.text! == "" || loginTF.text! == "" || passwordTF.text! == "" {
             self.present(getAllert(message: "Field nickname, login or password is empty"), animated: true)
         }
-        let user = User(nickname: nicknameTF.text!, login: loginTF.text!, password: passwordTF.text!)
-        if Auth().registration(user: user){
+        if Auth().registration(user: User(nickname: nicknameTF.text!, login: loginTF.text!, password: passwordTF.text!, userHash: hashValue)){
             self.navigationController?.pushViewController(TabBarController(), animated: true)
             self.navigationController?.navigationBar.isHidden = true
         }else{

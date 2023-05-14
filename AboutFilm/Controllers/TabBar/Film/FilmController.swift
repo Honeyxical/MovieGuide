@@ -2,7 +2,7 @@ import UIKit
 
 class FilmController: UIViewController {
     
-    var filmId: Int = 685246
+    var filmId: Int = 0
     var backButtonIsHidden = true
     var updateButtonIsHidden = false
     

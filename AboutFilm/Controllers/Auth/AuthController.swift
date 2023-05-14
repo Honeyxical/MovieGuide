@@ -6,7 +6,7 @@ class AuthController: UIViewController {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Login", for: .normal)
-        button.addTarget(self, action: #selector(login), for: .touchUpInside)
+        button.addTarget(nil, action: #selector(login), for: .touchUpInside)
         return button
     }()
     @objc private func login() {
@@ -17,7 +17,7 @@ class AuthController: UIViewController {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Registration", for: .normal)
-        button.addTarget(self, action: #selector(registration), for: .touchUpInside)
+        button.addTarget(nil, action: #selector(registration), for: .touchUpInside)
         return button
     }()
     @objc private func registration() {

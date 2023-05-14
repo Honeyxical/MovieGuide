@@ -24,7 +24,7 @@ class LoginController: UIViewController {
         let btn = UIButton(type: .system)
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setTitle("Login", for: .normal)
-        btn.addTarget(self, action: #selector(login), for: .touchUpInside)
+        btn.addTarget(nil, action: #selector(login), for: .touchUpInside)
         return btn
     }()
     
