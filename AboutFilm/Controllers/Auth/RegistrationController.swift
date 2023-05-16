@@ -9,6 +9,16 @@ class RegistrationController: UIViewController {
         tf.autocorrectionType = .no
         return tf
     }()
+    
+    private let email: UITextField = {
+        let tf = UITextField()
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.placeholder = "Email"
+        tf.borderStyle = .roundedRect
+        tf.autocorrectionType = .no
+        return tf
+    }()
+    
     private let loginTF: UITextField = {
         let tf = UITextField()
         tf.translatesAutoresizingMaskIntoConstraints = false
@@ -39,7 +49,7 @@ class RegistrationController: UIViewController {
         if nicknameTF.text! == "" || loginTF.text! == "" || passwordTF.text! == "" {
             self.present(getAllert(message: "Field nickname, login or password is empty"), animated: true)
         }
-        if Auth().registration(user: User(nickname: nicknameTF.text!, login: loginTF.text!, password: passwordTF.text!, userHash: hashValue)){
+        if Auth().registration(user: User(nickname: nicknameTF.text!, email: email.text!, login: loginTF.text!, password: passwordTF.text!, userHash: hashValue)){
             self.navigationController?.pushViewController(TabBarController(), animated: true)
             self.navigationController?.navigationBar.isHidden = true
         }else{
@@ -58,6 +68,7 @@ class RegistrationController: UIViewController {
     private func setupLayout() {
         view.addSubview(nicknameTF)
         view.addSubview(loginTF)
+        view.addSubview(email)
         view.addSubview(passwordTF)
         view.addSubview(registerButton)
         
@@ -67,7 +78,11 @@ class RegistrationController: UIViewController {
             nicknameTF.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             nicknameTF.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
             
-            loginTF.topAnchor.constraint(equalTo: nicknameTF.bottomAnchor, constant: 10),
+            email.topAnchor.constraint(equalTo: nicknameTF.bottomAnchor, constant: 10),
+            email.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            email.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+            
+            loginTF.topAnchor.constraint(equalTo: email.bottomAnchor, constant: 10),
             loginTF.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             loginTF.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
             

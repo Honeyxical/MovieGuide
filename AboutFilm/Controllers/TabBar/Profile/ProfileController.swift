@@ -34,7 +34,7 @@ class ProfileController: UIViewController {
         guard let user = user else { return text }
         
         let attributedText = NSMutableAttributedString(string: user.nickname, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 25)])
-        attributedText.append(NSAttributedString(string: "\nvatnaya1997@gmail.com", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .thin), NSAttributedString.Key.paragraphStyle: titleParagraphStyle]))
+        attributedText.append(NSAttributedString(string: "\n" + user.email, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .thin), NSAttributedString.Key.paragraphStyle: titleParagraphStyle]))
         
         text.attributedText = attributedText
         text.textAlignment = .center
