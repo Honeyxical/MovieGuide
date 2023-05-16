@@ -34,10 +34,10 @@ struct Auth: AuthProtocol{
         return nil
     }
     
-    func getCurrentUser() -> UserProtocol {
-        let userFromStorage = users.data(forKey: "currentUser")
-        let user = unarchiveObject(data: userFromStorage!)
-        return user
+    func getCurrentUser() -> UserProtocol? {
+        guard let userLogin = users.string(forKey: "currentUser") else { return nil } // получение логина текущего юзера
+        guard let currentUser = users.data(forKey: userLogin) else { return nil }
+        return unarchiveObject(data: currentUser)
     }
     
     private func getUserHash() -> Data?{

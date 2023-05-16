@@ -11,7 +11,7 @@ class FilmsCell: UITableViewCell {
             DispatchQueue.main.async { [self] in
                 setPoster()
                 titleLabel.text! = film.name!
-                shortDescriptionLabel.text! = film.shortDescription ?? film.description!
+                shortDescriptionLabel.text! = film.shortDescription ?? film.description ?? "Description is missing"
             }
         }
     }
