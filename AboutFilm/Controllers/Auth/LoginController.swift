@@ -68,4 +68,8 @@ class LoginController: UIViewController {
             loginButton.widthAnchor.constraint(equalToConstant: 200)
         ])
     }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
 }

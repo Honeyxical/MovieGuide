@@ -6,6 +6,8 @@ class FilmController: UIViewController {
     var backButtonIsHidden = true
     var updateButtonIsHidden = false
     
+    private var user = Auth.auth.getCurrentUser()
+    
     var film: FilmFullInfo? {
         didSet{
             guard let film = film, let filmId = film.id else {
@@ -207,13 +209,31 @@ class FilmController: UIViewController {
         button.tintColor = .systemGray2
         return button
     }()
-    private let buttonBookMark: UIButton = {
+    private lazy var buttonBookMark: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "Favourite"), for: .normal)
+        let filmId = filmId > 0 ? filmId : film!.id!
+        let stateImage = user!.getFavouritesFilms().contains(filmId) ? "FavouriteAdded" : "Favourite"
+        button.setImage(UIImage(named: stateImage), for: .normal)
         button.tintColor = .systemGray2
+        button.addTarget(nil, action: #selector(addToFavorite), for: .touchUpInside)
         return button
     }()
+    
+    @objc private func addToFavorite(){
+        guard let user = user else { return }
+        let filmId = filmId > 0 ? filmId : film!.id!
+        if !user.getFavouritesFilms().contains(filmId) {
+            user.addFavouriteFilm(filmId: filmId, user: user)
+            buttonBookMark.setImage(UIImage(named: "FavouriteAdded"), for: .normal)
+            print("Added")
+        } else {
+            user.favouriteFilms.remove(at: (user.getFavouritesFilms().firstIndex(of: filmId))!)
+            buttonBookMark.setImage(UIImage(named: "Favourite"), for: .normal)
+            print("Deleted")
+        }
+    }
+    
     private let buttonShare: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false

@@ -2,11 +2,8 @@ import UIKit
 
 class FavoriteController: UIViewController {
     
-    var filmsId: [Int] = []
-    
     private var films: [FilmShortInfo?] = []{
         didSet{
-            print(films)
             DispatchQueue.main.async { [self] in
                 loader.removeFromSuperview()
                 tableView.reloadData()
@@ -38,22 +35,11 @@ class FavoriteController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        
         tableView.dataSource = self
         tableView.delegate = self
         getFilms()
-//        setupLayout()
-        
     }
     
-//    private func setupLayout() {
-//        NSLayoutConstraint.activate([
-//            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-//        ])
-//    }
     
     private func setupLoaderLayout() {
         view.addSubview(loader)
@@ -67,9 +53,10 @@ class FavoriteController: UIViewController {
     }
     
     private func getFilms() {
-        for id in filmsId {
+        guard let user = Auth.auth.getCurrentUser() else { return }
+        for id in user.getFavouritesFilms() {
             NetworkService.network.getFilmById(id: id) { [self] data in
-                films.append(FilmShortInfo(id: data.id, name: data.name, alternativeName: data.alternativeName, description: data.description, shortDescription: data.shortDescription))
+                films.append(FilmShortInfo(id: data.id, name: data.name, alternativeName: data.alternativeName, description: data.description,shortDescription: data.shortDescription, poster: data.poster))
             }
         }
     }
@@ -94,5 +81,20 @@ extension FavoriteController: UITableViewDelegate, UITableViewDataSource{
         
         cell.film = film
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let film = films[indexPath.row], let filmId = film.id else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        let destination = FilmController()
+        
+        destination.filmId = filmId
+        destination.backButtonIsHidden = false
+        destination.updateButtonIsHidden = true
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        self.navigationController?.pushViewController(destination, animated: true)
     }
 }

@@ -31,7 +31,6 @@ class NetworkService{
             
             do{
                 let films = try JSONDecoder().decode(FilmList.self, from: data)
-//                films.docs = self.insertPosters(docs: films.docs!)
                 completition(films.docs!)
             } catch {
                 print(error)

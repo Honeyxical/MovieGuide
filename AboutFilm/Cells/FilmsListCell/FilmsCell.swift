@@ -4,7 +4,6 @@ class FilmsCell: UITableViewCell {
     
     var film: FilmShortInfo? {
         didSet{
-            
             guard let film = film else {
                 return
             }
@@ -25,6 +24,8 @@ class FilmsCell: UITableViewCell {
         super.awakeFromNib()
         filmImage.image = UIImage(named: "PlaceholderImage")
         filmImage.contentMode = .scaleAspectFill
+        
+        URLCache.shared = URLCache(memoryCapacity: 500 * 1024 * 1024, diskCapacity: 500 * 1024 * 1024)
     }
 }
 

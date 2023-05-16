@@ -3,8 +3,8 @@ import Foundation
 protocol AuthProtocol{
     var users: UserDefaults {get set}
     
-    func registration(user: UserProtocol) -> Bool
-    func login(userLogin: String, userPassword: String) -> UserProtocol?
+    func registration(user: User) -> Bool
+    func login(userLogin: String, userPassword: String) -> User?
 }
 
 struct Auth: AuthProtocol{
@@ -12,46 +12,47 @@ struct Auth: AuthProtocol{
     
     internal var users: UserDefaults = UserDefaults.standard
     
-    func registration(user: UserProtocol) -> Bool {
+    func registration(user: User) -> Bool {
         if users.object(forKey: user.login) == nil{
             guard let archivedUser = archiveObject(object: user) else { return false}
             users.set(archivedUser, forKey: user.login)
-            setCurrentUser(login: user.login)
+            setCurrentUser(user: user)
             return true
         }
         return false
     }
     
-    func login(userLogin: String, userPassword: String) -> UserProtocol? {
+    func login(userLogin: String, userPassword: String) -> User? {
         guard let userFromStorage = users.data(forKey: userLogin) else {
             return nil
         }
         let user = unarchiveObject(data: userFromStorage)
         if user.password == userPassword{
-            setCurrentUser(login: user.login)
+            setCurrentUser(user: user)
             return user
         }
         return nil
     }
     
-    func getCurrentUser() -> UserProtocol? {
-        guard let userLogin = users.string(forKey: "currentUser") else { return nil } // получение логина текущего юзера
-        guard let currentUser = users.data(forKey: userLogin) else { return nil }
+    func saveCurrentUser(user: User) {
+        print("saving \(user)")
+        users.set(nil, forKey: "currentUser")
+        users.set(archiveObject(object: user), forKey: "currentUser")
+        users.set(archiveObject(object: user), forKey: user.login)
+        
+    }
+    
+    func getCurrentUser() -> User? {
+        guard let currentUser = users.data(forKey: "currentUser") else { return nil }
         return unarchiveObject(data: currentUser)
     }
     
-    private func getUserHash() -> Data?{
-        guard let currentUserHash = users.data(forKey: "currentUser") else {
-            return nil
-        }
-        return currentUserHash
+    private func setCurrentUser(user: User){
+        print(user)
+        users.set(archiveObject(object: user), forKey: "currentUser")
     }
     
-    private func setCurrentUser(login: String){
-        users.set(login, forKey: "currentUser")
-    }
-    
-    private func archiveObject(object: UserProtocol) -> Data?{
+    private func archiveObject(object: User) -> Data?{
         let user = try? NSKeyedArchiver.archivedData(withRootObject: object, requiringSecureCoding: false)
         guard let user: Data = user else {
             return nil
@@ -59,7 +60,7 @@ struct Auth: AuthProtocol{
         return user
     }
     
-    private func unarchiveObject(data: Data) -> UserProtocol{
-        return try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as! UserProtocol
+    private func unarchiveObject(data: Data) -> User{
+        return try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as! User
     }
 }
