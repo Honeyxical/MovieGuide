@@ -36,7 +36,6 @@
 		8D1C36A82A1376F30026545C /* FavoriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1C36A72A1376F30026545C /* FavoriteController.swift */; };
 		8D1C36AA2A13775D0026545C /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1C36A92A13775D0026545C /* AboutController.swift */; };
 		8D1C36AC2A1377A20026545C /* EditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1C36AB2A1377A20026545C /* EditController.swift */; };
-		8D7B66E52A017229003F8FCD /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D7B66E42A017229003F8FCD /* Helper.swift */; };
 		8D8F874629FD637800E4B949 /* Constructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8F874529FD637800E4B949 /* Constructor.swift */; };
 		8D915ED429F9428D0072A919 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D915ED329F9428D0072A919 /* UIColor+Extension.swift */; };
 		8D915ED629FAB46D0072A919 /* ActorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D915ED529FAB46D0072A919 /* ActorCell.swift */; };
@@ -76,7 +75,6 @@
 		8D1C36A72A1376F30026545C /* FavoriteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteController.swift; sourceTree = "<group>"; };
 		8D1C36A92A13775D0026545C /* AboutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
 		8D1C36AB2A1377A20026545C /* EditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditController.swift; sourceTree = "<group>"; };
-		8D7B66E42A017229003F8FCD /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		8D8F874529FD637800E4B949 /* Constructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constructor.swift; sourceTree = "<group>"; };
 		8D915ED329F9428D0072A919 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		8D915ED529FAB46D0072A919 /* ActorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorCell.swift; sourceTree = "<group>"; };
@@ -112,7 +110,6 @@
 				69CFD23B29E57E8500B86000 /* Loader.swift */,
 				69AC4FD629E807EF006A5B18 /* Converter.swift */,
 				8D8F874529FD637800E4B949 /* Constructor.swift */,
-				8D7B66E42A017229003F8FCD /* Helper.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -374,7 +371,6 @@
 				69F751C729DEC2B800C387BA /* FilmController.swift in Sources */,
 				692DF49C29D5FD8000B6DA45 /* Film.swift in Sources */,
 				69F751CF29E178AE00C387BA /* PaddingLabel.swift in Sources */,
-				8D7B66E52A017229003F8FCD /* Helper.swift in Sources */,
 				692FD5CA29E4096B00A059CF /* Mocks.swift in Sources */,
 				8D8F874629FD637800E4B949 /* Constructor.swift in Sources */,
 				694598EB29DC8004009D5C97 /* TabBarController.swift in Sources */,

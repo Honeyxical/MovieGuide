@@ -167,6 +167,23 @@ class ProfileController: UIViewController {
         navigationController?.pushViewController(AboutController(), animated: true)
         navigationController?.navigationBar.isHidden = false
     }
+    
+    private let logoutButton: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setTitle("logout", for: .normal)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        btn.setTitleColor(.gray, for: .normal)
+        btn.addTarget(nil, action: #selector(logoutHandler), for: .touchUpInside)
+        return btn
+    }()
+    
+    @objc private func logoutHandler() {
+        print("logout")
+//        Auth().logout(user: user!)
+//        navigationController?.popViewController(animated: false)
+        
+    }
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -182,6 +199,7 @@ class ProfileController: UIViewController {
         topView.addSubview(separator)
         topView.addSubview(editButton)
         view.addSubview(stackButtons)
+        view.addSubview(logoutButton)
         
         container.frame = view.frame
         
@@ -214,6 +232,9 @@ class ProfileController: UIViewController {
             stackButtons.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 35),
             stackButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
             stackButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
+            
+            logoutButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            logoutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 }

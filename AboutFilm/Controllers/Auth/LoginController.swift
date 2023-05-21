@@ -6,6 +6,7 @@ class LoginController: UIViewController {
         let tf = UITextField()
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.placeholder = "Login"
+        tf.text = "Q"
         tf.borderStyle = .roundedRect
         tf.autocorrectionType = .no
         return tf
@@ -15,6 +16,7 @@ class LoginController: UIViewController {
         let tf = UITextField()
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.placeholder = "Password"
+        tf.text = "q"
         tf.borderStyle = .roundedRect
         tf.isSecureTextEntry = true
         return tf
@@ -33,11 +35,10 @@ class LoginController: UIViewController {
             self.present(getAllert(message: "Field login or password are empty"), animated: true)
             return
         }
-        guard let _ = Auth().login(userLogin: loginTF.text!, userPassword: passwordTF.text!) else {
+        if !Auth().login(userLogin: loginTF.text!, userPassword: passwordTF.text!){
             self.present(getAllert(message: "User not found"), animated: true)
             return
         }
-        
         self.navigationController?.pushViewController(TabBarController(), animated: true)
         self.navigationController?.navigationBar.isHidden = true
     }

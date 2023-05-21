@@ -674,37 +674,35 @@ extension FilmController {
             }
         })
     }
-                                                 
-        private func getImage(data: Data) -> UIImageView {
-            let image = UIImageView(image: UIImage(data: data))
-            image.contentMode = .scaleToFill
-            image.translatesAutoresizingMaskIntoConstraints = false
-            
-            image.widthAnchor.constraint(equalToConstant: 300).isActive = true
-            
-            return image
+    
+    private func getImage(data: Data) -> UIImageView {
+        let image = UIImageView(image: UIImage(data: data))
+        image.contentMode = .scaleToFill
+        image.translatesAutoresizingMaskIntoConstraints = false
+        
+        image.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        
+        return image
+    }
+    
+    private func setSimilarMovieImage() {
+        guard let similarMovie = film?.similarMovies, !similarMovie.isEmpty else {
+            similarMoviesLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            similarMoviesScroll.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            similarMoviesCounter.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            return
         }
-                                                 
-                                                 private func setSimilarMovieImage() {
-            guard let similarMovie = film?.similarMovies, !similarMovie.isEmpty else {
-                similarMoviesLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
-                similarMoviesScroll.heightAnchor.constraint(equalToConstant: 0).isActive = true
-                similarMoviesCounter.heightAnchor.constraint(equalToConstant: 0).isActive = true
-                return
-            }
-            scrollView.contentSize.height += 350
-            similarMoviesCounter.text = String(similarMovie.count)
-            for elem in similarMovie {
-                guard let posterURL = elem.poster?.previewUrl ?? elem.poster?.url! else { return }
-                URLSession.shared.dataTask(with: URLRequest(url: URL(string: posterURL)!)) { [self] data, response, error in
-                    guard let data = data, error == nil else { return }
-                    
-                    DispatchQueue.main.async { [self] in
-                        similarMoviesStack.addArrangedSubview(getMovie(id: elem.id!, filmTitle: elem.name!, filmType: elem.type!, posterData: data))
-                    }
-                }.resume()
-            }
+        scrollView.contentSize.height += 350
+        similarMoviesCounter.text = String(similarMovie.count)
+        for elem in similarMovie {
+            guard let posterURL = elem.poster?.previewUrl ?? elem.poster?.url! else { return }
+            URLSession.shared.dataTask(with: URLRequest(url: URL(string: posterURL)!)) { [self] data, response, error in
+                guard let data = data, error == nil else { return }
+                
+                DispatchQueue.main.async { [self] in
+                    similarMoviesStack.addArrangedSubview(getMovie(id: elem.id!, filmTitle: elem.name!, filmType: elem.type!, posterData: data))
+                }
+            }.resume()
         }
-                                                 
-                                                 
-                                                 }
+    }
+}

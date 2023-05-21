@@ -4,7 +4,7 @@ protocol AuthProtocol{
     var users: UserDefaults {get set}
     
     func registration(user: User) -> Bool
-    func login(userLogin: String, userPassword: String) -> User?
+    func login(userLogin: String, userPassword: String) -> Bool
 }
 
 struct Auth: AuthProtocol{
@@ -22,24 +22,26 @@ struct Auth: AuthProtocol{
         return false
     }
     
-    func login(userLogin: String, userPassword: String) -> User? {
+    func login(userLogin: String, userPassword: String) -> Bool {
         guard let userFromStorage = users.data(forKey: userLogin) else {
-            return nil
+            return false
         }
         let user = unarchiveObject(data: userFromStorage)
         if user.password == userPassword{
             setCurrentUser(user: user)
-            return user
+            return true
         }
-        return nil
+        return false
     }
     
     func saveCurrentUser(user: User) {
-        print("saving \(user)")
-        users.set(nil, forKey: "currentUser")
         users.set(archiveObject(object: user), forKey: "currentUser")
         users.set(archiveObject(object: user), forKey: user.login)
-        
+    }
+    
+    func logout(user: User) {
+        saveCurrentUser(user: user)
+        users.set(nil, forKey: "currentUser")
     }
     
     func getCurrentUser() -> User? {

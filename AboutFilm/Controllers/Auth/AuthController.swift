@@ -46,5 +46,4 @@ class AuthController: UIViewController {
             buttonRegistration.widthAnchor.constraint(equalToConstant: 200)
         ])
     }
-
 }
