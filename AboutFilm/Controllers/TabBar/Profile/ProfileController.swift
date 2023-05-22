@@ -80,7 +80,7 @@ class ProfileController: UIViewController {
 
     @objc private func openEdit(){
         navigationController?.pushViewController(EditController(), animated: true)
-        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.isHidden = true
     }
     
     private lazy var stackButtons: UIStackView = {
@@ -132,7 +132,7 @@ class ProfileController: UIViewController {
     
     @objc private func openFavorite() {
         navigationController?.pushViewController(FavoriteController(), animated: true)
-        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.isHidden = true
     }
     
     private let aboutBtn: UIButton = {

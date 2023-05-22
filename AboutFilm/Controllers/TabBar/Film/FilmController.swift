@@ -94,7 +94,7 @@ class FilmController: UIViewController {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-        button.tintColor = .darkGray
+        button.tintColor = .black
         button.addTarget(self, action: #selector(backButtonHandler), for: .touchUpInside)
         button.isHidden = backButtonIsHidden
         return button

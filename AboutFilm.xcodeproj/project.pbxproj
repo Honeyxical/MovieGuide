@@ -31,7 +31,6 @@
 		69F751C329DDFCFC00C387BA /* Docs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F751C229DDFCFC00C387BA /* Docs.swift */; };
 		69F751C729DEC2B800C387BA /* FilmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F751C629DEC2B800C387BA /* FilmController.swift */; };
 		69F751CD29E094E600C387BA /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F751CC29E094E600C387BA /* AuthController.swift */; };
-		69F751CF29E178AE00C387BA /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F751CE29E178AE00C387BA /* PaddingLabel.swift */; };
 		8D176A5E2A06861B003DBBD2 /* UIScrollView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D176A5D2A06861B003DBBD2 /* UIScrollView + Extension.swift */; };
 		8D1C36A82A1376F30026545C /* FavoriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1C36A72A1376F30026545C /* FavoriteController.swift */; };
 		8D1C36AA2A13775D0026545C /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1C36A92A13775D0026545C /* AboutController.swift */; };
@@ -70,7 +69,6 @@
 		69F751C229DDFCFC00C387BA /* Docs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Docs.swift; sourceTree = "<group>"; };
 		69F751C629DEC2B800C387BA /* FilmController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmController.swift; sourceTree = "<group>"; };
 		69F751CC29E094E600C387BA /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
-		69F751CE29E178AE00C387BA /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		8D176A5D2A06861B003DBBD2 /* UIScrollView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView + Extension.swift"; sourceTree = "<group>"; };
 		8D1C36A72A1376F30026545C /* FavoriteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteController.swift; sourceTree = "<group>"; };
 		8D1C36A92A13775D0026545C /* AboutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
@@ -105,7 +103,6 @@
 			isa = PBXGroup;
 			children = (
 				690BB8E529DC64870096EB06 /* Allert.swift */,
-				69F751CE29E178AE00C387BA /* PaddingLabel.swift */,
 				692FD5C929E4096B00A059CF /* Mocks.swift */,
 				69CFD23B29E57E8500B86000 /* Loader.swift */,
 				69AC4FD629E807EF006A5B18 /* Converter.swift */,
@@ -370,7 +367,6 @@
 				69F751BE29DD7A6C00C387BA /* FilmsCell.swift in Sources */,
 				69F751C729DEC2B800C387BA /* FilmController.swift in Sources */,
 				692DF49C29D5FD8000B6DA45 /* Film.swift in Sources */,
-				69F751CF29E178AE00C387BA /* PaddingLabel.swift in Sources */,
 				692FD5CA29E4096B00A059CF /* Mocks.swift in Sources */,
 				8D8F874629FD637800E4B949 /* Constructor.swift in Sources */,
 				694598EB29DC8004009D5C97 /* TabBarController.swift in Sources */,

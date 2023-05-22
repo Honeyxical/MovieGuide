@@ -11,6 +11,35 @@ class FavoriteController: UIViewController {
         }
     }
     
+    private let navigationBar: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let backButton = UIButton(type: .system)
+        view.addSubview(backButton)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        backButton.tintColor = .black
+        backButton.addTarget(nil, action: #selector(backButtonHandler), for: .touchUpInside)
+        
+        let title = UILabel()
+        view.addSubview(title)
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.text = "Favotites"
+        title.textColor = .black
+        
+        backButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+        backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        
+        title.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+        title.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        return view
+    }()
+    
+    @objc private func backButtonHandler() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -48,8 +77,14 @@ class FavoriteController: UIViewController {
     
     private func setupLayout() {
         view.addSubview(tableView)
+        view.addSubview(navigationBar)
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            navigationBar.topAnchor.constraint(equalTo: view.topAnchor),
+            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            navigationBar.heightAnchor.constraint(equalToConstant: 100),
+            
+            tableView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
