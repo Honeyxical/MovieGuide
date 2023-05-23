@@ -24,21 +24,23 @@ class ProfileController: UIViewController {
         return image
     }()
     
-    private lazy var nameAndEmailTextView: UITextView = {
-        let text = UITextView()
+    private lazy var nameAndEmailTextView: UILabel = {
+        let text = UILabel()
+        guard let user = user else { return text }
         text.translatesAutoresizingMaskIntoConstraints = false
         
         let titleParagraphStyle = NSMutableParagraphStyle()
-        titleParagraphStyle.minimumLineHeight = 30
+        titleParagraphStyle.lineSpacing = 5
         
-        guard let user = user else { return text }
         
         let attributedText = NSMutableAttributedString(string: user.nickname, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 25)])
         attributedText.append(NSAttributedString(string: "\n" + user.email, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .thin), NSAttributedString.Key.paragraphStyle: titleParagraphStyle]))
+        attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: titleParagraphStyle, range: NSRange(location: 0, length: attributedText.length))
         
         text.attributedText = attributedText
         text.textAlignment = .center
-        text.textContainer.maximumNumberOfLines = 2
+        text.numberOfLines = 2
+        
         return text
     }()
     
