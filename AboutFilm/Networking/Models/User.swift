@@ -46,6 +46,11 @@ class User: NSObject, NSCoding, UserProtocol{
         Auth.auth.saveCurrentUser(user: user)
     }
     
+    func removeFavouriteFilm(filmId: Int, user: User) {
+        favouriteFilms.remove(at: favouriteFilms.firstIndex(of: NSNumber(value: filmId))!)
+        Auth().saveCurrentUser(user: user)
+    }
+    
     func encode(with coder: NSCoder) {
         coder.encode(nickname, forKey: "nickname")
         coder.encode(email, forKey: "email")

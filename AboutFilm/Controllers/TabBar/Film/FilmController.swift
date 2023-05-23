@@ -226,11 +226,9 @@ class FilmController: UIViewController {
         if !user.getFavouritesFilms().contains(filmId) {
             user.addFavouriteFilm(filmId: filmId, user: user)
             buttonBookMark.setImage(UIImage(named: "FavouriteAdded"), for: .normal)
-            print("Added")
         } else {
-            user.favouriteFilms.remove(at: (user.getFavouritesFilms().firstIndex(of: filmId))!)
+            user.removeFavouriteFilm(filmId: filmId, user: user)
             buttonBookMark.setImage(UIImage(named: "Favourite"), for: .normal)
-            print("Deleted")
         }
     }
     
@@ -251,6 +249,7 @@ class FilmController: UIViewController {
         textView.isSelectable = false
         textView.isEditable = false
         textView.textAlignment = .left
+        textView.isScrollEnabled = false
         return textView
     }()
     
