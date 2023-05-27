@@ -5,7 +5,6 @@ class FavoriteController: UIViewController {
     private var films: [FilmShortInfo?] = []{
         didSet{
             DispatchQueue.main.async { [self] in
-                loader.removeFromSuperview()
                 tableView.reloadData()
             }
         }
@@ -60,15 +59,20 @@ class FavoriteController: UIViewController {
         setupLayout()
         tableView.dataSource = self
         tableView.delegate = self
-        getFilms()
+        URLCache.shared = URLCache(memoryCapacity: 500 * 1024 * 1024, diskCapacity: 500 * 1024 * 1024)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupLoaderLayout()
+        getFilms()
+    }
     
     private func setupLoaderLayout() {
         view.addSubview(loader)
         
         NSLayoutConstraint.activate([
-            loader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            loader.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
             loader.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             loader.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             loader.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -93,11 +97,33 @@ class FavoriteController: UIViewController {
     
     private func getFilms() {
         guard let user = Auth.auth.getCurrentUser() else { return }
+        films = []
+        if user.getFavouritesFilms().count == 0 {
+            displayPlug()
+            return
+        }
         for id in user.getFavouritesFilms() {
             NetworkService.network.getFilmById(id: id) { [self] data in
                 films.append(FilmShortInfo(id: data.id, name: data.name, alternativeName: data.alternativeName, description: data.description,shortDescription: data.shortDescription, poster: data.poster))
             }
         }
+    }
+    
+    private func displayPlug(){
+        tableView.removeFromSuperview()
+        loader.removeFromSuperview()
+        
+        let plug = UILabel()
+        plug.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(plug)
+        plug.text = "No favorite movies"
+        plug.font = .systemFont(ofSize: 40)
+        
+        plug.textColor = .lightGray
+        
+        plug.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        plug.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
     }
 }
 
@@ -119,6 +145,7 @@ extension FavoriteController: UITableViewDelegate, UITableViewDataSource{
         }
         
         cell.film = film
+        loader.removeFromSuperview()
         return cell
     }
     

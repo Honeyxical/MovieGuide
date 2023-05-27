@@ -92,7 +92,6 @@ class NetworkService{
                 print("\n\nError download image\n")
                 fatalError()
             }
-            print("poster downloaded: \(data)")
             completition(data)
         }.resume()
     }

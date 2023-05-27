@@ -229,6 +229,7 @@ class FilmController: UIViewController {
         } else {
             user.removeFavouriteFilm(filmId: filmId, user: user)
             buttonBookMark.setImage(UIImage(named: "Favourite"), for: .normal)
+            
         }
     }
     
