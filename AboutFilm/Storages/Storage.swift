@@ -23,13 +23,12 @@ struct Auth: AuthProtocol{
     }
     
     func login(userLogin: String, userPassword: String) -> Bool {
-        guard let userFromStorage = users.data(forKey: userLogin) else {
-            return false
-        }
-        let user = unarchiveObject(data: userFromStorage)
-        if user.password == userPassword{
-            setCurrentUser(user: user)
-            return true
+        if let userFromStorage = users.data(forKey: userLogin) {
+            let user = unarchiveObject(data: userFromStorage)
+            if user.password == userPassword{
+                setCurrentUser(user: user)
+                return true
+            }
         }
         return false
     }

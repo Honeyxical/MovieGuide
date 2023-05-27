@@ -33,7 +33,7 @@ class RegistrationController: UIViewController {
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.placeholder = "Password"
         tf.borderStyle = .roundedRect
-        tf.isSecureTextEntry = true
+        tf.isSecureTextEntry = false
         return tf
     }()
     

@@ -6,7 +6,7 @@ class LoginController: UIViewController {
         let tf = UITextField()
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.placeholder = "Login"
-        tf.text = "Q"
+        tf.text = "E"
         tf.borderStyle = .roundedRect
         tf.autocorrectionType = .no
         return tf
@@ -16,9 +16,9 @@ class LoginController: UIViewController {
         let tf = UITextField()
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.placeholder = "Password"
-        tf.text = "q"
+        tf.text = "E"
         tf.borderStyle = .roundedRect
-        tf.isSecureTextEntry = true
+        tf.isSecureTextEntry = false
         return tf
     }()
     

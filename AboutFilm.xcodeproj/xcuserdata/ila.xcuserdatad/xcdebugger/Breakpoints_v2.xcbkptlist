@@ -8,7 +8,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "F7667B5D-A62B-4D43-8D93-14F3A3B2B3AC"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AboutFilm/Storages/Storage.swift"
@@ -352,6 +352,22 @@
             startingLineNumber = "82"
             endingLineNumber = "82"
             landmarkName = "getFilmPosters(id:completition:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "30F69541-FCBB-44B5-AE82-C7AEF50486D6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AboutFilm/Storages/Storage.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "login(userLogin:userPassword:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
