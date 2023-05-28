@@ -31,7 +31,11 @@ class NetworkService{
             
             do{
                 let films = try JSONDecoder().decode(FilmList.self, from: data)
-                completition(films.docs!)
+                if films.docs != nil{
+                    completition(films.docs!)
+                } else {
+                    completition([])
+                }
             } catch {
                 print(error)
             }

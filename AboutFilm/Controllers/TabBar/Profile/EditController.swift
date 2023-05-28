@@ -69,6 +69,8 @@ class EditController: UIViewController {
     }()
     
     @objc private func saveHandler() {
+        var user = Auth.auth.getCurrentUser()
+        user?.nickname = editNicknameField.text!
         
     }
     
@@ -125,12 +127,7 @@ class EditController: UIViewController {
         ])
     }
     
-    private func getField(placeholder: String) -> UIView{
-        let border = UIView()
-        border.translatesAutoresizingMaskIntoConstraints = false
-        border.layer.borderColor = UIColor.lightGray.cgColor
-        border.layer.borderWidth = 1.5
-        border.layer.cornerRadius = 18
+    private func getField(placeholder: String) -> UITextField{
         
         let tf = UITextField()
         tf.translatesAutoresizingMaskIntoConstraints = false
@@ -138,19 +135,18 @@ class EditController: UIViewController {
         let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22)]
         
         tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: attributes)
-        tf.borderStyle = .none
-        
-        border.addSubview(tf)
+        tf.layer.borderWidth = 1
+        tf.layer.borderColor = UIColor.gray.cgColor
+        tf.layer.cornerRadius = 15
+        let textPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 30))
+        tf.leftView = textPaddingView
+        tf.leftViewMode = .always
         
         NSLayoutConstraint.activate([
-            tf.topAnchor.constraint(equalTo: border.topAnchor, constant: 10),
-            tf.bottomAnchor.constraint(equalTo: border.bottomAnchor, constant: -10),
-            tf.leadingAnchor.constraint(equalTo: border.leadingAnchor, constant: 30),
-            tf.trailingAnchor.constraint(equalTo: border.trailingAnchor, constant: -30),
-            
-            border.heightAnchor.constraint(equalToConstant: 60)
+            tf.heightAnchor.constraint(equalToConstant: 60),
+            tf.widthAnchor.constraint(equalToConstant: view.bounds.width)
         ])
         
-        return border
+        return tf
     }
 }
