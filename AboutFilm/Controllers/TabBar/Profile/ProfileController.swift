@@ -1,7 +1,7 @@
 import UIKit
 
 class ProfileController: UIViewController {
-    let user = Auth.auth.getCurrentUser()
+    var user: User?
     
     let container: UIView = {
         let view = UIView()
@@ -17,6 +17,8 @@ class ProfileController: UIViewController {
         return view
     }()
     
+    //MARK: - profileImage
+    
     private let profileImage: UIImageView = {
         let image = UIImageView(image: UIImage(named: "Ghost"))
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -24,23 +26,14 @@ class ProfileController: UIViewController {
         return image
     }()
     
+    //MARK: - nameAndEmailTextView
+    
     private lazy var nameAndEmailTextView: UILabel = {
         let text = UILabel()
-        guard let user = user else { return text }
         text.translatesAutoresizingMaskIntoConstraints = false
-        
-        let titleParagraphStyle = NSMutableParagraphStyle()
-        titleParagraphStyle.lineSpacing = 5
-        
-        
-        let attributedText = NSMutableAttributedString(string: user.nickname, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 25)])
-        attributedText.append(NSAttributedString(string: "\n" + user.email, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .thin), NSAttributedString.Key.paragraphStyle: titleParagraphStyle]))
-        attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: titleParagraphStyle, range: NSRange(location: 0, length: attributedText.length))
-        
-        text.attributedText = attributedText
+        text.attributedText = getAttributedText(user: user!)
         text.textAlignment = .center
         text.numberOfLines = 2
-        
         return text
     }()
     
@@ -51,6 +44,8 @@ class ProfileController: UIViewController {
         line.layer.borderWidth = 1
         return line
     }()
+    
+    //MARK: - editButton
     
     private let editButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -85,6 +80,8 @@ class ProfileController: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
+    //MARK: - stackButtons
+    
     private lazy var stackButtons: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [favoriteBtn, aboutBtn])
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -93,6 +90,8 @@ class ProfileController: UIViewController {
         stack.axis = .vertical
         return stack
     }()
+    
+    //MARK: - favoriteBtn
     
     private let favoriteBtn: UIButton = {
         let btn = UIButton(type: .custom)
@@ -137,6 +136,8 @@ class ProfileController: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
+    //MARK: - aboutBtn
+    
     private let aboutBtn: UIButton = {
         let btn = UIButton(type: .custom)
         btn.translatesAutoresizingMaskIntoConstraints = false
@@ -170,6 +171,8 @@ class ProfileController: UIViewController {
         navigationController?.navigationBar.isHidden = false
     }
     
+    //MARK: - logoutButton
+    
     private let logoutButton: UIButton = {
         let btn = UIButton(type: .custom)
         btn.translatesAutoresizingMaskIntoConstraints = false
@@ -187,11 +190,25 @@ class ProfileController: UIViewController {
         
     }
    
+    //MARK: - viewDidLoad
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        user = Auth.auth.getCurrentUser()
         setupLayout()
     }
+    
+    //MARK: - viewWillAppear
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        user = Auth.auth.getCurrentUser()
+        nameAndEmailTextView.attributedText = getAttributedText(user: user!)
+        
+    }
+    
+    //MARK: - setupLayout
     
     private func setupLayout() {
         view.addSubview(container)
@@ -219,7 +236,6 @@ class ProfileController: UIViewController {
             nameAndEmailTextView.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 15),
             nameAndEmailTextView.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
             nameAndEmailTextView.heightAnchor.constraint(equalToConstant: 70),
-            nameAndEmailTextView.widthAnchor.constraint(equalToConstant: view.bounds.width),
             
             separator.topAnchor.constraint(equalTo: nameAndEmailTextView.bottomAnchor, constant: 50),
             separator.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
@@ -238,5 +254,19 @@ class ProfileController: UIViewController {
             logoutButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
             logoutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+    }
+    
+    //MARK: - setupLayout
+    
+    private func getAttributedText(user: User) -> NSAttributedString {
+        let titleParagraphStyle = NSMutableParagraphStyle()
+        titleParagraphStyle.lineSpacing = 5
+        titleParagraphStyle.alignment = .center
+        
+        let attributedText = NSMutableAttributedString(string: user.nickname, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 25)])
+        attributedText.append(NSAttributedString(string: "\n" + user.email, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .thin), NSAttributedString.Key.paragraphStyle: titleParagraphStyle]))
+        attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: titleParagraphStyle, range: NSRange(location: 0, length: attributedText.length))
+        
+        return attributedText
     }
 }
