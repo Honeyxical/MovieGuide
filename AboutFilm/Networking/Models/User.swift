@@ -51,6 +51,20 @@ class User: NSObject, NSCoding, UserProtocol{
         Auth().saveCurrentUser(user: user)
     }
     
+    func dataEditing(tuple: (nickName: String, email: String, password: String)) {
+        if tuple.nickName != "" {
+            self.nickname = tuple.nickName
+        }
+        
+        if tuple.email != "" {
+            self.email = tuple.email
+        }
+        
+        if tuple.password != "" {
+            self.password = tuple.password
+        }
+    }
+    
     func encode(with coder: NSCoder) {
         coder.encode(nickname, forKey: "nickname")
         coder.encode(email, forKey: "email")

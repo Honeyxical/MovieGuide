@@ -60,7 +60,7 @@ class EditController: UIViewController {
         let btn = UIButton(type: .system)
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setTitle("Save", for: .normal)
-        btn.addTarget(nil, action: #selector(backButtonHandler), for: .touchUpInside)
+        btn.addTarget(nil, action: #selector(saveHandler), for: .touchUpInside)
         btn.layer.cornerRadius = 30
         btn.backgroundColor = .black
         btn.tintColor = .white
@@ -69,9 +69,15 @@ class EditController: UIViewController {
     }()
     
     @objc private func saveHandler() {
-        var user = Auth.auth.getCurrentUser()
-        user?.nickname = editNicknameField.text!
-        
+        if editPasswordField.text == repeatPasswordField.text || (editPasswordField.text == "" && repeatPasswordField.text == "") {
+            if var user = Auth.auth.getCurrentUser(){
+                user.dataEditing(tuple: (nickName: editNicknameField.text!, email: editEmailField.text!, password: editPasswordField.text!))
+                Auth.auth.saveCurrentUser(user: user)
+                navigationController?.popViewController(animated: true)
+            }
+        } else {
+            self.present(getAllert(message: "Passwords don't match "), animated: true)
+        }
     }
     
     private let cancelButton: UIButton = {
