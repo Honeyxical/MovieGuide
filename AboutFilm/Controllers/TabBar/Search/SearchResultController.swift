@@ -16,7 +16,7 @@ class SearchResultController: UIViewController {
         let navBar = UINavigationBar()
         let navItem = UINavigationItem(title: navbarTitle)
         let backItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), landscapeImagePhone: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(back))
-        
+        backItem.tintColor = .black
         navBar.isTranslucent = false
         
         navItem.leftBarButtonItem = backItem

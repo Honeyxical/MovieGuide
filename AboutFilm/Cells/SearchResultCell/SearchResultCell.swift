@@ -23,6 +23,8 @@ class SearchResultCell: UITableViewCell {
         configureFilmNameLabel()
         configureSecondNameYearLabel()
         configureCountryGenresLabel()
+        
+        URLCache.shared = URLCache(memoryCapacity: 500 * 1024 * 1024, diskCapacity: 500 * 1024 * 1024)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

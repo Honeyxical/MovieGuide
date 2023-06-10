@@ -70,7 +70,7 @@ class EditController: UIViewController {
     
     @objc private func saveHandler() {
         if editPasswordField.text == repeatPasswordField.text || (editPasswordField.text == "" && repeatPasswordField.text == "") {
-            if var user = Auth.auth.getCurrentUser(){
+            if let user = Auth.auth.getCurrentUser(){
                 user.dataEditing(tuple: (nickName: editNicknameField.text!, email: editEmailField.text!, password: editPasswordField.text!))
                 Auth.auth.saveCurrentUser(user: user)
                 navigationController?.popViewController(animated: true)
