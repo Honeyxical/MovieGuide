@@ -48,7 +48,7 @@
 		690BB8E029DC5D3D0096EB06 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		690BB8E229DC5D4B0096EB06 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		690BB8E529DC64870096EB06 /* Allert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Allert.swift; sourceTree = "<group>"; };
-		692DF48329D5FD5700B6DA45 /* AboutFilm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AboutFilm.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		692DF48329D5FD5700B6DA45 /* MovieGuide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieGuide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		692DF48629D5FD5700B6DA45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		692DF48829D5FD5700B6DA45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		692DF48F29D5FD5700B6DA45 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -114,7 +114,7 @@
 		692DF47A29D5FD5700B6DA45 = {
 			isa = PBXGroup;
 			children = (
-				692DF48529D5FD5700B6DA45 /* AboutFilm */,
+				692DF48529D5FD5700B6DA45 /* MovieGuide */,
 				692DF48429D5FD5700B6DA45 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -122,12 +122,12 @@
 		692DF48429D5FD5700B6DA45 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				692DF48329D5FD5700B6DA45 /* AboutFilm.app */,
+				692DF48329D5FD5700B6DA45 /* MovieGuide.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		692DF48529D5FD5700B6DA45 /* AboutFilm */ = {
+		692DF48529D5FD5700B6DA45 /* MovieGuide */ = {
 			isa = PBXGroup;
 			children = (
 				697497A329EC08EC00176BAD /* Application */,
@@ -139,7 +139,7 @@
 				69F751C829DF420400C387BA /* Resource */,
 				690BB8E429DC646F0096EB06 /* Tools */,
 			);
-			path = AboutFilm;
+			path = MovieGuide;
 			sourceTree = "<group>";
 		};
 		692DF49A29D5FD6F00B6DA45 /* Models */ = {
@@ -295,9 +295,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		692DF48229D5FD5700B6DA45 /* AboutFilm */ = {
+		692DF48229D5FD5700B6DA45 /* MovieGuide */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 692DF49729D5FD5700B6DA45 /* Build configuration list for PBXNativeTarget "AboutFilm" */;
+			buildConfigurationList = 692DF49729D5FD5700B6DA45 /* Build configuration list for PBXNativeTarget "MovieGuide" */;
 			buildPhases = (
 				692DF47F29D5FD5700B6DA45 /* Sources */,
 				692DF48029D5FD5700B6DA45 /* Frameworks */,
@@ -307,9 +307,9 @@
 			);
 			dependencies = (
 			);
-			name = AboutFilm;
+			name = MovieGuide;
 			productName = AboutFilm;
-			productReference = 692DF48329D5FD5700B6DA45 /* AboutFilm.app */;
+			productReference = 692DF48329D5FD5700B6DA45 /* MovieGuide.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -327,7 +327,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 692DF47E29D5FD5700B6DA45 /* Build configuration list for PBXProject "AboutFilm" */;
+			buildConfigurationList = 692DF47E29D5FD5700B6DA45 /* Build configuration list for PBXProject "MovieGuide" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -340,7 +340,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				692DF48229D5FD5700B6DA45 /* AboutFilm */,
+				692DF48229D5FD5700B6DA45 /* MovieGuide */,
 			);
 		};
 /* End PBXProject section */
@@ -580,7 +580,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		692DF47E29D5FD5700B6DA45 /* Build configuration list for PBXProject "AboutFilm" */ = {
+		692DF47E29D5FD5700B6DA45 /* Build configuration list for PBXProject "MovieGuide" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				692DF49529D5FD5700B6DA45 /* Debug */,
@@ -589,7 +589,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		692DF49729D5FD5700B6DA45 /* Build configuration list for PBXNativeTarget "AboutFilm" */ = {
+		692DF49729D5FD5700B6DA45 /* Build configuration list for PBXNativeTarget "MovieGuide" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				692DF49829D5FD5700B6DA45 /* Debug */,
