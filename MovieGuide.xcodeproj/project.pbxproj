@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09AAA0052A37B950006D2510 /* ReusableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAA0042A37B950006D2510 /* ReusableItems.swift */; };
 		690BB8DD29DC4B120096EB06 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BB8DC29DC4B120096EB06 /* Storage.swift */; };
 		690BB8DF29DC4BB10096EB06 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BB8DE29DC4BB10096EB06 /* User.swift */; };
 		690BB8E129DC5D3D0096EB06 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BB8E029DC5D3D0096EB06 /* LoginController.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		09AAA0042A37B950006D2510 /* ReusableItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableItems.swift; sourceTree = "<group>"; };
 		690BB8DC29DC4B120096EB06 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		690BB8DE29DC4BB10096EB06 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		690BB8E029DC5D3D0096EB06 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				69CFD23B29E57E8500B86000 /* Loader.swift */,
 				69AC4FD629E807EF006A5B18 /* Converter.swift */,
 				8D8F874529FD637800E4B949 /* Constructor.swift */,
+				09AAA0042A37B950006D2510 /* ReusableItems.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -387,6 +390,7 @@
 				690BB8DD29DC4B120096EB06 /* Storage.swift in Sources */,
 				8D1C36AA2A13775D0026545C /* AboutController.swift in Sources */,
 				69F751C329DDFCFC00C387BA /* Docs.swift in Sources */,
+				09AAA0052A37B950006D2510 /* ReusableItems.swift in Sources */,
 				690BB8DF29DC4BB10096EB06 /* User.swift in Sources */,
 				690BB8E629DC64870096EB06 /* Allert.swift in Sources */,
 			);
