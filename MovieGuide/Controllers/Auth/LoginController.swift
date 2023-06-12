@@ -92,13 +92,13 @@ class LoginController: UIViewController {
     }()
     
     private let signUpButton: UIButton = {
-        let signUp = UIButton(type: .system)
-        signUp.translatesAutoresizingMaskIntoConstraints = false
-        signUp.setAttributedTitle(NSAttributedString(
+        let btn = UIButton(type: .system)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setAttributedTitle(NSAttributedString(
             string: "Sign Up",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .bold)]), for: .normal)
-        signUp.addTarget(nil, action: #selector(signUp), for: .touchUpInside)
-        return signUp
+        btn.addTarget(nil, action: #selector(signUp), for: .touchUpInside)
+        return btn
     }()
     
     @objc private func signUp() {
