@@ -30,7 +30,6 @@
 		69F751BF29DD7A6C00C387BA /* FilmsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69F751BD29DD7A6C00C387BA /* FilmsCell.xib */; };
 		69F751C329DDFCFC00C387BA /* Docs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F751C229DDFCFC00C387BA /* Docs.swift */; };
 		69F751C729DEC2B800C387BA /* FilmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F751C629DEC2B800C387BA /* FilmController.swift */; };
-		69F751CD29E094E600C387BA /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F751CC29E094E600C387BA /* AuthController.swift */; };
 		8D176A5E2A06861B003DBBD2 /* UIScrollView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D176A5D2A06861B003DBBD2 /* UIScrollView + Extension.swift */; };
 		8D1C36A82A1376F30026545C /* FavoriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1C36A72A1376F30026545C /* FavoriteController.swift */; };
 		8D1C36AA2A13775D0026545C /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1C36A92A13775D0026545C /* AboutController.swift */; };
@@ -68,7 +67,6 @@
 		69F751BD29DD7A6C00C387BA /* FilmsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilmsCell.xib; sourceTree = "<group>"; };
 		69F751C229DDFCFC00C387BA /* Docs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Docs.swift; sourceTree = "<group>"; };
 		69F751C629DEC2B800C387BA /* FilmController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmController.swift; sourceTree = "<group>"; };
-		69F751CC29E094E600C387BA /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		8D176A5D2A06861B003DBBD2 /* UIScrollView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView + Extension.swift"; sourceTree = "<group>"; };
 		8D1C36A72A1376F30026545C /* FavoriteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteController.swift; sourceTree = "<group>"; };
 		8D1C36A92A13775D0026545C /* AboutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
@@ -173,7 +171,6 @@
 		69444E5B29E5723C00E66ACD /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				69F751CC29E094E600C387BA /* AuthController.swift */,
 				690BB8E229DC5D4B0096EB06 /* RegistrationController.swift */,
 				690BB8E029DC5D3D0096EB06 /* LoginController.swift */,
 			);
@@ -377,7 +374,6 @@
 				8D176A5E2A06861B003DBBD2 /* UIScrollView + Extension.swift in Sources */,
 				8D915ED629FAB46D0072A919 /* ActorCell.swift in Sources */,
 				69AC4FD729E807EF006A5B18 /* Converter.swift in Sources */,
-				69F751CD29E094E600C387BA /* AuthController.swift in Sources */,
 				69674AB029E1ACE3002AAF14 /* SearchController.swift in Sources */,
 				692DF48729D5FD5700B6DA45 /* AppDelegate.swift in Sources */,
 				692DF48929D5FD5700B6DA45 /* SceneDelegate.swift in Sources */,
