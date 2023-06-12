@@ -11,30 +11,9 @@ class LoginController: UIViewController {
         return label
     }()
     
-    private let loginTF: UITextField = {
-        let tf = UITextField()
-        tf.translatesAutoresizingMaskIntoConstraints = false
-        tf.attributedPlaceholder = NSAttributedString(
-            string: "Login",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18)!])
-        tf.autocorrectionType = .no
-        return tf
-    }()
+    private let loginTF: UITextField = getTextField(plaseholder: "Login")
     
-    private lazy var separatorLogin: UIView = getSeparator()
-    
-    private let passwordTF: UITextField = {
-        let tf = UITextField()
-        tf.translatesAutoresizingMaskIntoConstraints = false
-        tf.attributedPlaceholder = NSAttributedString(
-            string: "Password",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18)!])
-        tf.borderStyle = .none
-        tf.isSecureTextEntry = false
-        return tf
-    }()
-    
-    private lazy var separatorPassword: UIView = getSeparator()
+    private let passwordTF: UITextField = getTextField(plaseholder: "Password")
     
     private let loginButton: UIButton = {
         let btn = UIButton(type: .system)
@@ -78,7 +57,6 @@ class LoginController: UIViewController {
         fb.backgroundColor = .white
         fb.layer.borderWidth = 1
         fb.layer.borderColor = UIColor.blue.cgColor
-//        fb.addTarget(nil, action: #selector(nil), for: .touchUpInside)
         return fb
     }()
     
@@ -114,9 +92,7 @@ class LoginController: UIViewController {
     private func setupLayout() {
         view.addSubview(loginLabel)
         view.addSubview(loginTF)
-        view.addSubview(separatorLogin)
         view.addSubview(passwordTF)
-        view.addSubview(separatorPassword)
         view.addSubview(loginButton)
         view.addSubview(restorePassword)
         view.addSubview(facebookLogin)
@@ -132,19 +108,9 @@ class LoginController: UIViewController {
             loginTF.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             loginTF.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
             
-            separatorLogin.topAnchor.constraint(equalTo: loginTF.bottomAnchor, constant: 15),
-            separatorLogin.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            separatorLogin.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            separatorLogin.heightAnchor.constraint(equalToConstant: 2),
-            
-            passwordTF.topAnchor.constraint(equalTo: separatorLogin.bottomAnchor, constant: 40),
+            passwordTF.topAnchor.constraint(equalTo: loginTF.bottomAnchor, constant: 60),
             passwordTF.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             passwordTF.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            
-            separatorPassword.topAnchor.constraint(equalTo: passwordTF.bottomAnchor, constant: 15),
-            separatorPassword.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            separatorPassword.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            separatorPassword.heightAnchor.constraint(equalToConstant: 2),
             
             loginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -300),
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
