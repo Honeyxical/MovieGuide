@@ -185,8 +185,10 @@ class ProfileController: UIViewController {
     
     @objc private func logoutHandler() {
         print("logout")
-//        Auth().logout(user: user!)
-//        navigationController?.popViewController(animated: false)
+        Auth().logout(user: user!)
+        navigationController?.tabBarController?.tabBar.isHidden = true
+        navigationController?.pushViewController(LoginController(), animated: false)
+        
         
     }
    
