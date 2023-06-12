@@ -7,7 +7,7 @@ class LoginController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         
         label.text = "Login"
-        label.font = .systemFont(ofSize: 36, weight: .heavy)
+        label.font = .systemFont(ofSize: 36, weight: .bold)
         return label
     }()
     
@@ -81,6 +81,7 @@ class LoginController: UIViewController {
     
     @objc private func signUp() {
         navigationController?.pushViewController(RegistrationController(), animated: true)
+        navigationController?.navigationBar.isHidden = true
     }
     
     override func viewDidLoad() {
@@ -100,7 +101,7 @@ class LoginController: UIViewController {
         view.addSubview(signUpButton)
         
         NSLayoutConstraint.activate([
-            loginLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 25),
+            loginLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 125),
             loginLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             
             loginTF.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -140,13 +141,5 @@ class LoginController: UIViewController {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
-    }
-    
-    private func getSeparator() -> UIView{
-        let line = UIView()
-        line.translatesAutoresizingMaskIntoConstraints = false
-        line.layer.borderColor = UIColor.gray.cgColor
-        line.layer.borderWidth = 1
-        return line
     }
 }
