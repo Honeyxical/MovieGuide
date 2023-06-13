@@ -88,6 +88,10 @@ class LoginController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupLayout()
+        
+        loginTF.text = "Q"
+        passwordTF.text = "Q"
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     private func setupLayout() {
