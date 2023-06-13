@@ -339,5 +339,128 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "216304C0-6C93-4340-B1CC-708C7C51B707"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieGuide/Controllers/TabBar/TabBarController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "11"
+            endingLineNumber = "11"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "216304C0-6C93-4340-B1CC-708C7C51B707 - 4243b14ba5de246c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieGuide.TabBarController.prevScreen.getter : __C.UITabBarItem"
+                  moduleName = "MovieGuide"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ila/Documents/Swift%20Projects/MovieGuide/MovieGuide/Controllers/TabBar/TabBarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "200">
+               </Location>
+               <Location
+                  uuid = "216304C0-6C93-4340-B1CC-708C7C51B707 - 4243b14ba5de246c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieGuide.TabBarController.prevScreen.getter : __C.UITabBarItem"
+                  moduleName = "MovieGuide"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ila/Documents/Swift%20Projects/MovieGuide/MovieGuide/Controllers/TabBar/TabBarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "304">
+               </Location>
+               <Location
+                  uuid = "216304C0-6C93-4340-B1CC-708C7C51B707 - 713a552843fbe474"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieGuide.TabBarController.prevScreen.setter : __C.UITabBarItem"
+                  moduleName = "MovieGuide"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ila/Documents/Swift%20Projects/MovieGuide/MovieGuide/Controllers/TabBar/TabBarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  uuid = "216304C0-6C93-4340-B1CC-708C7C51B707 - e2705467ca405456"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieGuide.TabBarController.prevScreen.modify : __C.UITabBarItem"
+                  moduleName = "MovieGuide"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ila/Documents/Swift%20Projects/MovieGuide/MovieGuide/Controllers/TabBar/TabBarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "216304C0-6C93-4340-B1CC-708C7C51B707 - 3c235c62084e51cc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieGuide.TabBarController.prevScreen.modify : __C.UITabBarItem with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "MovieGuide"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ila/Documents/Swift%20Projects/MovieGuide/MovieGuide/Controllers/TabBar/TabBarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "216304C0-6C93-4340-B1CC-708C7C51B707 - f2488787593fde66"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieGuide.TabBarController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; MovieGuide.TabBarController"
+                  moduleName = "MovieGuide"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ila/Documents/Swift%20Projects/MovieGuide/MovieGuide/Controllers/TabBar/TabBarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "216304C0-6C93-4340-B1CC-708C7C51B707 - 40ef2dafe8ef9ff0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieGuide.TabBarController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;MovieGuide.TabBarController&gt;"
+                  moduleName = "MovieGuide"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ila/Documents/Swift%20Projects/MovieGuide/MovieGuide/Controllers/TabBar/TabBarController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "64">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

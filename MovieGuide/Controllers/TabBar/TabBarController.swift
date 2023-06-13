@@ -15,6 +15,7 @@ class TabBarController: UITabBarController {
         tabBar.backgroundImage = UIImage()
         tabBar.shadowImage = UIImage()
         tabBar.tintColor = .white
+        tabBar.unselectedItemTintColor = .lightGray
         
         setupTabBarLayout()
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
