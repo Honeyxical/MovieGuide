@@ -187,7 +187,8 @@ class ProfileController: UIViewController {
         print("logout")
         Auth().logout(user: user!)
         navigationController?.tabBarController?.tabBar.isHidden = true
-        navigationController?.pushViewController(LoginController(), animated: false)
+//        navigationController?.pushViewController(LoginController(), animated: false)
+        navigationController?.popToRootViewController(animated: false)
         
         
     }
