@@ -75,14 +75,15 @@ class RegistrationController: UIViewController {
         return btn
     }()
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupLayout()
+        
+        nicknameTF.delegate = self
+        loginTF.delegate = self
+        email.delegate = self
+        passwordTF.delegate = self
     }
     
     private func setupLayout() {
@@ -139,3 +140,15 @@ class RegistrationController: UIViewController {
     }
     
 }
+
+extension RegistrationController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+}
+

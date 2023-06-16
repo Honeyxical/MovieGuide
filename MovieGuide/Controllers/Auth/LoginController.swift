@@ -90,7 +90,9 @@ class LoginController: UIViewController {
         setupLayout()
         
         loginTF.text = "Q"
+        loginTF.delegate = self
         passwordTF.text = "Q"
+        passwordTF.delegate = self
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
@@ -141,6 +143,13 @@ class LoginController: UIViewController {
             signUpButton.leadingAnchor.constraint(equalTo: createACLabel.trailingAnchor, constant: 2),
             signUpButton.heightAnchor.constraint(equalToConstant: 20)
         ])
+    }
+}
+
+extension LoginController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
