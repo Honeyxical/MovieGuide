@@ -15,6 +15,17 @@ enum TabBarSelected: String {
 }
 
 class TabBarController: UITabBarController {
+    let networkService: NetworkService
+
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVCs()
@@ -30,14 +41,14 @@ class TabBarController: UITabBarController {
     
     func setupVCs() {
             viewControllers = [
-                createNavigationController(for: HomeController(networkService: NetworkService()),
+                createNavigationController(for: HomeController(networkService: networkService),
                                            title: "Home", image: UIImage(systemName: TabBarUnselected.home.rawValue)!,
                                            selectedImage: UIImage(systemName: TabBarSelected.home.rawValue)!),
-                createNavigationController(for: FilmController(networkService: NetworkService()),
+                createNavigationController(for: FilmController(networkService: networkService),
                                            title: "Random film",
                                            image: UIImage(systemName: TabBarUnselected.film.rawValue)!,
                                            selectedImage: UIImage(systemName: TabBarSelected.film.rawValue)!),
-                createNavigationController(for: SearchController(networkService: NetworkService()),
+                createNavigationController(for: SearchController(networkService: networkService),
                                            title: "Search",
                                            image: UIImage(systemName: TabBarUnselected.search.rawValue)!,
                                            selectedImage: UIImage(systemName: TabBarSelected.search.rawValue)!),

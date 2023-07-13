@@ -35,7 +35,7 @@ class LoginController: UIViewController {
             self.present(getAllert(message: "User not found"), animated: true)
             return
         }
-        self.navigationController?.pushViewController(TabBarController(), animated: true)
+        self.navigationController?.pushViewController(TabBarController(networkService: NetworkService()), animated: true)
         self.navigationController?.navigationBar.isHidden = true
     }
     
