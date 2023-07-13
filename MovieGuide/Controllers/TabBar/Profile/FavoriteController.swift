@@ -1,9 +1,9 @@
 import UIKit
 
 class FavoriteController: UIViewController {
-    let networkService: NetworkService?
+    let networkService: NetworkService
 
-    init(networkService: NetworkService?) {
+    init(networkService: NetworkService) {
         self.networkService = networkService
         super.init()
     }
@@ -113,7 +113,6 @@ class FavoriteController: UIViewController {
             return
         }
 
-        guard let networkService = networkService else { return }
         for id in user.getFavouritesFilms() {
             networkService.getFilmById(id: id) { [self] data in
                 films.append(FilmShortInfo(id: data.id,

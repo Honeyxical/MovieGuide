@@ -1,9 +1,9 @@
 import UIKit
 
 class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    let networkService: NetworkService?
+    let networkService: NetworkService
 
-    init(networkService: NetworkService?) {
+    init(networkService: NetworkService) {
         self.networkService = networkService
         super.init(nibName: nil, bundle: nil)
     }
@@ -38,7 +38,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         view.addSubview(loader)
         configureLoader()
 
-        guard let networkService = networkService else { return }
         networkService.getFilmList { docs in
             self.films = docs
         }

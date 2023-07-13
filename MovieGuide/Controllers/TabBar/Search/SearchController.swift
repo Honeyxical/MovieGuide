@@ -1,10 +1,10 @@
 import UIKit
 
 class SearchController: UIViewController {
-    let networkService: NetworkService?
+    let networkService: NetworkService
     var findTextFiled = UITextField()
 
-    init(networkService: NetworkService?) {
+    init(networkService: NetworkService) {
         self.networkService = networkService
         super.init(nibName: nil, bundle: nil)
     }
@@ -56,7 +56,6 @@ extension SearchController: UITextFieldDelegate {
         
         let destination = SearchResultController()
 
-        guard let networkService = networkService else { return false}
         networkService.searchFilm(name: textField.text!) { data in
             destination.films = data
         }

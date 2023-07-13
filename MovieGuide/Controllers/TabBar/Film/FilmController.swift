@@ -1,9 +1,9 @@
 import UIKit
 
 class FilmController: UIViewController {
-    let networkService: NetworkService?
+    let networkService: NetworkService
 
-    init(networkService: NetworkService?) {
+    init(networkService: NetworkService) {
         self.networkService = networkService
         super.init(nibName: nil, bundle: nil)
     }
@@ -142,7 +142,6 @@ class FilmController: UIViewController {
 
         view.addSubview(loader)
 
-        guard let networkService = networkService else { return }
         networkService.getRandomFilm { film in
             self.film = film
         }
@@ -322,7 +321,6 @@ class FilmController: UIViewController {
         configureLoader()
         updatebutton.isEnabled = false
 
-        guard let networkService = networkService else { return }
         if filmId > 0 {
             networkService.getFilmById(id: filmId) { film in
                 self.film = film
@@ -676,7 +674,6 @@ extension FilmController {
                 }
             }
         }
-        guard let networkService = networkService else { return }
         networkService.getFilmPostersURL(id: id, completition: { data in
             if !data.isEmpty {
                 postersUrl = data
