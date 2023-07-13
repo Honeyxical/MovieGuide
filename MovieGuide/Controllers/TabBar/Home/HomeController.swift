@@ -1,6 +1,17 @@
 import UIKit
 
 class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    let networkService: NetworkService?
+
+    init(networkService: NetworkService?) {
+        self.networkService = networkService
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     var films: [FilmShortInfo?] = [] {
         didSet {
             DispatchQueue.main.async { [self] in
@@ -27,7 +38,8 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         view.addSubview(loader)
         configureLoader()
 
-        NetworkService.network.getFilmList { docs in
+        guard let networkService = networkService else { return }
+        networkService.getFilmList { docs in
             self.films = docs
         }
 
@@ -86,7 +98,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        let destination = FilmController()
+        let destination = FilmController(networkService: NetworkService())
 
         destination.filmId = filmId
         destination.backButtonIsHidden = false

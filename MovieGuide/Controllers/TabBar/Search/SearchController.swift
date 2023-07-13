@@ -1,9 +1,18 @@
 import UIKit
 
 class SearchController: UIViewController {
-    let network = NetworkService()
+    let networkService: NetworkService?
     var findTextFiled = UITextField()
-    
+
+    init(networkService: NetworkService?) {
+        self.networkService = networkService
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -46,8 +55,9 @@ extension SearchController: UITextFieldDelegate {
         textField.resignFirstResponder()
         
         let destination = SearchResultController()
-        
-        NetworkService.network.searchFilm(name: textField.text!) { data in
+
+        guard let networkService = networkService else { return false}
+        networkService.searchFilm(name: textField.text!) { data in
             destination.films = data
         }
         destination.navbarTitle += textField.text!

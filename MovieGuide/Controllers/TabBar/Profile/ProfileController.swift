@@ -135,7 +135,7 @@ class ProfileController: UIViewController {
     }()
     
     @objc private func openFavorite() {
-        navigationController?.pushViewController(FavoriteController(), animated: true)
+        navigationController?.pushViewController(FavoriteController(networkService: NetworkService()), animated: true)
         navigationController?.navigationBar.isHidden = true
     }
     

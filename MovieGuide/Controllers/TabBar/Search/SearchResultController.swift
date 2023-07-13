@@ -108,7 +108,7 @@ extension SearchResultController: UITableViewDataSource, UITableViewDelegate {
             return
         }
         
-        let destination = FilmController()
+        let destination = FilmController(networkService: NetworkService())
         
         destination.filmId = filmId
         destination.updateButtonIsHidden = true

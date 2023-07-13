@@ -1,8 +1,6 @@
 import Foundation
 
 class NetworkService {
-    static let network = NetworkService()
-
     private let apiKey = "TN3T3HK-GGE44PM-KAMXMJW-HRQ4X7Q"
     private let reserveApiKey = "T7P5MRK-8ZG4FAC-N3ZRJWE-6VT9V3N"
     

@@ -1,6 +1,16 @@
 import UIKit
 
 class FilmController: UIViewController {
+    let networkService: NetworkService?
+
+    init(networkService: NetworkService?) {
+        self.networkService = networkService
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     var filmId: Int = 0
     var backButtonIsHidden = true
@@ -131,7 +141,9 @@ class FilmController: UIViewController {
         scrollView.scrollToTop()
 
         view.addSubview(loader)
-        NetworkService.network.getRandomFilm { film in
+
+        guard let networkService = networkService else { return }
+        networkService.getRandomFilm { film in
             self.film = film
         }
 
@@ -310,12 +322,13 @@ class FilmController: UIViewController {
         configureLoader()
         updatebutton.isEnabled = false
 
+        guard let networkService = networkService else { return }
         if filmId > 0 {
-            NetworkService.network.getFilmById(id: filmId) { film in
+            networkService.getFilmById(id: filmId) { film in
                 self.film = film
             }
         } else {
-            NetworkService.network.getRandomFilm { film in
+            networkService.getRandomFilm { film in
                 self.film = film
             }
         }
@@ -585,7 +598,7 @@ class FilmController: UIViewController {
     }
 
     @objc func openSimilarFilm(sender: UIButton) {
-        let destination = FilmController()
+        let destination = FilmController(networkService: NetworkService())
         destination.backButtonIsHidden = false
         destination.updateButtonIsHidden = true
         destination.filmId = Int(sender.titleLabel!.text!)!
@@ -663,7 +676,8 @@ extension FilmController {
                 }
             }
         }
-        NetworkService.network.getFilmPostersURL(id: id, completition: { data in
+        guard let networkService = networkService else { return }
+        networkService.getFilmPostersURL(id: id, completition: { data in
             if !data.isEmpty {
                 postersUrl = data
             } else {

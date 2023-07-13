@@ -1,6 +1,16 @@
 import UIKit
 
 class FavoriteController: UIViewController {
+    let networkService: NetworkService?
+
+    init(networkService: NetworkService?) {
+        self.networkService = networkService
+        super.init()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     private var films: [FilmShortInfo?] = [] {
         didSet {
@@ -102,8 +112,10 @@ class FavoriteController: UIViewController {
             displayPlug()
             return
         }
+
+        guard let networkService = networkService else { return }
         for id in user.getFavouritesFilms() {
-            NetworkService.network.getFilmById(id: id) { [self] data in
+            networkService.getFilmById(id: id) { [self] data in
                 films.append(FilmShortInfo(id: data.id,
                                            name: data.name,
                                            alternativeName: data.alternativeName,
@@ -162,7 +174,7 @@ extension FavoriteController: UITableViewDelegate, UITableViewDataSource {
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        let destination = FilmController()
+        let destination = FilmController(networkService: NetworkService())
 
         destination.filmId = filmId
         destination.backButtonIsHidden = false

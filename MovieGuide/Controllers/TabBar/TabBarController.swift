@@ -30,21 +30,21 @@ class TabBarController: UITabBarController {
     
     func setupVCs() {
             viewControllers = [
-                createNavigationController(for: HomeController(),
+                createNavigationController(for: HomeController(networkService: NetworkService()),
                                            title: "Home", image: UIImage(systemName: TabBarUnselected.home.rawValue)!,
                                            selectedImage: UIImage(systemName: TabBarSelected.home.rawValue)!),
-                createNavigationController(for: FilmController(),
+                createNavigationController(for: FilmController(networkService: NetworkService()),
                                            title: "Random film",
                                            image: UIImage(systemName: TabBarUnselected.film.rawValue)!,
                                            selectedImage: UIImage(systemName: TabBarSelected.film.rawValue)!),
-                createNavigationController(for: SearchController(),
+                createNavigationController(for: SearchController(networkService: NetworkService()),
                                            title: "Search",
                                            image: UIImage(systemName: TabBarUnselected.search.rawValue)!,
                                            selectedImage: UIImage(systemName: TabBarSelected.search.rawValue)!),
                 createNavigationController(for: ProfileController(),
                                            title: "Profile",
                                            image: UIImage(systemName: TabBarUnselected.profile.rawValue)!,
-                                           selectedImage: UIImage(systemName: TabBarSelected.profile.rawValue)!) 
+                                           selectedImage: UIImage(systemName: TabBarSelected.profile.rawValue)!)
             ]
         }
     
