@@ -3,7 +3,7 @@ import UIKit
 class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let networkService: NetworkServiceProtocol
 
-    init(networkService: NetworkService) {
+    init(networkService: NetworkServiceProtocol) {
         self.networkService = networkService
         super.init(nibName: nil, bundle: nil)
     }

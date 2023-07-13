@@ -15,9 +15,9 @@ enum TabBarSelected: String {
 }
 
 class TabBarController: UITabBarController {
-    let networkService: NetworkService
+    let networkService: NetworkServiceProtocol
 
-    init(networkService: NetworkService) {
+    init(networkService: NetworkServiceProtocol) {
         self.networkService = networkService
         super.init(nibName: nil, bundle: nil)
     }
