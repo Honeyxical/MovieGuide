@@ -85,6 +85,6 @@ class User: NSObject, NSCoding, UserProtocol {
         self.login = coder.decodeObject(forKey: "login") as? String ?? "login"
         self.password = coder.decodeObject(forKey: "password") as? String ?? "password"
         self.favouriteFilms = coder.decodeObject(forKey: "favouriteFilms") as? [NSNumber] ?? []
-        self.userImage = (coder.decodeObject(forKey: "userImage") as! NSData) as Data
+        self.userImage = (coder.decodeObject(forKey: "userImage") as? NSData) as? Data ?? Data()
     }
 }

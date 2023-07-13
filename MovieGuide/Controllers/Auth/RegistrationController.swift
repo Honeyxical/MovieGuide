@@ -151,4 +151,3 @@ extension RegistrationController: UITextFieldDelegate {
         view.endEditing(true)
     }
 }
-

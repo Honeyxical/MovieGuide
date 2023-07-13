@@ -351,8 +351,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "11"
             endingLineNumber = "11"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
+            landmarkName = "TabBarSelected"
+            landmarkType = "13">
             <Locations>
                <Location
                   uuid = "216304C0-6C93-4340-B1CC-708C7C51B707 - 4243b14ba5de246c"

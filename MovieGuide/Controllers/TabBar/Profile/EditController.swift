@@ -66,7 +66,7 @@ class EditController: UIViewController {
     func showImagePickerOptions() {
         let alertVC = UIAlertController(title: "Pick a photo", message: "Choose a picture from Library or camera", preferredStyle: .actionSheet)
         
-        let cameraAction = UIAlertAction(title: "Camera", style: .default){ [weak self] (action) in
+        let cameraAction = UIAlertAction(title: "Camera", style: .default){ [weak self] (_) in
             guard let self = self else {
                 return
             }
@@ -77,7 +77,7 @@ class EditController: UIViewController {
             }
         }
         
-        let libraryPicker = UIAlertAction(title: "Library", style: .default){ [weak self] (action) in
+        let libraryPicker = UIAlertAction(title: "Library", style: .default){ [weak self] (_) in
             guard let self = self else {
                 return
             }
@@ -221,10 +221,10 @@ class EditController: UIViewController {
 }
 
 extension EditController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info[.originalImage] as! UIImage
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let image = info[.originalImage] as? UIImage else { return }
         self.image.image = image
-        user?.updateUserImage(data: image.pngData()!)
+        user?.updateUserImage(data: image.pngData() ?? Data())
         self.dismiss(animated: true)
     }
 }

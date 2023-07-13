@@ -192,8 +192,6 @@ class ProfileController: UIViewController {
         navigationController?.tabBarController?.tabBar.isHidden = true
 //        navigationController?.pushViewController(LoginController(), animated: false)
         navigationController?.popToRootViewController(animated: false)
-        
-        
     }
    
     // MARK: - viewDidLoad
