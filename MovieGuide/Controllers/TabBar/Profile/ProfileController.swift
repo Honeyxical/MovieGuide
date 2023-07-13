@@ -17,7 +17,7 @@ class ProfileController: UIViewController {
         return view
     }()
     
-    //MARK: - profileImage
+    // MARK: - profileImage
     
     private let profileImage: UIImageView = {
         let image = UIImageView(image: UIImage(named: "Ghost"))
@@ -26,7 +26,7 @@ class ProfileController: UIViewController {
         return image
     }()
     
-    //MARK: - nameAndEmailTextView
+    // MARK: - nameAndEmailTextView
     
     private lazy var nameAndEmailTextView: UILabel = {
         let text = UILabel()
@@ -45,7 +45,7 @@ class ProfileController: UIViewController {
         return line
     }()
     
-    //MARK: - editButton
+    // MARK: - editButton
     
     private let editButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -75,12 +75,12 @@ class ProfileController: UIViewController {
         return button
     }()
 
-    @objc private func openEdit(){
+    @objc private func openEdit() {
         navigationController?.pushViewController(EditController(), animated: true)
         navigationController?.navigationBar.isHidden = true
     }
     
-    //MARK: - stackButtons
+    // MARK: - stackButtons
     
     private lazy var stackButtons: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [favoriteBtn, aboutBtn])
@@ -91,7 +91,7 @@ class ProfileController: UIViewController {
         return stack
     }()
     
-    //MARK: - favoriteBtn
+    // MARK: - favoriteBtn
     
     private let favoriteBtn: UIButton = {
         let btn = UIButton(type: .custom)
@@ -136,7 +136,7 @@ class ProfileController: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
-    //MARK: - aboutBtn
+    // MARK: - aboutBtn
     
     private let aboutBtn: UIButton = {
         let btn = UIButton(type: .custom)
@@ -171,7 +171,7 @@ class ProfileController: UIViewController {
         navigationController?.navigationBar.isHidden = false
     }
     
-    //MARK: - logoutButton
+    // MARK: - logoutButton
     
     private let logoutButton: UIButton = {
         let btn = UIButton(type: .custom)
@@ -188,11 +188,9 @@ class ProfileController: UIViewController {
         Auth().logout(user: user!)
         navigationController?.tabBarController?.tabBar.isHidden = true
         navigationController?.pushViewController(LoginController(), animated: false)
-        
-        
     }
    
-    //MARK: - viewDidLoad
+    // MARK: - viewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -201,7 +199,7 @@ class ProfileController: UIViewController {
         setupLayout()
     }
     
-    //MARK: - viewWillAppear
+    // MARK: - viewWillAppear
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -210,7 +208,7 @@ class ProfileController: UIViewController {
         
     }
     
-    //MARK: - setupLayout
+    // MARK: - setupLayout
     
     private func setupLayout() {
         view.addSubview(container)
@@ -258,15 +256,16 @@ class ProfileController: UIViewController {
         ])
     }
     
-    //MARK: - setupLayout
+    // MARK: - setupLayout
     
     private func getAttributedText(user: User) -> NSAttributedString {
         let titleParagraphStyle = NSMutableParagraphStyle()
         titleParagraphStyle.lineSpacing = 5
         titleParagraphStyle.alignment = .center
         
-        let attributedText = NSMutableAttributedString(string: user.nickname, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 25)])
-        attributedText.append(NSAttributedString(string: "\n" + user.email, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .thin), NSAttributedString.Key.paragraphStyle: titleParagraphStyle]))
+        let attributedText = NSMutableAttributedString(string: user.nickname, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25)])
+        attributedText.append(NSAttributedString(string: "\n" + user.email,
+                                                 attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .thin), NSAttributedString.Key.paragraphStyle: titleParagraphStyle]))
         attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: titleParagraphStyle, range: NSRange(location: 0, length: attributedText.length))
         
         return attributedText

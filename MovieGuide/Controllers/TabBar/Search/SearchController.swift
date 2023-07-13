@@ -12,7 +12,7 @@ class SearchController: UIViewController {
         view.addSubview(getFindTextFieldView())
     }
     
-    private func getFindTextFieldView() -> UIView{
+    private func getFindTextFieldView() -> UIView {
         let view = UIView(frame: CGRect(x: 15, y: 65, width: 363, height: 60))
         view.layer.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2).cgColor
         view.layer.cornerRadius = 5
@@ -21,16 +21,17 @@ class SearchController: UIViewController {
         return view
     }
     
-    private func configureFindTextFiled() -> UITextField{
+    private func configureFindTextFiled() -> UITextField {
         let findTextFiled = UITextField(frame: CGRect(x: 40, y: 14, width: 300, height: 31))
         findTextFiled.delegate = self
         findTextFiled.placeholder = "Films, serials, anime"
-        findTextFiled.attributedPlaceholder = NSAttributedString(string: "Films, serials, anime", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)])
+        findTextFiled.attributedPlaceholder = NSAttributedString(string: "Films, serials, anime",
+                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)])
         findTextFiled.clearButtonMode = .whileEditing
         return findTextFiled
     }
     
-    private func getMagnifyingglass() ->UIImageView{
+    private func getMagnifyingglass() -> UIImageView {
         let magnifyingglass = UIImageView(frame: CGRect(x: 15, y: 20, width: 20, height: 20))
         magnifyingglass.image = UIImage(systemName: "magnifyingglass")
         magnifyingglass.tintColor = UIColor.gray
@@ -59,4 +60,3 @@ extension SearchController: UITextFieldDelegate {
         view.endEditing(true)
     }
 }
-

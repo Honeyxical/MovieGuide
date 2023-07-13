@@ -78,6 +78,3 @@ struct Generes: Decodable{
 struct Countries: Decodable{
     let name: String?
 }
-
-
-

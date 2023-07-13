@@ -49,15 +49,15 @@ class LoginController: UIViewController {
     }()
     
     private let facebookLogin: UIButton = {
-        let fb = UIButton(type: .system)
-        fb.translatesAutoresizingMaskIntoConstraints = false
-        fb.setAttributedTitle(NSAttributedString(
+        let fbButton = UIButton(type: .system)
+        fbButton.translatesAutoresizingMaskIntoConstraints = false
+        fbButton.setAttributedTitle(NSAttributedString(
             string: "LOGIN WITH FACEBOOK",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.blue, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18)!]), for: .normal)
-        fb.backgroundColor = .white
-        fb.layer.borderWidth = 1
-        fb.layer.borderColor = UIColor.blue.cgColor
-        return fb
+        fbButton.backgroundColor = .white
+        fbButton.layer.borderWidth = 1
+        fbButton.layer.borderColor = UIColor.blue.cgColor
+        return fbButton
     }()
     
     private let createACLabel: UILabel = {

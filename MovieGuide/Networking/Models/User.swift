@@ -1,6 +1,6 @@
 import Foundation
 
-protocol UserProtocol{
+protocol UserProtocol {
     var nickname: String {get set}
     var login: String {get set}
     var password: String {get set}
@@ -12,15 +12,13 @@ protocol UserProtocol{
     func addFavouriteFilm(filmId: Int, user: User)
     }
 
-class User: NSObject, NSCoding, UserProtocol{
-    
+class User: NSObject, NSCoding, UserProtocol {
     internal var nickname: String
     internal var email: String
     internal var login: String
     internal var password: String
     internal var favouriteFilms: [NSNumber] = []
 
-    
     init(nickname: String, email: String, login: String, password: String, userHash: Int) {
         self.nickname = nickname
         self.email = email
@@ -35,8 +33,8 @@ class User: NSObject, NSCoding, UserProtocol{
     func getFavouritesFilms() -> [Int] {
         var ids: [Int] = []
         
-        for i in favouriteFilms {
-            ids.append(i.intValue)
+        for elem in favouriteFilms {
+            ids.append(elem.intValue)
         }
         return ids
     }
@@ -74,10 +72,10 @@ class User: NSObject, NSCoding, UserProtocol{
     }
     
     required init?(coder: NSCoder) {
-        self.nickname = coder.decodeObject(forKey: "nickname") as! String
-        self.email = coder.decodeObject(forKey: "email") as! String
-        self.login = coder.decodeObject(forKey: "login") as! String
-        self.password = coder.decodeObject(forKey: "password") as! String
+        self.nickname = coder.decodeObject(forKey: "nickname") as? String ?? "nickname"
+        self.email = coder.decodeObject(forKey: "email") as? String ?? "email"
+        self.login = coder.decodeObject(forKey: "login") as? String ?? "login"
+        self.password = coder.decodeObject(forKey: "password") as? String ?? "password"
         self.favouriteFilms = coder.decodeObject(forKey: "favouriteFilms") as? [NSNumber] ?? []
     }
 }

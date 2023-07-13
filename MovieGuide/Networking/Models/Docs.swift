@@ -1,6 +1,6 @@
 import Foundation
 
-struct FilmList:Decodable{
+struct FilmList: Decodable {
     var docs: [FilmShortInfo]?
 }
 

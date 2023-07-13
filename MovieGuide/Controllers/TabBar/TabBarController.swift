@@ -1,6 +1,6 @@
 import UIKit
 
-enum tabBarUnselected: String {
+enum TabBarUnselected: String {
     case home = "house.circle"
     case film = "film.circle"
     case search = "magnifyingglass.circle"
@@ -23,10 +23,10 @@ class TabBarController: UITabBarController {
     
     func setupVCs() {
             viewControllers = [
-                createNavController(for: HomeController(), title: "Home", image: UIImage(systemName: tabBarUnselected.home.rawValue)!),
-                createNavController(for: FilmController(), title: "Random film", image: UIImage(systemName: tabBarUnselected.film.rawValue)!),
-                createNavController(for: SearchController(), title: "Search", image: UIImage(systemName: tabBarUnselected.search.rawValue)!),
-                createNavController(for: ProfileController(), title: "Profile", image: UIImage(systemName: tabBarUnselected.profile.rawValue)!),
+                createNavController(for: HomeController(), title: "Home", image: UIImage(systemName: TabBarUnselected.home.rawValue)!),
+                createNavController(for: FilmController(), title: "Random film", image: UIImage(systemName: TabBarUnselected.film.rawValue)!),
+                createNavController(for: SearchController(), title: "Search", image: UIImage(systemName: TabBarUnselected.search.rawValue)!),
+                createNavController(for: ProfileController(), title: "Profile", image: UIImage(systemName: TabBarUnselected.profile.rawValue)!)
             ]
         }
     

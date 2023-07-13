@@ -19,7 +19,6 @@ class FilmsCell: UITableViewCell {
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var shortDescriptionLabel: UILabel!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         filmImage.image = UIImage(named: "PlaceholderImage")
@@ -33,7 +32,7 @@ extension FilmsCell {
     private func setPoster() {
         guard let posterUrl = film?.poster?.previewUrl ?? film?.poster?.url! else { return }
         
-        URLSession.shared.dataTask(with: URLRequest(url: URL(string: posterUrl)!)) { data, response, error in
+        URLSession.shared.dataTask(with: URLRequest(url: URL(string: posterUrl)!)) { data, _, error in
             guard let data = data, error == nil else { return }
             
             DispatchQueue.main.async { [self] in

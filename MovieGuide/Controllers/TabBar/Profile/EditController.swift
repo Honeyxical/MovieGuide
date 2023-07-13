@@ -135,24 +135,24 @@ class EditController: UIViewController {
     
     private func getField(placeholder: String) -> UITextField{
         
-        let tf = UITextField()
-        tf.translatesAutoresizingMaskIntoConstraints = false
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
         
         let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22)]
         
-        tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: attributes)
-        tf.layer.borderWidth = 1
-        tf.layer.borderColor = UIColor.gray.cgColor
-        tf.layer.cornerRadius = 15
+        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: attributes)
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.gray.cgColor
+        textField.layer.cornerRadius = 15
         let textPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 30))
-        tf.leftView = textPaddingView
-        tf.leftViewMode = .always
+        textField.leftView = textPaddingView
+        textField.leftViewMode = .always
         
         NSLayoutConstraint.activate([
-            tf.heightAnchor.constraint(equalToConstant: 60),
-            tf.widthAnchor.constraint(equalToConstant: view.bounds.width)
+            textField.heightAnchor.constraint(equalToConstant: 60),
+            textField.widthAnchor.constraint(equalToConstant: view.bounds.width)
         ])
         
-        return tf
+        return textField
     }
 }

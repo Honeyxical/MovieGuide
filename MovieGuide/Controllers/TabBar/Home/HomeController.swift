@@ -1,8 +1,8 @@
 import UIKit
 
 class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var films: [FilmShortInfo?] = []{
-        didSet{
+    var films: [FilmShortInfo?] = [] {
+        didSet {
             DispatchQueue.main.async { [self] in
                 self.tableView.reloadData()
                 self.loader.removeFromSuperview()
@@ -10,7 +10,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
     }
-    
+
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -18,32 +18,32 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.register(UINib(nibName: "FilmsCell", bundle: nil), forCellReuseIdentifier: "FilmsCell")
         return tableView
     }()
-    
+
     private lazy var loader = Loader.getLoader()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         view.addSubview(loader)
         configureLoader()
-        
+
         NetworkService.network.getFilmList { docs in
             self.films = docs
         }
-        
+
         URLCache.shared = URLCache(memoryCapacity: 500 * 1024 * 1024, diskCapacity: 500 * 1024 * 1024)
-        
+
         tableView.delegate = self
         tableView.dataSource = self
     }
-    
+
     private func configureLoader() {
         loader.heightAnchor.constraint(equalToConstant: view.bounds.height).isActive = true
         loader.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
         loader.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         loader.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
-    
+
     private func setupLayout() {
         view.addSubview(tableView)
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -51,43 +51,47 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return films.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FilmsCell") as! FilmsCell
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FilmsCell") as? FilmsCell
+        guard let cell = cell else {
+            let defaultCell = UITableViewCell()
+            return defaultCell
+        }
+
         if films.isEmpty {
             return cell
         }
-        
+
         guard let film = films[indexPath.row] else {
             return cell
         }
-        
+
         cell.film = film
-        
+
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let film = films[indexPath.row], let filmId = film.id else {
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
         let destination = FilmController()
-        
+
         destination.filmId = filmId
         destination.backButtonIsHidden = false
         destination.updateButtonIsHidden = true
-        
+
         tableView.deselectRow(at: indexPath, animated: true)
         self.navigationController?.pushViewController(destination, animated: true)
     }

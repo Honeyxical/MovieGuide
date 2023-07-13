@@ -3,7 +3,7 @@ import UIKit
 func getRatingArray(rating: Rating) -> [UIView] {
     var resultArray: [UIView] = []
 
-    if rating.kp != nil, rating.kp != 0{
+    if rating.kp != nil, rating.kp != 0 {
         resultArray.append(getRating(rating: String(rating.kp!), nameRating: "Kinopoisk"))
     }
     if rating.imdb != nil, rating.imdb != 0 {
@@ -23,8 +23,9 @@ func getRatingArray(rating: Rating) -> [UIView] {
 }
 
 func getAttributedString(mainText: String, secondaryText: String) -> NSMutableAttributedString {
-    let attributedTextString = NSMutableAttributedString(string: mainText, attributes: [ NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .bold)])
-    attributedTextString.append(NSAttributedString(string: "\n" + secondaryText, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .thin), NSAttributedString.Key.foregroundColor : UIColor.gray]))
+    let attributedTextString = NSMutableAttributedString(string: mainText, attributes: [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold)])
+    attributedTextString.append(NSAttributedString(string: "\n" + secondaryText,
+                                                   attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .thin), NSAttributedString.Key.foregroundColor: UIColor.gray]))
     return attributedTextString
 }
 

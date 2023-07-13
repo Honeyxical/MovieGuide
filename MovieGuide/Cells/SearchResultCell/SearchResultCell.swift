@@ -67,7 +67,7 @@ extension SearchResultCell {
     private func setPoster() {
         guard let posterUrl = film?.poster else { return }
         
-        URLSession.shared.dataTask(with: URLRequest(url: URL(string: posterUrl)!)) { data, response, error in
+        URLSession.shared.dataTask(with: URLRequest(url: URL(string: posterUrl)!)) { data, _, error in
             guard let data = data, error == nil else { return }
             
             DispatchQueue.main.async { [self] in

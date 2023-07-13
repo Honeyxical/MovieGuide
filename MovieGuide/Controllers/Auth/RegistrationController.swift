@@ -50,7 +50,7 @@ class RegistrationController: UIViewController {
         if Auth().registration(user: User(nickname: nicknameTF.text!, email: email.text!, login: loginTF.text!, password: passwordTF.text!, userHash: hashValue)){
             self.navigationController?.pushViewController(TabBarController(), animated: true)
             self.navigationController?.navigationBar.isHidden = true
-        }else{
+        } else {
             self.present(getAllert(message: "Account already exist"), animated: true)
 
         }

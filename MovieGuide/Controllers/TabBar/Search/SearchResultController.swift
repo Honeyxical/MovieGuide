@@ -2,8 +2,8 @@ import UIKit
 
 class SearchResultController: UIViewController {
     var navbarTitle = "Search: "
-    var films: [SearchFilmInfo?] = []{
-        didSet{
+    var films: [SearchFilmInfo?] = [] {
+        didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.loader.removeFromSuperview()
@@ -84,8 +84,12 @@ extension SearchResultController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as! SearchResultCell
-        if films.isEmpty{
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as? SearchResultCell
+        guard let cell = cell else {
+            let defaultCell = UITableViewCell()
+            return defaultCell
+        }
+        if films.isEmpty {
             return cell
         }
         
@@ -99,7 +103,7 @@ extension SearchResultController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let film = films[indexPath.row] , let filmId = film.id else {
+        guard let film = films[indexPath.row], let filmId = film.id else {
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }

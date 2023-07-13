@@ -1,10 +1,10 @@
 func arrayToString(array: [String?]) -> String {
-    if array.isEmpty{
+    if array.isEmpty {
         return ""
     }
     var result = ""
-    for i in 0...array.count - 1{
-        result.append(array[i]! + " ")
+    for counter in 0...array.count - 1 {
+        result.append(array[counter]! + " ")
     }
     return result
 }
@@ -16,12 +16,12 @@ func genresToString(array: [Generes], count: Int) -> String {
 
     var result = ""
 
-    for i in 0...array.count - 1 {
-        if i == count{
-            result.append(array[i].name!)
+    for counter in 0...array.count - 1 {
+        if counter == count {
+            result.append(array[counter].name!)
             continue
         }
-        result.append(array[i].name! + ", ")
+        result.append(array[counter].name! + ", ")
     }
     return result
 }
@@ -31,12 +31,12 @@ func actorsToString(array: [Person], count: Int) -> String {
 
     let count = count > array.count ? array.count : count
 
-    for i in 0...count {
-        if i == count{
-            result.append(array[i].enName ?? array[i].name!)
+    for counter in 0...count {
+        if counter == count {
+            result.append(array[counter].enName ?? array[counter].name!)
             continue
         }
-        result.append(array[i].enName ?? array[i].name!)
+        result.append(array[counter].enName ?? array[counter].name!)
         result.append(", ")
     }
     return result

@@ -14,7 +14,6 @@ class RandomFilmController: UIViewController {
 
     }
     
-
     /*
     // MARK: - Navigation
 
