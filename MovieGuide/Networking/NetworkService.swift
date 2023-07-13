@@ -1,6 +1,14 @@
 import Foundation
 
-class NetworkService {
+protocol NetworkServiceProtocol {
+    func getFilmById(id: Int, completiton: @escaping (FilmFullInfo) -> Void)
+    func getFilmList(completition: @escaping ([FilmShortInfo]) -> Void)
+    func getRandomFilm(completition: @escaping (FilmFullInfo) -> Void)
+    func searchFilm(name: String, completition: @escaping ([SearchFilmInfo]) -> Void)
+    func getFilmPostersURL(id: Int, completition: @escaping ([PostersURL]) -> Void)
+}
+
+class NetworkService: NetworkServiceProtocol {
     private let apiKey = "TN3T3HK-GGE44PM-KAMXMJW-HRQ4X7Q"
     private let reserveApiKey = "T7P5MRK-8ZG4FAC-N3ZRJWE-6VT9V3N"
     
@@ -89,18 +97,18 @@ class NetworkService {
         }.resume()
     }
     
-   private func getImage(url: String, completition: @escaping (Data) -> Void) {
-        URLSession.shared.dataTask(with: URL(string: url)!) {data, _, error in
-            guard let data = data, error == nil  else {
-                print("\n\nError download image\n")
-                fatalError()
-            }
-            completition(data)
-        }.resume()
-    }
-    
     // MARK: - Private func
-    
+
+    private func getImage(url: String, completition: @escaping (Data) -> Void) {
+         URLSession.shared.dataTask(with: URL(string: url)!) {data, _, error in
+             guard let data = data, error == nil  else {
+                 print("\n\nError download image\n")
+                 fatalError()
+             }
+             completition(data)
+         }.resume()
+     }
+
     private func getRequestForFilmPosters(id: Int, limit: Int) -> URLRequest {
         var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1/image?page=1&limit=\(limit)&movieId=\(id)")!)
         request.httpMethod = "GET"
@@ -202,16 +210,5 @@ class NetworkService {
         }
         
         return array
-    }
-    
-    func getPosters(array: [PostersURL]) -> [Data] {
-        var resultArray: [Data] = []
-        for elem in array {
-            getImage(url: elem.previewUrl ?? elem.url!) { data in
-                resultArray.append(data)
-            }
-        }
-        print("return array images")
-        return resultArray
     }
 }
