@@ -16,9 +16,13 @@ enum TabBarSelected: String {
 
 class TabBarController: UITabBarController {
     let networkService: NetworkServiceProtocol
+    let userService: UserServiceProtocol
+    let user: UserProtocol
 
-    init(networkService: NetworkServiceProtocol) {
+    init(networkService: NetworkServiceProtocol, userService: UserServiceProtocol, user: UserProtocol) {
         self.networkService = networkService
+        self.userService = userService
+        self.user = user
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -41,18 +45,18 @@ class TabBarController: UITabBarController {
     
     func setupVCs() {
             viewControllers = [
-                createNavigationController(for: HomeController(networkService: networkService),
+                createNavigationController(for: HomeController(networkService: networkService, userService: userService, user: user),
                                            title: "Home", image: UIImage(systemName: TabBarUnselected.home.rawValue)!,
                                            selectedImage: UIImage(systemName: TabBarSelected.home.rawValue)!),
-                createNavigationController(for: FilmController(networkService: networkService),
+                createNavigationController(for: FilmController(networkService: networkService, userService: userService, user: user),
                                            title: "Random film",
                                            image: UIImage(systemName: TabBarUnselected.film.rawValue)!,
                                            selectedImage: UIImage(systemName: TabBarSelected.film.rawValue)!),
-                createNavigationController(for: SearchController(networkService: networkService),
+                createNavigationController(for: SearchController(networkService: networkService, userService: userService, user: user),
                                            title: "Search",
                                            image: UIImage(systemName: TabBarUnselected.search.rawValue)!,
                                            selectedImage: UIImage(systemName: TabBarSelected.search.rawValue)!),
-                createNavigationController(for: ProfileController(),
+                createNavigationController(for: ProfileController(userService: userService, user: user),
                                            title: "Profile",
                                            image: UIImage(systemName: TabBarUnselected.profile.rawValue)!,
                                            selectedImage: UIImage(systemName: TabBarSelected.profile.rawValue)!)

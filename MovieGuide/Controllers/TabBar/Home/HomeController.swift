@@ -2,9 +2,13 @@ import UIKit
 
 class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let networkService: NetworkServiceProtocol
+    let userService: UserServiceProtocol
+    let user: UserProtocol
 
-    init(networkService: NetworkServiceProtocol) {
+    init(networkService: NetworkServiceProtocol, userService: UserServiceProtocol, user: UserProtocol) {
         self.networkService = networkService
+        self.userService = userService
+        self.user = user
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -97,7 +101,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        let destination = FilmController(networkService: NetworkService())
+        let destination = FilmController(networkService: NetworkService(), userService: userService, user: user)
 
         destination.filmId = filmId
         destination.backButtonIsHidden = false

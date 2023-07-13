@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		09AAA0052A37B950006D2510 /* ReusableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAA0042A37B950006D2510 /* ReusableItems.swift */; };
-		690BB8DD29DC4B120096EB06 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BB8DC29DC4B120096EB06 /* Storage.swift */; };
+		690BB8DD29DC4B120096EB06 /* UserStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BB8DC29DC4B120096EB06 /* UserStorage.swift */; };
 		690BB8DF29DC4BB10096EB06 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BB8DE29DC4BB10096EB06 /* User.swift */; };
 		690BB8E129DC5D3D0096EB06 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BB8E029DC5D3D0096EB06 /* LoginController.swift */; };
 		690BB8E329DC5D4B0096EB06 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BB8E229DC5D4B0096EB06 /* RegistrationController.swift */; };
@@ -27,6 +27,7 @@
 		69AC4FD729E807EF006A5B18 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AC4FD629E807EF006A5B18 /* Converter.swift */; };
 		69AC4FDB29E80B34006A5B18 /* SearchResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AC4FDA29E80B34006A5B18 /* SearchResultController.swift */; };
 		69CFD23C29E57E8500B86000 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CFD23B29E57E8500B86000 /* Loader.swift */; };
+		69D36B412A6070E200AE9D21 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D36B402A6070E200AE9D21 /* UserService.swift */; };
 		69F751BE29DD7A6C00C387BA /* FilmsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F751BC29DD7A6C00C387BA /* FilmsCell.swift */; };
 		69F751BF29DD7A6C00C387BA /* FilmsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69F751BD29DD7A6C00C387BA /* FilmsCell.xib */; };
 		69F751C329DDFCFC00C387BA /* Docs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F751C229DDFCFC00C387BA /* Docs.swift */; };
@@ -44,7 +45,7 @@
 
 /* Begin PBXFileReference section */
 		09AAA0042A37B950006D2510 /* ReusableItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableItems.swift; sourceTree = "<group>"; };
-		690BB8DC29DC4B120096EB06 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		690BB8DC29DC4B120096EB06 /* UserStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStorage.swift; sourceTree = "<group>"; };
 		690BB8DE29DC4BB10096EB06 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		690BB8E029DC5D3D0096EB06 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		690BB8E229DC5D4B0096EB06 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
@@ -65,6 +66,7 @@
 		69AC4FD629E807EF006A5B18 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 		69AC4FDA29E80B34006A5B18 /* SearchResultController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultController.swift; sourceTree = "<group>"; };
 		69CFD23B29E57E8500B86000 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
+		69D36B402A6070E200AE9D21 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		69F751BC29DD7A6C00C387BA /* FilmsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsCell.swift; sourceTree = "<group>"; };
 		69F751BD29DD7A6C00C387BA /* FilmsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilmsCell.xib; sourceTree = "<group>"; };
 		69F751C229DDFCFC00C387BA /* Docs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Docs.swift; sourceTree = "<group>"; };
@@ -94,7 +96,7 @@
 		690BB8DB29DC4AF50096EB06 /* Storages */ = {
 			isa = PBXGroup;
 			children = (
-				690BB8DC29DC4B120096EB06 /* Storage.swift */,
+				690BB8DC29DC4B120096EB06 /* UserStorage.swift */,
 			);
 			path = Storages;
 			sourceTree = "<group>";
@@ -133,8 +135,9 @@
 			isa = PBXGroup;
 			children = (
 				697497A329EC08EC00176BAD /* Application */,
+				692DF49A29D5FD6F00B6DA45 /* Models */,
+				69D36B3E2A6070B000AE9D21 /* Service */,
 				8D915ED229F942570072A919 /* Extension */,
-				692DF4A029D5FFB300B6DA45 /* Networking */,
 				690BB8DB29DC4AF50096EB06 /* Storages */,
 				694598EE29DCA3DD009D5C97 /* Cells */,
 				692DF49E29D5FD9000B6DA45 /* Controllers */,
@@ -167,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				692DF4A129D5FFD000B6DA45 /* NetworkService.swift */,
-				692DF49A29D5FD6F00B6DA45 /* Models */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -234,6 +236,23 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		69D36B3E2A6070B000AE9D21 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				69D36B3F2A6070C700AE9D21 /* User */,
+				692DF4A029D5FFB300B6DA45 /* Networking */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		69D36B3F2A6070C700AE9D21 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				69D36B402A6070E200AE9D21 /* UserService.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		69F751BB29DD790C00C387BA /* FilmsListCell */ = {
@@ -409,6 +428,7 @@
 				69AC4FDB29E80B34006A5B18 /* SearchResultController.swift in Sources */,
 				8D176A5E2A06861B003DBBD2 /* UIScrollView + Extension.swift in Sources */,
 				8D915ED629FAB46D0072A919 /* ActorCell.swift in Sources */,
+				69D36B412A6070E200AE9D21 /* UserService.swift in Sources */,
 				69AC4FD729E807EF006A5B18 /* Converter.swift in Sources */,
 				69674AB029E1ACE3002AAF14 /* SearchController.swift in Sources */,
 				692DF48729D5FD5700B6DA45 /* AppDelegate.swift in Sources */,
@@ -420,7 +440,7 @@
 				690BB8E129DC5D3D0096EB06 /* LoginController.swift in Sources */,
 				8D1C36AC2A1377A20026545C /* EditController.swift in Sources */,
 				8D1C36A82A1376F30026545C /* FavoriteController.swift in Sources */,
-				690BB8DD29DC4B120096EB06 /* Storage.swift in Sources */,
+				690BB8DD29DC4B120096EB06 /* UserStorage.swift in Sources */,
 				8D1C36AA2A13775D0026545C /* AboutController.swift in Sources */,
 				69F751C329DDFCFC00C387BA /* Docs.swift in Sources */,
 				09AAA0052A37B950006D2510 /* ReusableItems.swift in Sources */,

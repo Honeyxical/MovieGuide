@@ -2,8 +2,19 @@ import UIKit
 
 class EditController: UIViewController {
     
-    let user = Auth.auth.getCurrentUser()
-    
+    let user: UserProtocol
+    let userService: UserServiceProtocol
+
+    init(user: UserProtocol, userService: UserServiceProtocol) {
+        self.user = user
+        self.userService = userService
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     private let navigationBar: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -34,7 +45,7 @@ class EditController: UIViewController {
     }
     
     private lazy var image: UIImageView = {
-        let image = UIImageView(image: UIImage(data: user!.userImage))
+        let image = UIImageView(image: UIImage(data: user.userImage))
         image.translatesAutoresizingMaskIntoConstraints = false
         image.layer.cornerRadius = 100
         image.contentMode = .scaleAspectFill
@@ -127,11 +138,9 @@ class EditController: UIViewController {
     
     @objc private func saveHandler() {
         if editPasswordField.text == repeatPasswordField.text || (editPasswordField.text == "" && repeatPasswordField.text == "") {
-            if let user = user{
-                user.dataEditing(tuple: (nickName: editNicknameField.text!, email: editEmailField.text!, password: editPasswordField.text!))
-                Auth.auth.saveCurrentUser(user: user)
-                navigationController?.popViewController(animated: true)
-            }
+            userService.dataEditing(tuple: (nickName: editNicknameField.text!, email: editEmailField.text!, password: editPasswordField.text!))
+            userService.userStorage.saveCurrentUser(user: user)
+            navigationController?.popViewController(animated: true)
         } else {
             self.present(getAllert(message: "Passwords don't match "), animated: true)
         }
@@ -224,7 +233,7 @@ extension EditController: UIImagePickerControllerDelegate, UINavigationControlle
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.originalImage] as? UIImage else { return }
         self.image.image = image
-        user?.updateUserImage(data: image.pngData() ?? Data())
+        userService.updateUserImage(data: image.pngData() ?? Data())
         self.dismiss(animated: true)
     }
 }

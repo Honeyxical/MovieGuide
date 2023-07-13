@@ -1,8 +1,19 @@
 import UIKit
 
 class ProfileController: UIViewController {
-    var user: User?
-    
+    var userService: UserServiceProtocol
+    var user: UserProtocol
+
+    init(userService: UserServiceProtocol, user: UserProtocol) {
+        self.userService = userService
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     let container: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red: 251/255, green: 251/255, blue: 251/255, alpha: 1.0)
@@ -34,7 +45,7 @@ class ProfileController: UIViewController {
     private lazy var nameAndEmailTextView: UILabel = {
         let text = UILabel()
         text.translatesAutoresizingMaskIntoConstraints = false
-        text.attributedText = getAttributedText(user: user!)
+        text.attributedText = getAttributedText(user: user)
         text.textAlignment = .center
         text.numberOfLines = 2
         return text
@@ -79,7 +90,7 @@ class ProfileController: UIViewController {
     }()
 
     @objc private func openEdit() {
-        navigationController?.pushViewController(EditController(), animated: true)
+        navigationController?.pushViewController(EditController(user: user, userService: userService), animated: true)
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -135,7 +146,7 @@ class ProfileController: UIViewController {
     }()
     
     @objc private func openFavorite() {
-        navigationController?.pushViewController(FavoriteController(networkService: NetworkService()), animated: true)
+        navigationController?.pushViewController(FavoriteController(networkService: NetworkService(), userService: userService, user: user), animated: true)
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -188,9 +199,8 @@ class ProfileController: UIViewController {
     
     @objc private func logoutHandler() {
         print("logout")
-        Auth().logout(user: user!)
+        userService.logout(user: user)
         navigationController?.tabBarController?.tabBar.isHidden = true
-//        navigationController?.pushViewController(LoginController(), animated: false)
         navigationController?.popToRootViewController(animated: false)
     }
    
@@ -199,7 +209,6 @@ class ProfileController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        user = Auth.auth.getCurrentUser()
         setupLayout()
     }
     
@@ -207,9 +216,8 @@ class ProfileController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        user = Auth.auth.getCurrentUser()
-        nameAndEmailTextView.attributedText = getAttributedText(user: user!)
-        profileImage.image = UIImage(data: user!.userImage)
+        nameAndEmailTextView.attributedText = getAttributedText(user: user)
+        profileImage.image = UIImage(data: user.userImage)
     }
     
     // MARK: - setupLayout
@@ -262,7 +270,7 @@ class ProfileController: UIViewController {
     
     // MARK: - setupLayout
     
-    private func getAttributedText(user: User) -> NSAttributedString {
+    private func getAttributedText(user: UserProtocol) -> NSAttributedString {
         let titleParagraphStyle = NSMutableParagraphStyle()
         titleParagraphStyle.lineSpacing = 5
         titleParagraphStyle.alignment = .center

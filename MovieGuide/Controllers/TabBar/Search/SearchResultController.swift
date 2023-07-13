@@ -1,6 +1,19 @@
 import UIKit
 
 class SearchResultController: UIViewController {
+    let userService: UserServiceProtocol
+    let user: UserProtocol
+
+    init(userService: UserServiceProtocol, user: UserProtocol) {
+        self.userService = userService
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     var navbarTitle = "Search: "
     var films: [SearchFilmInfo?] = [] {
         didSet {
@@ -108,7 +121,7 @@ extension SearchResultController: UITableViewDataSource, UITableViewDelegate {
             return
         }
         
-        let destination = FilmController(networkService: NetworkService())
+        let destination = FilmController(networkService: NetworkService(), userService: userService, user: user)
         
         destination.filmId = filmId
         destination.updateButtonIsHidden = true

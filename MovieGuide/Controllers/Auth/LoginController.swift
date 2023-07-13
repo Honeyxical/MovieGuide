@@ -1,7 +1,17 @@
 import UIKit
 
 class LoginController: UIViewController {
-    
+    let userService: UserServiceProtocol
+
+    init() {
+        self.userService = UserService(userStotage: UserStorage(), user: User(nickname: "", email: "", login: "", password: "", userHash: 0))
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     private let loginLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -31,11 +41,14 @@ class LoginController: UIViewController {
             self.present(getAllert(message: "Field login or password are empty"), animated: true)
             return
         }
-        if !Auth().login(userLogin: loginTF.text!, userPassword: passwordTF.text!){
+        if !userService.login(userLogin: loginTF.text!, userPassword: passwordTF.text!){
             self.present(getAllert(message: "User not found"), animated: true)
             return
         }
-        self.navigationController?.pushViewController(TabBarController(networkService: NetworkService()), animated: true)
+        let curentUser = userService.userStorage.getCurrentUser()
+        self.navigationController?.pushViewController(TabBarController(networkService: NetworkService(),
+                                                                       userService: UserService(userStotage: UserStorage(), user: curentUser),
+                                                                       user: userService.userStorage.getCurrentUser()), animated: true)
         self.navigationController?.navigationBar.isHidden = true
     }
     
@@ -80,7 +93,7 @@ class LoginController: UIViewController {
     }()
     
     @objc private func signUp() {
-        navigationController?.pushViewController(RegistrationController(), animated: true)
+        navigationController?.pushViewController(RegistrationController(userService: userService), animated: true)
         navigationController?.navigationBar.isHidden = true
     }
     

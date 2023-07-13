@@ -1,6 +1,16 @@
 import UIKit
 
 class RegistrationController: UIViewController {
+    let userService: UserServiceProtocol
+
+    init(userService: UserServiceProtocol) {
+        self.userService = userService
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private let backButton: UIButton = {
         let btn = UIButton()
@@ -47,8 +57,11 @@ class RegistrationController: UIViewController {
         if nicknameTF.text! == "" || loginTF.text! == "" || passwordTF.text! == "" {
             self.present(getAllert(message: "Field nickname, login or password is empty"), animated: true)
         }
-        if Auth().registration(user: User(nickname: nicknameTF.text!, email: email.text!, login: loginTF.text!, password: passwordTF.text!, userHash: hashValue)){
-            self.navigationController?.pushViewController(TabBarController(networkService: NetworkService()), animated: true)
+        let currentUser = User(nickname: nicknameTF.text!, email: email.text!, login: loginTF.text!, password: passwordTF.text!, userHash: hashValue)
+        if userService.registration(user: currentUser){
+            self.navigationController?.pushViewController(TabBarController(networkService: NetworkService(),
+                                                                           userService: UserService(userStotage: UserStorage(), user: currentUser),
+                                                                           user: currentUser), animated: true)
             self.navigationController?.navigationBar.isHidden = true
         } else {
             self.present(getAllert(message: "Account already exist"), animated: true)

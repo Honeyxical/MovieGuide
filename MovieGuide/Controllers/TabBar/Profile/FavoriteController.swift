@@ -2,10 +2,14 @@ import UIKit
 
 class FavoriteController: UIViewController {
     let networkService: NetworkService
+    let userService: UserServiceProtocol
+    let user: UserProtocol
 
-    init(networkService: NetworkService) {
+    init(networkService: NetworkService, userService: UserServiceProtocol, user: UserProtocol) {
         self.networkService = networkService
-        super.init()
+        self.userService = userService
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
@@ -106,14 +110,13 @@ class FavoriteController: UIViewController {
     }
 
     private func getFilms() {
-        guard let user = Auth.auth.getCurrentUser() else { return }
         films = []
-        if user.getFavouritesFilms().count == 0 {
+        if userService.getFavouritesFilms().count == 0 {
             displayPlug()
             return
         }
 
-        for id in user.getFavouritesFilms() {
+        for id in userService.getFavouritesFilms() {
             networkService.getFilmById(id: id) { [self] data in
                 films.append(FilmShortInfo(id: data.id,
                                            name: data.name,
@@ -173,7 +176,7 @@ extension FavoriteController: UITableViewDelegate, UITableViewDataSource {
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        let destination = FilmController(networkService: NetworkService())
+        let destination = FilmController(networkService: NetworkService(), userService: userService, user: user)
 
         destination.filmId = filmId
         destination.backButtonIsHidden = false

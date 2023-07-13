@@ -2,9 +2,13 @@ import UIKit
 
 class FilmController: UIViewController {
     let networkService: NetworkServiceProtocol
+    let userService: UserServiceProtocol
+    let user: UserProtocol
 
-    init(networkService: NetworkServiceProtocol) {
+    init(networkService: NetworkServiceProtocol, userService: UserServiceProtocol, user: UserProtocol) {
         self.networkService = networkService
+        self.userService = userService
+        self.user = user
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -15,8 +19,6 @@ class FilmController: UIViewController {
     var filmId: Int = 0
     var backButtonIsHidden = true
     var updateButtonIsHidden = false
-
-    private var user = Auth.auth.getCurrentUser()
 
     var film: FilmFullInfo? {
         didSet {
@@ -224,7 +226,7 @@ class FilmController: UIViewController {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         let filmId = filmId > 0 ? filmId : film!.id!
-        let stateImage = user!.getFavouritesFilms().contains(filmId) ? "FavouriteAdded" : "Favourite"
+        let stateImage = userService.getFavouritesFilms().contains(filmId) ? "FavouriteAdded" : "Favourite"
         button.setImage(UIImage(named: stateImage), for: .normal)
         button.tintColor = .systemGray2
         button.addTarget(nil, action: #selector(addToFavorite), for: .touchUpInside)
@@ -232,13 +234,12 @@ class FilmController: UIViewController {
     }()
 
     @objc private func addToFavorite() {
-        guard let user = user else { return }
         let filmId = filmId > 0 ? filmId : film!.id!
-        if !user.getFavouritesFilms().contains(filmId) {
-            user.addFavouriteFilm(filmId: filmId, user: user)
+        if !userService.getFavouritesFilms().contains(filmId) {
+            userService.addFavouriteFilm(filmId: filmId, user: user)
             buttonBookMark.setImage(UIImage(named: "FavouriteAdded"), for: .normal)
         } else {
-            user.removeFavouriteFilm(filmId: filmId, user: user)
+            userService.removeFavouriteFilm(filmId: filmId, user: user)
             buttonBookMark.setImage(UIImage(named: "Favourite"), for: .normal)
 
         }
@@ -596,7 +597,7 @@ class FilmController: UIViewController {
     }
 
     @objc func openSimilarFilm(sender: UIButton) {
-        let destination = FilmController(networkService: NetworkService())
+        let destination = FilmController(networkService: NetworkService(), userService: userService, user: user)
         destination.backButtonIsHidden = false
         destination.updateButtonIsHidden = true
         destination.filmId = Int(sender.titleLabel!.text!)!

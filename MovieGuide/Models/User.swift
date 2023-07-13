@@ -7,11 +7,7 @@ protocol UserProtocol {
     var favouriteFilms: [NSNumber] {get set}
     var email: String {get set}
     var userImage: Data {get set}
-    
-    func getUserLoginAndEmail() -> (String, String)
-    func getFavouritesFilms() -> [Int]
-    func addFavouriteFilm(filmId: Int, user: User)
-    }
+}
 
 class User: NSObject, NSCoding, UserProtocol {
     internal var nickname: String
@@ -27,47 +23,6 @@ class User: NSObject, NSCoding, UserProtocol {
         self.login = login
         self.password = password
         self.userImage = (UIImage(named: "Ghost")?.pngData())!
-    }
-    
-    func getUserLoginAndEmail() -> (String, String) {
-        return (nickname, email)
-    }
-    
-    func getFavouritesFilms() -> [Int] {
-        var ids: [Int] = []
-        
-        for elem in favouriteFilms {
-            ids.append(elem.intValue)
-        }
-        return ids
-    }
-    
-    func addFavouriteFilm(filmId: Int, user: User) {
-        favouriteFilms.append(NSNumber(value: filmId))
-        Auth.auth.saveCurrentUser(user: user)
-    }
-    
-    func removeFavouriteFilm(filmId: Int, user: User) {
-        favouriteFilms.remove(at: favouriteFilms.firstIndex(of: NSNumber(value: filmId))!)
-        Auth().saveCurrentUser(user: user)
-    }
-    
-    func dataEditing(tuple: (nickName: String, email: String, password: String)) {
-        if tuple.nickName != "" {
-            self.nickname = tuple.nickName
-        }
-        
-        if tuple.email != "" {
-            self.email = tuple.email
-        }
-        
-        if tuple.password != "" {
-            self.password = tuple.password
-        }
-    }
-    
-    func updateUserImage(data: Data) {
-        userImage = data
     }
     
     func encode(with coder: NSCoder) {

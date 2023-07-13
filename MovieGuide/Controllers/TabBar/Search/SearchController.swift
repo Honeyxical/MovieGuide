@@ -2,16 +2,21 @@ import UIKit
 
 class SearchController: UIViewController {
     let networkService: NetworkServiceProtocol
-    var findTextFiled = UITextField()
+    let userService: UserServiceProtocol
+    let user: UserProtocol
 
-    init(networkService: NetworkServiceProtocol) {
+    init(networkService: NetworkServiceProtocol, userService: UserServiceProtocol, user: UserProtocol) {
         self.networkService = networkService
+        self.userService = userService
+        self.user = user
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    var findTextFiled = UITextField()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +59,7 @@ extension SearchController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
-        let destination = SearchResultController()
+        let destination = SearchResultController(userService: userService, user: user)
 
         networkService.searchFilm(name: textField.text!) { data in
             destination.films = data
