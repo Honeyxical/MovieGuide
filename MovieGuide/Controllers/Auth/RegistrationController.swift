@@ -48,7 +48,7 @@ class RegistrationController: UIViewController {
             self.present(getAllert(message: "Field nickname, login or password is empty"), animated: true)
         }
         if Auth().registration(user: User(nickname: nicknameTF.text!, email: email.text!, login: loginTF.text!, password: passwordTF.text!, userHash: hashValue)){
-            self.navigationController?.pushViewController(TabBarController(), animated: true)
+            self.navigationController?.pushViewController(TabBarController(networkService: NetworkService()), animated: true)
             self.navigationController?.navigationBar.isHidden = true
         } else {
             self.present(getAllert(message: "Account already exist"), animated: true)
