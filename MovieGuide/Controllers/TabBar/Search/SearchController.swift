@@ -1,7 +1,7 @@
 import UIKit
 
 class SearchController: UIViewController {
-    let networkService: NetworkService
+    let networkService: NetworkServiceProtocol
     var findTextFiled = UITextField()
 
     init(networkService: NetworkService) {

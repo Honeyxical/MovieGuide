@@ -283,8 +283,8 @@
 		8DF1B9482A0BBCD30024C5C3 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				69AC4FDA29E80B34006A5B18 /* SearchResultController.swift */,
 				69674AAF29E1ACE3002AAF14 /* SearchController.swift */,
+				69AC4FDA29E80B34006A5B18 /* SearchResultController.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";

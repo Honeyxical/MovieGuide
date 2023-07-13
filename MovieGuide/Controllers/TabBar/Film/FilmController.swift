@@ -1,7 +1,7 @@
 import UIKit
 
 class FilmController: UIViewController {
-    let networkService: NetworkService
+    let networkService: NetworkServiceProtocol
 
     init(networkService: NetworkService) {
         self.networkService = networkService
