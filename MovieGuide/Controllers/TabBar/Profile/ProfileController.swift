@@ -19,10 +19,13 @@ class ProfileController: UIViewController {
     
     // MARK: - profileImage
     
-    private let profileImage: UIImageView = {
-        let image = UIImageView(image: UIImage(named: "Ghost"))
+    private lazy var profileImage: UIImageView = {
+        let image = UIImageView(image: UIImage())
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.contentMode = .scaleToFill
+        image.contentMode = .scaleAspectFill
+        image.layer.cornerRadius = 50
+        image.clipsToBounds = true
+        image.layer.borderWidth = 2
         return image
     }()
     
@@ -187,7 +190,10 @@ class ProfileController: UIViewController {
         print("logout")
         Auth().logout(user: user!)
         navigationController?.tabBarController?.tabBar.isHidden = true
-        navigationController?.pushViewController(LoginController(), animated: false)
+//        navigationController?.pushViewController(LoginController(), animated: false)
+        navigationController?.popToRootViewController(animated: false)
+        
+        
     }
    
     // MARK: - viewDidLoad
@@ -205,7 +211,7 @@ class ProfileController: UIViewController {
         super.viewWillAppear(animated)
         user = Auth.auth.getCurrentUser()
         nameAndEmailTextView.attributedText = getAttributedText(user: user!)
-        
+        profileImage.image = UIImage(data: user!.userImage)
     }
     
     // MARK: - setupLayout

@@ -2,6 +2,8 @@ import UIKit
 
 class EditController: UIViewController {
     
+    let user = Auth.auth.getCurrentUser()
+    
     private let navigationBar: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -31,13 +33,68 @@ class EditController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    private let image: UIImageView = {
-        let image = UIImageView(image: UIImage(named: "Ghost"))
+    private lazy var image: UIImageView = {
+        let image = UIImageView(image: UIImage(data: user!.userImage))
         image.translatesAutoresizingMaskIntoConstraints = false
         image.layer.cornerRadius = 100
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleAspectFill
+        image.layer.borderWidth = 1
+        image.clipsToBounds = true
         return image
     }()
+    
+    private let imagePickerBtn: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.backgroundColor = .lightGray.withAlphaComponent(0.1)
+        btn.addTarget(nil, action: #selector(imagePickerHandler), for: .touchUpInside)
+        btn.layer.cornerRadius = 100
+        btn.setImage(UIImage(named: "Upload"), for: .normal)
+        return btn
+    }()
+    
+    @objc private func imagePickerHandler() {
+        showImagePickerOptions()
+    }
+    
+    private func imagePicker(sourceType: UIImagePickerController.SourceType) -> UIImagePickerController {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = sourceType
+        return imagePicker
+    }
+    
+    func showImagePickerOptions() {
+        let alertVC = UIAlertController(title: "Pick a photo", message: "Choose a picture from Library or camera", preferredStyle: .actionSheet)
+        
+        let cameraAction = UIAlertAction(title: "Camera", style: .default){ [weak self] (action) in
+            guard let self = self else {
+                return
+            }
+            
+            let cameraImagePicker = self.imagePicker(sourceType: .camera)
+            self.present(cameraImagePicker, animated: true){
+                cameraImagePicker.delegate = self
+            }
+        }
+        
+        let libraryPicker = UIAlertAction(title: "Library", style: .default){ [weak self] (action) in
+            guard let self = self else {
+                return
+            }
+            
+            let libraryImagePicker = self.imagePicker(sourceType: .photoLibrary)
+            self.present(libraryImagePicker, animated: true){
+                libraryImagePicker.delegate = self
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alertVC.addAction(cameraAction)
+        alertVC.addAction(libraryPicker)
+        alertVC.addAction(cancelAction)
+        self.present(alertVC, animated: true)
+    }
     
     private lazy var editNicknameField = getField(placeholder: "Nickname")
     
@@ -70,7 +127,7 @@ class EditController: UIViewController {
     
     @objc private func saveHandler() {
         if editPasswordField.text == repeatPasswordField.text || (editPasswordField.text == "" && repeatPasswordField.text == "") {
-            if let user = Auth.auth.getCurrentUser(){
+            if let user = user{
                 user.dataEditing(tuple: (nickName: editNicknameField.text!, email: editEmailField.text!, password: editPasswordField.text!))
                 Auth.auth.saveCurrentUser(user: user)
                 navigationController?.popViewController(animated: true)
@@ -102,6 +159,7 @@ class EditController: UIViewController {
     private func setupLayout() {
         view.addSubview(navigationBar)
         view.addSubview(image)
+        view.addSubview(imagePickerBtn)
         view.addSubview(stackFiled)
         view.addSubview(cancelButton)
         view.addSubview(saveButton)
@@ -116,6 +174,11 @@ class EditController: UIViewController {
             image.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             image.widthAnchor.constraint(equalToConstant: 200),
             image.heightAnchor.constraint(equalToConstant: 200),
+            
+            imagePickerBtn.centerXAnchor.constraint(equalTo: image.centerXAnchor),
+            imagePickerBtn.centerYAnchor.constraint(equalTo: image.centerYAnchor),
+            imagePickerBtn.heightAnchor.constraint(equalToConstant: 200),
+            imagePickerBtn.widthAnchor.constraint(equalToConstant: 200),
             
             stackFiled.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 25),
             stackFiled.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
@@ -154,5 +217,14 @@ class EditController: UIViewController {
         ])
         
         return textField
+    }
+}
+
+extension EditController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as! UIImage
+        self.image.image = image
+        user?.updateUserImage(data: image.pngData()!)
+        self.dismiss(animated: true)
     }
 }

@@ -7,6 +7,14 @@ enum TabBarUnselected: String {
     case profile = "person.circle"
 }
 
+enum tabBarSelected: String {
+    case home = "house.circle.fill"
+    case film = "film.circle.fill"
+    case search = "magnifyingglass.circle.fill"
+    case profile = "person.circle.fill"
+}
+
+
 class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,22 +31,19 @@ class TabBarController: UITabBarController {
     
     func setupVCs() {
             viewControllers = [
-                createNavController(for: HomeController(), title: "Home", image: UIImage(systemName: TabBarUnselected.home.rawValue)!),
-                createNavController(for: FilmController(), title: "Random film", image: UIImage(systemName: TabBarUnselected.film.rawValue)!),
-                createNavController(for: SearchController(), title: "Search", image: UIImage(systemName: TabBarUnselected.search.rawValue)!),
-                createNavController(for: ProfileController(), title: "Profile", image: UIImage(systemName: TabBarUnselected.profile.rawValue)!)
+                createNavController(for: HomeController(), title: "Home", image: UIImage(systemName: tabBarUnselected.home.rawValue)!, selectedImage: UIImage(systemName: tabBarSelected.home.rawValue)!),
+                createNavController(for: FilmController(), title: "Random film", image: UIImage(systemName: tabBarUnselected.film.rawValue)!, selectedImage: UIImage(systemName: tabBarSelected.film.rawValue)!),
+                createNavController(for: SearchController(), title: "Search", image: UIImage(systemName: tabBarUnselected.search.rawValue)!, selectedImage: UIImage(systemName: tabBarSelected.search.rawValue)!),
+                createNavController(for: ProfileController(), title: "Profile", image: UIImage(systemName: tabBarUnselected.profile.rawValue)!, selectedImage: UIImage(systemName: tabBarSelected.profile.rawValue)!),
             ]
         }
     
     fileprivate func createNavController(for viewController: UIViewController,
                                          title: String,
-                                         image: UIImage) -> UIViewController {
-        let navController = UINavigationController(rootViewController: viewController)
-        navController.tabBarItem.title = title
-        navController.tabBarItem.image = image
-        navController.navigationBar.isHidden = true
-        navigationController?.navigationBar.isHidden = true
-        return navController
+                                         image: UIImage, selectedImage: UIImage) -> UIViewController {
+        let vc = viewController
+        vc.tabBarItem = UITabBarItem(title: title, image: image, selectedImage: selectedImage)
+        return vc
     }
     
     fileprivate func setupTabBarLayout() {
