@@ -1,6 +1,6 @@
 import UIKit
 
-class User: NSCoding {
+class User: NSObject, NSCoding {
     internal var nickname: String
     internal var email: String
     internal var login: String
