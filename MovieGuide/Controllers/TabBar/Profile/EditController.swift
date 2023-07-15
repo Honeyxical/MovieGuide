@@ -2,10 +2,10 @@ import UIKit
 
 class EditController: UIViewController {
     
-    let user: UserProtocol
+    let user: User
     let userService: UserServiceProtocol
 
-    init(user: UserProtocol, userService: UserServiceProtocol) {
+    init(user: User, userService: UserServiceProtocol) {
         self.user = user
         self.userService = userService
         super.init(nibName: nil, bundle: nil)

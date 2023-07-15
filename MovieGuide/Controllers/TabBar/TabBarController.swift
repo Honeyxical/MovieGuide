@@ -17,9 +17,9 @@ enum TabBarSelected: String {
 class TabBarController: UITabBarController {
     let networkService: NetworkServiceProtocol
     let userService: UserServiceProtocol
-    let user: UserProtocol
+    let user: User
 
-    init(networkService: NetworkServiceProtocol, userService: UserServiceProtocol, user: UserProtocol) {
+    init(networkService: NetworkServiceProtocol, userService: UserServiceProtocol, user: User) {
         self.networkService = networkService
         self.userService = userService
         self.user = user

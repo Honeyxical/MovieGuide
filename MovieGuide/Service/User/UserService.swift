@@ -5,15 +5,15 @@ protocol UserServiceProtocol {
 
     // Auth methods
     func getUserLoginAndEmail() -> (String, String)
-    func registration(user: UserProtocol) -> Bool
+    func registration(user: User) -> Bool
     func login(userLogin: String, userPassword: String) -> Bool
-    func logout(user: UserProtocol)
-    func getCurrentUser(login: String, password: String) -> UserProtocol
+    func logout(user: User)
+    func getCurrentUser(login: String, password: String) -> User
 
     // Films methods
     func getFavouritesFilms() -> [Int]
-    func addFavouriteFilm(filmId: Int, user: UserProtocol)
-    func removeFavouriteFilm(filmId: Int, user: UserProtocol)
+    func addFavouriteFilm(filmId: Int, user: User)
+    func removeFavouriteFilm(filmId: Int, user: User)
 
     // Edit user profile methods
     func dataEditing(tuple: (nickName: String, email: String, password: String))
@@ -22,9 +22,9 @@ protocol UserServiceProtocol {
 
 class UserService: UserServiceProtocol {
     var userStorage: DataBaseManager
-    var user: UserProtocol
+    var user: User
 
-    init(userStotage: DataBaseManager, user: UserProtocol) {
+    init(userStotage: DataBaseManager, user: User) {
         self.userStorage = userStotage
         self.user = user
     }
@@ -43,7 +43,7 @@ class UserService: UserServiceProtocol {
         return false
     }
 
-    func registration(user: UserProtocol) -> Bool {
+    func registration(user: User) -> Bool {
         if userStorage.getUserForKey(key: user.login) == nil {
             userStorage.saveNewUser(user: user)
             userStorage.saveCurrentUser(user: user)
@@ -52,12 +52,12 @@ class UserService: UserServiceProtocol {
         return false
     }
 
-    func logout(user: UserProtocol) {
+    func logout(user: User) {
         userStorage.saveCurrentUser(user: user)
         userStorage.removeCurrentUser()
     }
 
-    func getCurrentUser(login: String, password: String) -> UserProtocol {
+    func getCurrentUser(login: String, password: String) -> User {
         return userStorage.getCurrentUser()
     }
 
@@ -71,12 +71,12 @@ class UserService: UserServiceProtocol {
         return ids
     }
 
-    func addFavouriteFilm(filmId: Int, user: UserProtocol) {
+    func addFavouriteFilm(filmId: Int, user: User) {
         self.user.favouriteFilms.append(NSNumber(value: filmId))
         userStorage.saveCurrentUser(user: user)
     }
 
-    func removeFavouriteFilm(filmId: Int, user: UserProtocol) {
+    func removeFavouriteFilm(filmId: Int, user: User) {
         self.user.favouriteFilms.remove(at: user.favouriteFilms.firstIndex(of: NSNumber(value: filmId))!)
         userStorage.saveCurrentUser(user: user)
     }

@@ -2,9 +2,9 @@ import UIKit
 
 class ProfileController: UIViewController {
     var userService: UserServiceProtocol
-    var user: UserProtocol
+    var user: User
 
-    init(userService: UserServiceProtocol, user: UserProtocol) {
+    init(userService: UserServiceProtocol, user: User) {
         self.userService = userService
         self.user = user
         super.init(nibName: nil, bundle: nil)
@@ -270,7 +270,7 @@ class ProfileController: UIViewController {
     
     // MARK: - setupLayout
     
-    private func getAttributedText(user: UserProtocol) -> NSAttributedString {
+    private func getAttributedText(user: User) -> NSAttributedString {
         let titleParagraphStyle = NSMutableParagraphStyle()
         titleParagraphStyle.lineSpacing = 5
         titleParagraphStyle.alignment = .center

@@ -3,9 +3,9 @@ import UIKit
 class FavoriteController: UIViewController {
     let networkService: NetworkService
     let userService: UserServiceProtocol
-    let user: UserProtocol
+    let user: User
 
-    init(networkService: NetworkService, userService: UserServiceProtocol, user: UserProtocol) {
+    init(networkService: NetworkService, userService: UserServiceProtocol, user: User) {
         self.networkService = networkService
         self.userService = userService
         self.user = user

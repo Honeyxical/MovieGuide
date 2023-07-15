@@ -2,17 +2,17 @@ import Foundation
 
 protocol DataBaseManager {
 
-    func getUserForKey(key: String) -> UserProtocol?
-    func saveCurrentUser(user: UserProtocol)
-    func saveNewUser(user: UserProtocol)
+    func getUserForKey(key: String) -> User?
+    func saveCurrentUser(user: User)
+    func saveNewUser(user: User)
     func removeCurrentUser()
-    func getCurrentUser() -> UserProtocol
+    func getCurrentUser() -> User
 }
 
 struct UserDefaultsBaseManager: DataBaseManager {
     internal var users: UserDefaults = UserDefaults.standard
 
-    func getUserForKey(key: String) -> UserProtocol? {
+    func getUserForKey(key: String) -> User? {
         if let userFromStorage = users.data(forKey: key) {
             guard let user = unarchiveObject(data: userFromStorage) else { return nil }
             return user
@@ -20,12 +20,12 @@ struct UserDefaultsBaseManager: DataBaseManager {
         return nil
     }
 
-    func saveCurrentUser(user: UserProtocol) {
+    func saveCurrentUser(user: User) {
         users.set(archiveObject(object: user), forKey: "currentUser")
         users.set(archiveObject(object: user), forKey: user.login)
     }
     
-    func getCurrentUser() -> UserProtocol {
+    func getCurrentUser() -> User {
         if let currentUser = users.data(forKey: "currentUser") {
             if let user = unarchiveObject(data: currentUser){
                 return user
@@ -34,7 +34,7 @@ struct UserDefaultsBaseManager: DataBaseManager {
         return User(nickname: "", email: "", login: "", password: "", userHash: 0)
     }
 
-    func saveNewUser(user: UserProtocol) {
+    func saveNewUser(user: User) {
         guard let archivedUser = archiveObject(object: user) else { return }
         users.set(archivedUser, forKey: user.login)
     }
@@ -43,7 +43,7 @@ struct UserDefaultsBaseManager: DataBaseManager {
         users.set(nil, forKey: "currentUser")
     }
     
-    private func archiveObject(object: UserProtocol) -> Data? {
+    private func archiveObject(object: User) -> Data? {
         let user = try? NSKeyedArchiver.archivedData(withRootObject: object, requiringSecureCoding: false)
         guard let user: Data = user else {
             return nil

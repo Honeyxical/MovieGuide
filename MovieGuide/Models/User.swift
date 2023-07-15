@@ -1,15 +1,6 @@
 import UIKit
 
-protocol UserProtocol {
-    var nickname: String {get set}
-    var login: String {get set}
-    var password: String {get set}
-    var favouriteFilms: [NSNumber] {get set}
-    var email: String {get set}
-    var userImage: Data {get set}
-}
-
-class User: NSObject, NSCoding, UserProtocol {
+class User: NSCoding {
     internal var nickname: String
     internal var email: String
     internal var login: String

@@ -2,9 +2,9 @@ import UIKit
 
 class SearchResultController: UIViewController {
     let userService: UserServiceProtocol
-    let user: UserProtocol
+    let user: User
 
-    init(userService: UserServiceProtocol, user: UserProtocol) {
+    init(userService: UserServiceProtocol, user: User) {
         self.userService = userService
         self.user = user
         super.init(nibName: nil, bundle: nil)
