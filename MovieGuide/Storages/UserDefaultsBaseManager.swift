@@ -1,6 +1,6 @@
 import Foundation
 
-protocol UserStorageProtocol {
+protocol DataBaseManager {
 
     func getUserForKey(key: String) -> UserProtocol?
     func saveCurrentUser(user: UserProtocol)
@@ -9,7 +9,7 @@ protocol UserStorageProtocol {
     func getCurrentUser() -> UserProtocol
 }
 
-struct UserStorage: UserStorageProtocol {
+struct UserDefaultsBaseManager: DataBaseManager {
     internal var users: UserDefaults = UserDefaults.standard
 
     func getUserForKey(key: String) -> UserProtocol? {

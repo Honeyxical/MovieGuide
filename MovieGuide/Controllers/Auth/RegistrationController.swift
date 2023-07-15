@@ -60,7 +60,7 @@ class RegistrationController: UIViewController {
         let currentUser = User(nickname: nicknameTF.text!, email: email.text!, login: loginTF.text!, password: passwordTF.text!, userHash: hashValue)
         if userService.registration(user: currentUser){
             self.navigationController?.pushViewController(TabBarController(networkService: NetworkService(),
-                                                                           userService: UserService(userStotage: UserStorage(), user: currentUser),
+                                                                           userService: UserService(userStotage: UserDefaultsBaseManager(), user: currentUser),
                                                                            user: currentUser), animated: true)
             self.navigationController?.navigationBar.isHidden = true
         } else {

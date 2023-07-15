@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		09AAA0052A37B950006D2510 /* ReusableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAA0042A37B950006D2510 /* ReusableItems.swift */; };
-		690BB8DD29DC4B120096EB06 /* UserStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BB8DC29DC4B120096EB06 /* UserStorage.swift */; };
+		690BB8DD29DC4B120096EB06 /* UserDefaultsBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BB8DC29DC4B120096EB06 /* UserDefaultsBaseManager.swift */; };
 		690BB8DF29DC4BB10096EB06 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BB8DE29DC4BB10096EB06 /* User.swift */; };
 		690BB8E129DC5D3D0096EB06 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BB8E029DC5D3D0096EB06 /* LoginController.swift */; };
 		690BB8E329DC5D4B0096EB06 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BB8E229DC5D4B0096EB06 /* RegistrationController.swift */; };
@@ -45,7 +45,7 @@
 
 /* Begin PBXFileReference section */
 		09AAA0042A37B950006D2510 /* ReusableItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableItems.swift; sourceTree = "<group>"; };
-		690BB8DC29DC4B120096EB06 /* UserStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStorage.swift; sourceTree = "<group>"; };
+		690BB8DC29DC4B120096EB06 /* UserDefaultsBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsBaseManager.swift; sourceTree = "<group>"; };
 		690BB8DE29DC4BB10096EB06 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		690BB8E029DC5D3D0096EB06 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		690BB8E229DC5D4B0096EB06 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 		690BB8DB29DC4AF50096EB06 /* Storages */ = {
 			isa = PBXGroup;
 			children = (
-				690BB8DC29DC4B120096EB06 /* UserStorage.swift */,
+				690BB8DC29DC4B120096EB06 /* UserDefaultsBaseManager.swift */,
 			);
 			path = Storages;
 			sourceTree = "<group>";
@@ -440,7 +440,7 @@
 				690BB8E129DC5D3D0096EB06 /* LoginController.swift in Sources */,
 				8D1C36AC2A1377A20026545C /* EditController.swift in Sources */,
 				8D1C36A82A1376F30026545C /* FavoriteController.swift in Sources */,
-				690BB8DD29DC4B120096EB06 /* UserStorage.swift in Sources */,
+				690BB8DD29DC4B120096EB06 /* UserDefaultsBaseManager.swift in Sources */,
 				8D1C36AA2A13775D0026545C /* AboutController.swift in Sources */,
 				69F751C329DDFCFC00C387BA /* Docs.swift in Sources */,
 				09AAA0052A37B950006D2510 /* ReusableItems.swift in Sources */,

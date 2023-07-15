@@ -4,7 +4,7 @@ class LoginController: UIViewController {
     let userService: UserServiceProtocol
 
     init() {
-        self.userService = UserService(userStotage: UserStorage(), user: User(nickname: "", email: "", login: "", password: "", userHash: 0))
+        self.userService = UserService(userStotage: UserDefaultsBaseManager(), user: User(nickname: "", email: "", login: "", password: "", userHash: 0))
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -47,7 +47,7 @@ class LoginController: UIViewController {
         }
         let curentUser = userService.userStorage.getCurrentUser()
         self.navigationController?.pushViewController(TabBarController(networkService: NetworkService(),
-                                                                       userService: UserService(userStotage: UserStorage(), user: curentUser),
+                                                                       userService: UserService(userStotage: UserDefaultsBaseManager(), user: curentUser),
                                                                        user: userService.userStorage.getCurrentUser()), animated: true)
         self.navigationController?.navigationBar.isHidden = true
     }

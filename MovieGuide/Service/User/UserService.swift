@@ -1,7 +1,7 @@
 import Foundation
 
 protocol UserServiceProtocol {
-    var userStorage: UserStorageProtocol {get set}
+    var userStorage: DataBaseManager {get set}
 
     // Auth methods
     func getUserLoginAndEmail() -> (String, String)
@@ -21,10 +21,10 @@ protocol UserServiceProtocol {
 }
 
 class UserService: UserServiceProtocol {
-    var userStorage: UserStorageProtocol
+    var userStorage: DataBaseManager
     var user: UserProtocol
 
-    init(userStotage: UserStorageProtocol, user: UserProtocol) {
+    init(userStotage: DataBaseManager, user: UserProtocol) {
         self.userStorage = userStotage
         self.user = user
     }
