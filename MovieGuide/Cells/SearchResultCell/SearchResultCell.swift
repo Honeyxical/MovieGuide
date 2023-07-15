@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 class SearchResultCell: UITableViewCell {
     
@@ -67,12 +68,6 @@ extension SearchResultCell {
     private func setPoster() {
         guard let posterUrl = film?.poster else { return }
         
-        URLSession.shared.dataTask(with: URLRequest(url: URL(string: posterUrl)!)) { data, _, error in
-            guard let data = data, error == nil else { return }
-            
-            DispatchQueue.main.async { [self] in
-                posterImageView.image = UIImage(data: data)
-            }
-        }.resume()
+        posterImageView.kf.setImage(with: URL(string: posterUrl))
     }
 }

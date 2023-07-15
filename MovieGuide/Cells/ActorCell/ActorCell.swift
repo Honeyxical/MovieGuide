@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 class ActorCell: UICollectionViewCell {
     var person: Person? {
@@ -70,14 +71,7 @@ class ActorCell: UICollectionViewCell {
 extension ActorCell {
     func getImage() {
         guard let photoUrl = person?.photo else { return }
-        URLSession.shared.dataTask(with: URLRequest(url: URL(string: photoUrl)!)) { data, _, error in
-            guard let data = data, error == nil else {
-                return
-            }
-            let image = UIImage(data: data)
-            DispatchQueue.main.async { [self] in
-                photoImageView.image = image
-            }
-        }.resume()
+
+        photoImageView.kf.setImage(with: URL(string: photoUrl))
     }
 }

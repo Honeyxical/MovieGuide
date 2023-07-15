@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 class FilmController: UIViewController {
     let networkService: NetworkServiceProtocol
@@ -556,9 +557,9 @@ class FilmController: UIViewController {
 
     // MARK: - getImage
 
-    private func getMovie(id: Int, filmTitle: String, filmType: String, posterData: Data) -> UIButton {
+    private func getMovie(id: Int, filmTitle: String, filmType: String, posterUrl: String) -> UIButton {
         let container = UIButton(type: .custom)
-        let image = UIImageView(image: UIImage(data: posterData))
+        let image = UIImageView(image: nil)
         let textView = UITextView()
         container.titleLabel?.text = String(id)
 
@@ -572,6 +573,7 @@ class FilmController: UIViewController {
         container.addTarget(self, action: #selector(openSimilarFilm(sender:)), for: .touchUpInside)
 
         image.contentMode = .scaleToFill
+        image.kf.setImage(with: URL(string: posterUrl))
 
         textView.attributedText = getAttributedString(mainText: filmTitle, secondaryText: filmType)
         textView.isEditable = false
@@ -646,14 +648,10 @@ extension FilmController {
 
     private func setFilmPoster() {
         guard let posterUrl = film?.poster?.url else { return }
-        URLSession.shared.dataTask(with: URLRequest(url: URL(string: posterUrl)!)) { data, _, error in
-            guard let data = data, error == nil else { return }
-
-            DispatchQueue.main.async { [self] in
-                imageView.image = UIImage(data: data)
-                imageViewContainer.image = UIImage(data: data)
-            }
-        }.resume()
+        DispatchQueue.main.async { [self] in
+            imageView.kf.setImage(with: URL(string: posterUrl))
+            imageViewContainer.kf.setImage(with: URL(string: posterUrl))
+        }
     }
 
     private func setPosters(id: Int) {
@@ -662,13 +660,9 @@ extension FilmController {
                 for elem in postersUrl! {
                     guard let posterUrl = elem.previewUrl ?? elem.url else { return }
 
-                    URLSession.shared.dataTask(with: URLRequest(url: URL(string: posterUrl)!)) { [self] data, _, error in
-                        guard let data = data, error == nil else { return }
-
-                        DispatchQueue.main.async { [self] in
-                            posterStackView.addArrangedSubview(getImage(data: data))
-                        }
-                    }.resume()
+                    DispatchQueue.main.async { [self] in
+                        posterStackView.addArrangedSubview(getImage(posterUrl: posterUrl))
+                    }
                 }
                 DispatchQueue.main.async {
                     self.posterCounter.text = String(postersUrl!.count)
@@ -689,11 +683,11 @@ extension FilmController {
         })
     }
 
-    private func getImage(data: Data) -> UIImageView {
-        let image = UIImageView(image: UIImage(data: data))
+    private func getImage(posterUrl: String) -> UIImageView {
+        let image = UIImageView(image: nil)
+        image.kf.setImage(with: URL(string: posterUrl))
         image.contentMode = .scaleToFill
         image.translatesAutoresizingMaskIntoConstraints = false
-
         image.widthAnchor.constraint(equalToConstant: 300).isActive = true
 
         return image
@@ -710,13 +704,10 @@ extension FilmController {
         similarMoviesCounter.text = String(similarMovie.count)
         for elem in similarMovie {
             guard let posterURL = elem.poster?.previewUrl ?? elem.poster?.url! else { return }
-            URLSession.shared.dataTask(with: URLRequest(url: URL(string: posterURL)!)) { [self] data, _, error in
-                guard let data = data, error == nil else { return }
 
-                DispatchQueue.main.async { [self] in
-                    similarMoviesStack.addArrangedSubview(getMovie(id: elem.id!, filmTitle: elem.name!, filmType: elem.type!, posterData: data))
-                }
-            }.resume()
+            DispatchQueue.main.async { [self] in
+                similarMoviesStack.addArrangedSubview(getMovie(id: elem.id!, filmTitle: elem.name!, filmType: elem.type!, posterUrl: posterURL ))
+            }
         }
     }
 }

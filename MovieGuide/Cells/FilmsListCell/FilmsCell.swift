@@ -1,7 +1,8 @@
 import UIKit
+import Kingfisher
 
 class FilmsCell: UITableViewCell {
-    
+
     var film: FilmShortInfo? {
         didSet{
             guard let film = film else {
@@ -31,13 +32,7 @@ class FilmsCell: UITableViewCell {
 extension FilmsCell {
     private func setPoster() {
         guard let posterUrl = film?.poster?.previewUrl ?? film?.poster?.url! else { return }
-        
-        URLSession.shared.dataTask(with: URLRequest(url: URL(string: posterUrl)!)) { data, _, error in
-            guard let data = data, error == nil else { return }
-            
-            DispatchQueue.main.async { [self] in
-                filmImage.image = UIImage(data: data)
-            }
-        }.resume()
+
+        filmImage.kf.setImage(with: URL(string: posterUrl))
     }
 }
