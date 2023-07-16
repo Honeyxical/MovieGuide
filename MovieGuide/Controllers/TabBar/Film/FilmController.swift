@@ -333,8 +333,6 @@ class FilmController: UIViewController {
             }
         }
 
-        URLCache.shared = URLCache(memoryCapacity: 500 * 1024 * 1024, diskCapacity: 500 * 1024 * 1024)
-
         actorsCollection.register(ActorCell.self, forCellWithReuseIdentifier: "Item")
         actorsCollection.dataSource = self
     }

@@ -73,7 +73,6 @@ class FavoriteController: UIViewController {
         setupLayout()
         tableView.dataSource = self
         tableView.delegate = self
-        URLCache.shared = URLCache(memoryCapacity: 500 * 1024 * 1024, diskCapacity: 500 * 1024 * 1024)
     }
 
     override func viewWillAppear(_ animated: Bool) {

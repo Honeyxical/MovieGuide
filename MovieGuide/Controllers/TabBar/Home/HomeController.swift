@@ -46,8 +46,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.films = docs
         }
 
-        URLCache.shared = URLCache(memoryCapacity: 500 * 1024 * 1024, diskCapacity: 500 * 1024 * 1024)
-
         tableView.delegate = self
         tableView.dataSource = self
     }

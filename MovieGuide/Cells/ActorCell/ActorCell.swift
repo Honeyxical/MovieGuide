@@ -46,7 +46,6 @@ class ActorCell: UICollectionViewCell {
         super.init(frame: frame)
         backgroundColor = .white
         setupLayout()
-        URLCache.shared = URLCache(memoryCapacity: 500 * 1024 * 1024, diskCapacity: 500 * 1024 * 1024)
     }
 
     private func setupLayout() {
