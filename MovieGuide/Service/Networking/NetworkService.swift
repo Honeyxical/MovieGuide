@@ -11,7 +11,9 @@ protocol NetworkServiceProtocol {
 class NetworkService: NetworkServiceProtocol {
     private let apiKey = "TN3T3HK-GGE44PM-KAMXMJW-HRQ4X7Q"
     private let reserveApiKey = "T7P5MRK-8ZG4FAC-N3ZRJWE-6VT9V3N"
-    
+
+    let serialQueue = DispatchQueue(label: "network.service.serial-queue", attributes: .concurrent)
+
     func getFilmById(id: Int, completiton: @escaping (FilmFullInfo) -> Void) {
         URLSession.shared.dataTask(with: getRequestForFilmById(id: id)) { data, _, error in
             guard let data = data, error == nil else {
@@ -49,16 +51,13 @@ class NetworkService: NetworkServiceProtocol {
     }
     
     func getRandomFilm(completition: @escaping (FilmFullInfo) -> Void) {
-        URLSession.shared.dataTask(with: getRequestForRandomFilm()) { [self] data, _, error in
+        URLSession.shared.dataTask(with: getRequestForRandomFilm()) { data, _, error in
             guard let data = data, error == nil else {
                 return
             }
             
             do {
                 var film = try JSONDecoder().decode(FilmFullInfo.self, from: data)
-                getImage(url: film.poster!.url!) { data in
-                    film.poster!.posterData = data
-                }
                 completition(film)
             } catch {
                 print(error)
@@ -74,8 +73,7 @@ class NetworkService: NetworkServiceProtocol {
             
             do {
                 let films = try JSONDecoder().decode(SearchFilmList.self, from: data)
-                let docs = self.insertPosters(docs: films.docs!)
-                completition(docs)
+                completition(films.docs!)
             } catch {
                 print(error)
             }
@@ -98,16 +96,6 @@ class NetworkService: NetworkServiceProtocol {
     }
     
     // MARK: - Private func
-
-    private func getImage(url: String, completition: @escaping (Data) -> Void) {
-         URLSession.shared.dataTask(with: URL(string: url)!) {data, _, error in
-             guard let data = data, error == nil  else {
-                 print("\n\nError download image\n")
-                 fatalError()
-             }
-             completition(data)
-         }.resume()
-     }
 
     private func getRequestForFilmPosters(id: Int, limit: Int) -> URLRequest {
         var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1/image?page=1&limit=\(limit)&movieId=\(id)")!)
@@ -152,63 +140,5 @@ class NetworkService: NetworkServiceProtocol {
         request.addValue("application/json", forHTTPHeaderField: "accept")
         request.addValue(apiKey, forHTTPHeaderField: "X-API-KEY")
         return request
-    }
-    
-    private func insertPosters(docs: [FilmShortInfo]) -> [FilmShortInfo] {
-        var docs = docs
-        for counter in 0...docs.count - 1 {
-            getImage(url: docs[counter].poster!.previewUrl ?? docs[counter].poster!.url!) { data in
-                docs[counter].poster!.posterData = data
-            }
-        }
-        return docs
-    }
-    
-    private func insertPosters(docs: [SearchFilmInfo]) -> [SearchFilmInfo] {
-        var docs = docs
-        if docs.isEmpty {
-            return docs
-        }
-        for counter in 0...docs.count - 1 {
-            guard let posterUrl = docs[counter].poster else {
-                continue
-            }
-            getImage(url: posterUrl) { data in
-                docs[counter].posterData = data
-            }
-        }
-        return docs
-    }
-    
-    private func insertPosterForSimilarMovies(array: [SimilarMovies]) -> [SimilarMovies] {
-        if array.isEmpty {
-            return array
-        }
-        var array = array
-        
-        for counter in 0...array.count - 1 {
-            getImage(url: array[counter].poster!.previewUrl ?? array[counter].poster!.url!) { data in
-                array[counter].poster?.posterData = data
-            }
-        }
-        return array
-    }
-    
-    private func insertPersonsImage(array: [Person]) -> [Person] {
-        if array.isEmpty {
-            return array
-        }
-        var array = array
-        
-        for counter in 0...array.count - 1 {
-            guard let personImageUrl = array[counter].photo else {
-                continue
-            }
-            getImage(url: personImageUrl) { data in
-                array[counter].photoData = data
-            }
-        }
-        
-        return array
     }
 }

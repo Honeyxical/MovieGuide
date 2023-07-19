@@ -16,15 +16,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         fatalError("init(coder:) has not been implemented")
     }
 
-    var films: [FilmShortInfo?] = [] {
-        didSet {
-            DispatchQueue.main.async { [self] in
-                self.tableView.reloadData()
-                self.loader.removeFromSuperview()
-                setupLayout()
-            }
-        }
-    }
+    var films: [FilmShortInfo?] = []
 
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -39,12 +31,14 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        view.addSubview(tableView)
         view.addSubview(loader)
-        configureLoader()
 
         networkService.getFilmList { docs in
             self.films = docs
         }
+
+        setupLayout()
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -58,7 +52,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     private func setupLayout() {
-        view.addSubview(tableView)
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true

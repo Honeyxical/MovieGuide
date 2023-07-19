@@ -16,7 +16,7 @@ protocol UserServiceProtocol {
     func removeFavouriteFilm(filmId: Int, user: User)
 
     // Edit user profile methods
-    func dataEditing(tuple: (nickName: String, email: String, password: String))
+    func dataEditing(tuple: (nickName: String, email: String, password: String)) -> User
     func updateUserImage(data: Data)
 }
 
@@ -82,7 +82,7 @@ class UserService: UserServiceProtocol {
     }
 
     // Edit user profile methods
-    func dataEditing(tuple: (nickName: String, email: String, password: String)) {
+    func dataEditing(tuple: (nickName: String, email: String, password: String)) -> User {
         if tuple.nickName != "" {
             user.nickname = tuple.nickName
         }
@@ -94,6 +94,7 @@ class UserService: UserServiceProtocol {
         if tuple.password != "" {
             user.password = tuple.password
         }
+        return user
     }
 
     func updateUserImage(data: Data) {

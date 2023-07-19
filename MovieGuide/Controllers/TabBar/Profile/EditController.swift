@@ -1,7 +1,6 @@
 import UIKit
 
 class EditController: UIViewController {
-    
     let user: User
     let userService: UserServiceProtocol
 
@@ -138,8 +137,8 @@ class EditController: UIViewController {
     
     @objc private func saveHandler() {
         if editPasswordField.text == repeatPasswordField.text || (editPasswordField.text == "" && repeatPasswordField.text == "") {
-            userService.dataEditing(tuple: (nickName: editNicknameField.text!, email: editEmailField.text!, password: editPasswordField.text!))
-            userService.userStorage.saveCurrentUser(user: user)
+            let editedUser = userService.dataEditing(tuple: (nickName: editNicknameField.text!, email: editEmailField.text!, password: editPasswordField.text!))
+            userService.userStorage.saveCurrentUser(user: editedUser)
             navigationController?.popViewController(animated: true)
         } else {
             self.present(getAllert(message: "Passwords don't match "), animated: true)
@@ -233,7 +232,9 @@ extension EditController: UIImagePickerControllerDelegate, UINavigationControlle
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.originalImage] as? UIImage else { return }
         self.image.image = image
-        userService.updateUserImage(data: image.pngData() ?? Data())
+        if let imagePng = image.pngData(){
+            userService.updateUserImage(data: imagePng)
+        }
         self.dismiss(animated: true)
     }
 }
