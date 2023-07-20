@@ -63,6 +63,7 @@ extension SearchController: UITextFieldDelegate {
 
         networkService.searchFilm(name: textField.text!) { data in
             destination.films = data
+            destination.updateLayout()
         }
         destination.navbarTitle += textField.text!
 

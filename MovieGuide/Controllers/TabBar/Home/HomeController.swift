@@ -33,15 +33,21 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
         view.addSubview(loader)
+        setupLayout()
+        configureLoader()
 
         networkService.getFilmList { docs in
             self.films = docs
+            self.updateTableView()
         }
-
-        setupLayout()
 
         tableView.delegate = self
         tableView.dataSource = self
+    }
+
+    func updateTableView(){
+        tableView.reloadData()
+        loader.removeFromSuperview()
     }
 
     private func configureLoader() {
@@ -83,6 +89,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
 
         cell.film = film
+        cell.setData()
 
         return cell
     }

@@ -21,72 +21,7 @@ class FilmController: UIViewController {
     var backButtonIsHidden = true
     var updateButtonIsHidden = false
 
-    var film: FilmFullInfo? {
-        didSet {
-            guard let film = film, let filmId = film.id else {
-                return
-            }
-            setFilmPoster()
-            setPosters(id: filmId)
-
-            DispatchQueue.main.async { [self] in
-                actorsCollection.reloadData()
-
-                updatebutton.isEnabled = true
-                scrollView.isScrollEnabled = true
-                self.loader.removeFromSuperview()
-
-                if film.name != "" && film.name != nil {
-                    filmTitleLabel.text = film.enName ?? film.name!
-                } else {
-                    filmTitleLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
-                    scrollView.contentSize.height -= 60
-                }
-
-                filmsParamLabel.text = "\(String(film.year!)), \(genresToString(array: film.genres!, count: 3)) \n\(film.countries![0].name!), \(film.movieLength ?? 0) мин, \(film.ageRating ?? 6)+"
-
-                if film.description == nil {
-                    descriptionTextView.heightAnchor.constraint(equalToConstant: 0).isActive = true
-                    scrollView.contentSize.height -= 105
-                 } else {
-                    descriptionTextView.text = film.description!
-                }
-
-                if film.rating != nil {
-                    ratingStackView = getStackView(arrangedSubviews: getRatingArray(rating: film.rating!))
-                } else {
-                    ratingScrollView.heightAnchor.constraint(equalToConstant: 0).isActive = true
-                    ratingLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
-                    scrollView.contentSize.height -= 140
-                }
-
-                if film.persons!.isEmpty {
-                    actorLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
-                    actorsCollection.heightAnchor.constraint(equalToConstant: 0).isActive = true
-                    actorsCounter.heightAnchor.constraint(equalToConstant: 0).isActive = true
-                    actorsListLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
-                    scrollView.contentSize.height -= 430
-                } else {
-
-                    let rolesAttributedString = NSMutableAttributedString(string: "В ролях: \(actorsToString(array: film.persons!, count: 3))", attributes: [
-                        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13),
-                        NSAttributedString.Key.foregroundColor: UIColor.systemGray])
-
-                    rolesAttributedString.append(NSAttributedString(string: " и другие", attributes: [
-                        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .bold),
-                        NSAttributedString.Key.foregroundColor: UIColor.gray
-                    ]))
-
-                    actorsListLabel.attributedText = rolesAttributedString
-
-                    actorsCounter.text = String(film.persons!.count)
-
-                }
-                setSimilarMovieImage()
-                setupScrollLayout()
-            }
-        }
-    }
+    var film: FilmFullInfo?
 
     private let navigationBar: UIView = {
         let navBar = UIView()
@@ -326,10 +261,12 @@ class FilmController: UIViewController {
         if filmId > 0 {
             networkService.getFilmById(id: filmId) { film in
                 self.film = film
+                self.setupLayout()
             }
         } else {
             networkService.getRandomFilm { film in
                 self.film = film
+                self.setupLayout()
             }
         }
 
@@ -628,6 +565,7 @@ extension FilmController: UICollectionViewDataSource {
         }
 
         cell.person = person
+        cell.setupLayout()
         return cell
     }
 
@@ -644,12 +582,75 @@ extension FilmController: UICollectionViewDataSource {
 
 extension FilmController {
 
+    private func setupLayout() {
+        guard let film = film, let filmId = film.id else {
+            return
+        }
+        setFilmPoster()
+        setPosters(id: filmId)
+        actorsCollection.reloadData()
+
+        updatebutton.isEnabled = true
+        scrollView.isScrollEnabled = true
+        self.loader.removeFromSuperview()
+
+        if film.name != "" && film.name != nil {
+            filmTitleLabel.text = film.enName ?? film.name!
+        } else {
+            filmTitleLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            scrollView.contentSize.height -= 60
+        }
+
+        // swiftlint:disable line_length
+        filmsParamLabel.text = "\(String(film.year ?? 0)), \(genresToString(array: film.genres ?? [], count: 3)) \n\(film.countries![0].name ?? ""), \(film.movieLength ?? 0) мин, \(film.ageRating ?? 6)+"
+        // swiftlint:enable line_length
+
+        if film.description == nil {
+            descriptionTextView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            scrollView.contentSize.height -= 105
+        } else {
+            descriptionTextView.text = film.description!
+        }
+
+        if film.rating != nil {
+            ratingStackView = getStackView(arrangedSubviews: getRatingArray(rating: film.rating!))
+        } else {
+            ratingScrollView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            ratingLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            scrollView.contentSize.height -= 140
+        }
+
+        if film.persons!.isEmpty {
+            actorLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            actorsCollection.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            actorsCounter.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            actorsListLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            scrollView.contentSize.height -= 430
+        } else {
+
+            let rolesAttributedString = NSMutableAttributedString(string: "В ролях: \(actorsToString(array: film.persons!, count: 3))", attributes: [
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13),
+                NSAttributedString.Key.foregroundColor: UIColor.systemGray])
+
+            rolesAttributedString.append(NSAttributedString(string: " и другие", attributes: [
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .bold),
+                NSAttributedString.Key.foregroundColor: UIColor.gray
+            ]))
+
+            actorsListLabel.attributedText = rolesAttributedString
+
+            actorsCounter.text = String(film.persons!.count)
+
+        }
+        setSimilarMovieImage()
+        setupScrollLayout()
+
+    }
+
     private func setFilmPoster() {
         guard let posterUrl = film?.poster?.url else { return }
-        DispatchQueue.main.async { [self] in
-            imageView.kf.setImage(with: URL(string: posterUrl))
-            imageViewContainer.kf.setImage(with: URL(string: posterUrl))
-        }
+        imageView.kf.setImage(with: URL(string: posterUrl))
+        imageViewContainer.image = imageView.image
     }
 
     private func setPosters(id: Int) {

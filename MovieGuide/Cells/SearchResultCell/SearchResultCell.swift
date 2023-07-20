@@ -3,12 +3,7 @@ import Kingfisher
 
 class SearchResultCell: UITableViewCell {
     
-    var film: SearchFilmInfo? {
-        didSet {
-            setPoster()
-            
-        }
-    }
+    var film: SearchFilmInfo? 
 
     @IBOutlet weak private var posterImageView: UIImageView!
     
@@ -31,6 +26,7 @@ class SearchResultCell: UITableViewCell {
     }
     
     func configureCell(){
+        setPoster()
         guard let film = film else {
             return
         }

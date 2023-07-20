@@ -15,15 +15,7 @@ class SearchResultController: UIViewController {
     }
 
     var navbarTitle = "Search: "
-    var films: [SearchFilmInfo?] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.loader.removeFromSuperview()
-                self.setupLayout()
-            }
-        }
-    }
+    var films: [SearchFilmInfo?] = []
     
     private lazy var navigationBar: UINavigationBar = {
         let navBar = UINavigationBar()
@@ -63,7 +55,13 @@ class SearchResultController: UIViewController {
         tableView.dataSource = self
         tableView.register(UINib(nibName: "SearchResultCell", bundle: nil), forCellReuseIdentifier: "SearchResultCell")
     }
-    
+
+    func updateLayout() {
+        self.tableView.reloadData()
+        self.loader.removeFromSuperview()
+        self.setupLayout()
+    }
+
     private func configureLoader() {
         loader.heightAnchor.constraint(equalToConstant: view.bounds.height).isActive = true
         loader.widthAnchor.constraint(equalToConstant: view.bounds.width).isActive = true
@@ -112,6 +110,7 @@ extension SearchResultController: UITableViewDataSource, UITableViewDelegate {
         
         cell.film = film
         cell.configureCell()
+        
         return cell
     }
     

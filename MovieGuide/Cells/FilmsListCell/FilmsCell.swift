@@ -3,18 +3,7 @@ import Kingfisher
 
 class FilmsCell: UITableViewCell {
 
-    var film: FilmShortInfo? {
-        didSet{
-            guard let film = film else {
-                return
-            }
-            DispatchQueue.main.async { [self] in
-                setPoster()
-                titleLabel.text! = film.name!
-                shortDescriptionLabel.text! = film.shortDescription ?? film.description ?? "Description is missing"
-            }
-        }
-    }
+    var film: FilmShortInfo?
     
     @IBOutlet weak private var filmImage: UIImageView!
     @IBOutlet weak private var titleLabel: UILabel!
@@ -24,6 +13,15 @@ class FilmsCell: UITableViewCell {
         super.awakeFromNib()
         filmImage.image = UIImage(named: "PlaceholderImage")
         filmImage.contentMode = .scaleAspectFill
+    }
+
+    func setData() {
+        guard let film = film else {
+            return
+        }
+        setPoster()
+        titleLabel.text! = film.name!
+        shortDescriptionLabel.text! = film.shortDescription ?? film.description ?? "Description is missing"
     }
 }
 

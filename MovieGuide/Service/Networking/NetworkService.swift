@@ -1,7 +1,7 @@
 import Foundation
 
 protocol NetworkServiceProtocol {
-    func getFilmById(id: Int, completiton: @escaping (FilmFullInfo) -> Void)
+    func getFilmById(id: Int, completition: @escaping (FilmFullInfo) -> Void)
     func getFilmList(completition: @escaping ([FilmShortInfo]) -> Void)
     func getRandomFilm(completition: @escaping (FilmFullInfo) -> Void)
     func searchFilm(name: String, completition: @escaping ([SearchFilmInfo]) -> Void)
@@ -14,7 +14,7 @@ class NetworkService: NetworkServiceProtocol {
 
     let serialQueue = DispatchQueue(label: "network.service.serial-queue", attributes: .concurrent)
 
-    func getFilmById(id: Int, completiton: @escaping (FilmFullInfo) -> Void) {
+    func getFilmById(id: Int, completition: @escaping (FilmFullInfo) -> Void) {
         URLSession.shared.dataTask(with: getRequestForFilmById(id: id)) { data, _, error in
             guard let data = data, error == nil else {
                 print("\n\n Error to get film by Id")
@@ -23,7 +23,9 @@ class NetworkService: NetworkServiceProtocol {
             
             do {
                 let film = try JSONDecoder().decode(FilmFullInfo.self, from: data)
-                completiton(film)
+                DispatchQueue.main.async {
+                    completition(film)
+                }
             } catch {
                 print(error)
             }
@@ -40,7 +42,9 @@ class NetworkService: NetworkServiceProtocol {
             do {
                 let films = try JSONDecoder().decode(FilmList.self, from: data)
                 if films.docs != nil {
-                    completition(films.docs!)
+                    DispatchQueue.main.async {
+                        completition(films.docs!)
+                    }
                 } else {
                     completition([])
                 }
@@ -57,8 +61,10 @@ class NetworkService: NetworkServiceProtocol {
             }
             
             do {
-                var film = try JSONDecoder().decode(FilmFullInfo.self, from: data)
-                completition(film)
+                let film = try JSONDecoder().decode(FilmFullInfo.self, from: data)
+                DispatchQueue.main.async {
+                    completition(film)
+                }
             } catch {
                 print(error)
             }
@@ -73,7 +79,9 @@ class NetworkService: NetworkServiceProtocol {
             
             do {
                 let films = try JSONDecoder().decode(SearchFilmList.self, from: data)
-                completition(films.docs!)
+                DispatchQueue.main.async {
+                    completition(films.docs!)
+                }
             } catch {
                 print(error)
             }
@@ -88,7 +96,9 @@ class NetworkService: NetworkServiceProtocol {
             
             do {
                 let posters = try JSONDecoder().decode(FilmPosters.self, from: data)
-                completition(posters.docs!)
+                DispatchQueue.main.async {
+                    completition(posters.docs!)
+                }
             } catch {
                 print(error)
             }

@@ -77,7 +77,7 @@ class UserService: UserServiceProtocol {
     }
 
     func removeFavouriteFilm(filmId: Int, user: User) {
-        self.user.favouriteFilms.remove(at: user.favouriteFilms.firstIndex(of: NSNumber(value: filmId))!)
+        self.user.favouriteFilms.remove(at: user.favouriteFilms.firstIndex(of: NSNumber(value: filmId)) ?? 0)
         userStorage.saveCurrentUser(user: user)
     }
 

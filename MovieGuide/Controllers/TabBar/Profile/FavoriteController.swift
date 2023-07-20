@@ -16,13 +16,7 @@ class FavoriteController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private var films: [FilmShortInfo?] = [] {
-        didSet {
-            DispatchQueue.main.async { [self] in
-                tableView.reloadData()
-            }
-        }
-    }
+    private var films: [FilmShortInfo?] = []
 
     private let navigationBar: UIView = {
         let view = UIView()
@@ -123,6 +117,7 @@ class FavoriteController: UIViewController {
                                            description: data.description,
                                            shortDescription: data.shortDescription,
                                            poster: data.poster))
+                self.tableView.reloadData()
             }
         }
     }
@@ -166,6 +161,8 @@ extension FavoriteController: UITableViewDelegate, UITableViewDataSource {
         }
 
         cell.film = film
+        cell.setData()
+
         loader.removeFromSuperview()
         return cell
     }

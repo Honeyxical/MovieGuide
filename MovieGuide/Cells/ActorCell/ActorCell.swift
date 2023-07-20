@@ -2,20 +2,8 @@ import UIKit
 import Kingfisher
 
 class ActorCell: UICollectionViewCell {
-    var person: Person? {
-        didSet {
-            guard let unwrPerson = person else {
-                return
-            }
-            let attributedString = NSMutableAttributedString(string: (unwrPerson.enName ?? unwrPerson.name)!,
-                                                             attributes: [
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold)])
-            attributedString.append(NSAttributedString(string: "\n" + (unwrPerson.enProfession ?? unwrPerson.profession)!,
-                                                       attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .thin), NSAttributedString.Key.foregroundColor: UIColor.gray]))
-            nameTextView.attributedText = attributedString
-            getImage()
-        }
-    }
+
+    var person: Person?
 
     private let photoImageView: UIImageView = {
         let image = UIImageView(image: UIImage(named: "PlaceholderImage"))
@@ -48,9 +36,23 @@ class ActorCell: UICollectionViewCell {
         setupLayout()
     }
 
-    private func setupLayout() {
+    private func setData() {
+        guard let unwrPerson = person else {
+            return
+        }
+        let attributedString = NSMutableAttributedString(string: (unwrPerson.enName ?? unwrPerson.name)!,
+                                                         attributes: [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold)])
+        attributedString.append(NSAttributedString(string: "\n" + (unwrPerson.enProfession ?? unwrPerson.profession)!,
+                                                   attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .thin), NSAttributedString.Key.foregroundColor: UIColor.gray]))
+        nameTextView.attributedText = attributedString
+        getImage()
+    }
+
+    func setupLayout() {
         addSubview(photoImageView)
         addSubview(nameTextView)
+        setData()
 
         NSLayoutConstraint.activate([
             photoImageView.topAnchor.constraint(equalTo: topAnchor),
@@ -70,7 +72,6 @@ class ActorCell: UICollectionViewCell {
 extension ActorCell {
     func getImage() {
         guard let photoUrl = person?.photo else { return }
-
         photoImageView.kf.setImage(with: URL(string: photoUrl))
     }
 }
