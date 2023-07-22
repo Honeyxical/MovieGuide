@@ -13,7 +13,7 @@ class User: NSObject, NSCoding {
         self.email = email
         self.login = login
         self.password = password
-        self.userImage = (UIImage(named: "Ghost")?.pngData())!
+        self.userImage = (UIImage(named: "Ghost")?.pngData()) ?? Data()
     }
     
     func encode(with coder: NSCoder) {
