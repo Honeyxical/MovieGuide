@@ -1,5 +1,5 @@
-import UIKit
 import Kingfisher
+import UIKit
 
 class ActorCell: UICollectionViewCell {
 
@@ -37,14 +37,15 @@ class ActorCell: UICollectionViewCell {
     }
 
     private func setData() {
-        guard let unwrPerson = person else {
+        guard let unwrPerson = person, let personName = unwrPerson.enName ?? unwrPerson.name, let personProfession = unwrPerson.enProfession ?? unwrPerson.profession else {
             return
         }
-        let attributedString = NSMutableAttributedString(string: (unwrPerson.enName ?? unwrPerson.name)!,
+        let attributedString = NSMutableAttributedString(string: personName,
                                                          attributes: [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold)])
-        attributedString.append(NSAttributedString(string: "\n" + (unwrPerson.enProfession ?? unwrPerson.profession)!,
-                                                   attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .thin), NSAttributedString.Key.foregroundColor: UIColor.gray]))
+        attributedString.append(NSAttributedString(string: "\n" + personProfession,
+                                                   attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .thin),
+                                                                 NSAttributedString.Key.foregroundColor: UIColor.gray]))
         nameTextView.attributedText = attributedString
         getImage()
     }

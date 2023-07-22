@@ -104,7 +104,7 @@ class FavoriteController: UIViewController {
 
     private func getFilms() {
         films = []
-        if userService.getFavouritesFilms().count == 0 {
+        if userService.getFavouritesFilms().isEmpty {
             displayPlug()
             return
         }

@@ -14,11 +14,16 @@ class NetworkService: NetworkServiceProtocol {
 
     let serialQueue = DispatchQueue(label: "network.service.serial-queue", attributes: .concurrent)
 
+    enum NetworkServiceError: Error {
+        case wrongUrl
+    }
+
     func getFilmById(id: Int, completition: @escaping (FilmFullInfo) -> Void) {
-        URLSession.shared.dataTask(with: getRequestForFilmById(id: id)) { data, _, error in
+        guard let request = getRequestForFilmById(id: id) else { return }
+        URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else {
                 print("\n\n Error to get film by Id")
-                fatalError()
+                return
             }
             
             do {
@@ -34,16 +39,17 @@ class NetworkService: NetworkServiceProtocol {
     }
     
     func getFilmList(completition: @escaping ([FilmShortInfo]) -> Void) {
-        URLSession.shared.dataTask(with: getRequestForFilmList(limit: 10)) {data, _, error in
+        guard let request = getRequestForFilmList(limit: 10) else { return }
+        URLSession.shared.dataTask(with: request) {data, _, error in
             guard let data = data, error == nil else {
-                fatalError()
+                return
             }
             
             do {
                 let films = try JSONDecoder().decode(FilmList.self, from: data)
-                if films.docs != nil {
+                if let docs = films.docs {
                     DispatchQueue.main.async {
-                        completition(films.docs!)
+                        completition(docs)
                     }
                 } else {
                     completition([])
@@ -55,7 +61,8 @@ class NetworkService: NetworkServiceProtocol {
     }
     
     func getRandomFilm(completition: @escaping (FilmFullInfo) -> Void) {
-        URLSession.shared.dataTask(with: getRequestForRandomFilm()) { data, _, error in
+        guard let request = getRequestForRandomFilm() else { return }
+        URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else {
                 return
             }
@@ -72,15 +79,17 @@ class NetworkService: NetworkServiceProtocol {
     }
     
     func searchFilm(name: String, completition: @escaping ([SearchFilmInfo]) -> Void) {
-        URLSession.shared.dataTask(with: getRequestForSearchFilm(name: name)) { data, _, error in
+        guard let request = getRequestForSearchFilm(name: name) else { return }
+        URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else {
-                fatalError()
+                return
             }
             
             do {
                 let films = try JSONDecoder().decode(SearchFilmList.self, from: data)
+                guard let docs = films.docs else { return }
                 DispatchQueue.main.async {
-                    completition(films.docs!)
+                    completition(docs)
                 }
             } catch {
                 print(error)
@@ -89,15 +98,17 @@ class NetworkService: NetworkServiceProtocol {
     }
     
     func getFilmPostersURL(id: Int, completition: @escaping ([PostersURL]) -> Void) {
-        URLSession.shared.dataTask(with: getRequestForFilmPosters(id: id, limit: 15)) { data, _, error in
+        guard let request = getRequestForFilmPosters(id: id, limit: 15) else { return }
+        URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else {
                 return
             }
             
             do {
                 let posters = try JSONDecoder().decode(FilmPosters.self, from: data)
+                guard let docs = posters.docs else { return }
                 DispatchQueue.main.async {
-                    completition(posters.docs!)
+                    completition(docs)
                 }
             } catch {
                 print(error)
@@ -107,45 +118,51 @@ class NetworkService: NetworkServiceProtocol {
     
     // MARK: - Private func
 
-    private func getRequestForFilmPosters(id: Int, limit: Int) -> URLRequest {
-        var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1/image?page=1&limit=\(limit)&movieId=\(id)")!)
+    private func getRequestForFilmPosters(id: Int, limit: Int) -> URLRequest? {
+        guard let url = URL(string: "https://api.kinopoisk.dev/v1/image?page=1&limit=\(limit)&movieId=\(id)") else { return nil }
+        var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "accept")
         request.addValue(apiKey, forHTTPHeaderField: "X-API-KEY")
         return request
     }
     
-    private func getRequestForFilmById(id: Int) -> URLRequest {
-        var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1.3/movie/\(id)")!)
+    private func getRequestForFilmById(id: Int) -> URLRequest? {
+        guard let url = URL(string: "https://api.kinopoisk.dev/v1.3/movie/\(id)") else { return nil }
+        var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "accept")
         request.addValue(apiKey, forHTTPHeaderField: "X-API-KEY")
         return request
     }
     
-    private func getRequestForRandomFilm() -> URLRequest {
-        var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1/movie/random")!)
+    private func getRequestForRandomFilm() -> URLRequest?  {
+        guard let url = URL(string: "https://api.kinopoisk.dev/v1/movie/random") else { return nil }
+        var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "accept")
         request.addValue(apiKey, forHTTPHeaderField: "X-API-KEY")
         return request
     }
     
-    private func getRequestForFilmList(limit: Int) -> URLRequest {
+    private func getRequestForFilmList(limit: Int) -> URLRequest? {
         let randomPage = Int.random(in: 1...50)
 
         // swiftlint:disable line_length
-        var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1/movie?selectFields=id&selectFields=enName&selectFields=poster.url&selectFields=shortDescription&selectFields=description&selectFields=type&selectFields=year&selectFields=rating.imdb&selectFields=movieLength&selectFields=genres.name&selectFields=name&page=\(String(randomPage))&limit=" + String(limit))!)
+        guard let url = URL(string: "https://api.kinopoisk.dev/v1/movie?selectFields=id&selectFields=enName&selectFields=poster.url&selectFields=shortDescription&selectFields=description&selectFields=type&selectFields=year&selectFields=rating.imdb&selectFields=movieLength&selectFields=genres.name&selectFields=name&page=\(String(randomPage))&limit=" + String(limit)) else { return nil }
         // swiftlint:enable line_length
+
+        var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "accept")
         request.addValue(apiKey, forHTTPHeaderField: "X-API-KEY")
         return request
     }
     
-    private func getRequestForSearchFilm(name: String) -> URLRequest {
+    private func getRequestForSearchFilm(name: String) -> URLRequest? {
         let name = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        var request = URLRequest(url: URL(string: "https://api.kinopoisk.dev/v1.2/movie/search?page=1&limit=10&query=\(name!)")!)
+        guard let url = URL(string: "https://api.kinopoisk.dev/v1.2/movie/search?page=1&limit=10&query=\(String(describing: name))") else { return nil}
+        var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "accept")
         request.addValue(apiKey, forHTTPHeaderField: "X-API-KEY")

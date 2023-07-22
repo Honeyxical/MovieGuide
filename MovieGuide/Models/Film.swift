@@ -38,7 +38,6 @@ struct Rating: Decodable{
     let imdb: Double?
     let filmCritics: Double?
     let russianFilmCritics: Double?
-    let await: Double?
 }
 
 struct Premiere: Decodable{

@@ -52,6 +52,6 @@ struct UserDefaultsBaseManager: DataBaseManager {
     }
     
     private func unarchiveObject(data: Data) -> User? {
-        return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? User
+        try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? User
     }
 }

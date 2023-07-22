@@ -16,7 +16,7 @@ import UIKit
     }
     
     override func drawText(in rect: CGRect) {
-        let padding = UIEdgeInsets.init(top: paddingTop, left: paddingLeft, bottom: paddingBottom, right: paddingRight)
+        let padding = UIEdgeInsets(top: paddingTop, left: paddingLeft, bottom: paddingBottom, right: paddingRight)
         super.drawText(in: rect.inset(by: padding))
     }
     

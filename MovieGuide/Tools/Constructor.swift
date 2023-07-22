@@ -3,20 +3,27 @@ import UIKit
 func getRatingArray(rating: Rating) -> [UIView] {
     var resultArray: [UIView] = []
 
+    print(rating)
+
+    guard let kp = rating.kp,
+          let imdb = rating.imdb,
+          let filmCrit = rating.filmCritics,
+          let rusFilmCrit = rating.russianFilmCritics else {
+        return []
+
+    }
+
     if rating.kp != nil, rating.kp != 0 {
-        resultArray.append(getRating(rating: String(rating.kp!), nameRating: "Kinopoisk"))
+        resultArray.append(getRating(rating: String(kp), nameRating: "Kinopoisk"))
     }
     if rating.imdb != nil, rating.imdb != 0 {
-        resultArray.append(getRating(rating: String(rating.imdb!), nameRating: "IMDb"))
+        resultArray.append(getRating(rating: String(imdb), nameRating: "IMDb"))
     }
     if rating.filmCritics != nil, rating.filmCritics != 0 {
-        resultArray.append(getRating(rating: String(rating.filmCritics!), nameRating: "Film critics"))
+        resultArray.append(getRating(rating: String(filmCrit), nameRating: "Film critics"))
     }
     if rating.russianFilmCritics != nil, rating.russianFilmCritics != 0 {
-        resultArray.append(getRating(rating: String(rating.russianFilmCritics!), nameRating: "Russian film critics"))
-    }
-    if rating.await != nil, rating.await != 0 {
-        resultArray.append(getRating(rating: String(rating.await!), nameRating: "Await"))
+        resultArray.append(getRating(rating: String(rusFilmCrit), nameRating: "Russian film critics"))
     }
 
     return resultArray
@@ -25,7 +32,8 @@ func getRatingArray(rating: Rating) -> [UIView] {
 func getAttributedString(mainText: String, secondaryText: String) -> NSMutableAttributedString {
     let attributedTextString = NSMutableAttributedString(string: mainText, attributes: [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold)])
     attributedTextString.append(NSAttributedString(string: "\n" + secondaryText,
-                                                   attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .thin), NSAttributedString.Key.foregroundColor: UIColor.gray]))
+                                                   attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .thin),
+                                                                NSAttributedString.Key.foregroundColor: UIColor.gray]))
     return attributedTextString
 }
 

@@ -20,7 +20,11 @@ class SearchResultController: UIViewController {
     private lazy var navigationBar: UINavigationBar = {
         let navBar = UINavigationBar()
         let navItem = UINavigationItem(title: navbarTitle)
-        let backItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), landscapeImagePhone: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(back))
+        let backItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"),
+                                       landscapeImagePhone: UIImage(systemName: "chevron.left"),
+                                       style: .plain,
+                                       target: self,
+                                       action: #selector(back))
         backItem.tintColor = .black
         navBar.isTranslucent = false
         
@@ -104,7 +108,7 @@ extension SearchResultController: UITableViewDataSource, UITableViewDelegate {
             return cell
         }
         
-        guard let film =  films[indexPath.row] else {
+        guard let film = films[indexPath.row] else {
             return cell
         }
         

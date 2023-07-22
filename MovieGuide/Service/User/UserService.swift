@@ -31,7 +31,7 @@ class UserService: UserServiceProtocol {
 
     // Auth methods
     func getUserLoginAndEmail() -> (String, String) {
-        return (user.nickname, user.email)
+        (user.nickname, user.email)
     }
 
     func login(userLogin: String, userPassword: String) -> Bool {
@@ -58,7 +58,7 @@ class UserService: UserServiceProtocol {
     }
 
     func getCurrentUser(login: String, password: String) -> User {
-        return userStorage.getCurrentUser()
+        userStorage.getCurrentUser()
     }
 
     // Films methods

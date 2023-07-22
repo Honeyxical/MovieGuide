@@ -40,7 +40,8 @@ class SearchController: UIViewController {
         findTextFiled.delegate = self
         findTextFiled.placeholder = "Films, serials, anime"
         findTextFiled.attributedPlaceholder = NSAttributedString(string: "Films, serials, anime",
-                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)])
+                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray,
+                                                                              NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)])
         findTextFiled.clearButtonMode = .whileEditing
         return findTextFiled
     }
@@ -60,12 +61,12 @@ extension SearchController: UITextFieldDelegate {
         textField.resignFirstResponder()
         
         let destination = SearchResultController(userService: userService, user: user)
-
-        networkService.searchFilm(name: textField.text!) { data in
+        guard let tfText = textField.text else { return false }
+        networkService.searchFilm(name: tfText) { data in
             destination.films = data
             destination.updateLayout()
         }
-        destination.navbarTitle += textField.text!
+        destination.navbarTitle += tfText
 
         self.navigationController?.pushViewController(destination, animated: true)
         return true

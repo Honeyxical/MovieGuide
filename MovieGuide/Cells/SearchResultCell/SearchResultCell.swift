@@ -1,5 +1,5 @@
-import UIKit
 import Kingfisher
+import UIKit
 
 class SearchResultCell: UITableViewCell {
     
@@ -27,12 +27,17 @@ class SearchResultCell: UITableViewCell {
     
     func configureCell(){
         setPoster()
-        guard let film = film else {
+        guard let film = film,
+              let filmName = film.name,
+              let altFilmName = film.alternativeName,
+              let filmYear = film.year,
+              let countries = film.countries,
+              let genres = film.genres else {
             return
         }
-        filmNameLabel.text = film.name!
-        secondNameYearLabel.text = film.alternativeName! == "" ? String(film.year!) : "\(film.alternativeName!), \(String(film.year!))"
-        countryGenresLabel.text = arrayToString(array: film.countries!) + " • " + arrayToString(array: film.genres!)
+        filmNameLabel.text = filmName
+        secondNameYearLabel.text = altFilmName == "" ? String(filmYear) : "\(altFilmName), \(String(filmYear))"
+        countryGenresLabel.text = arrayToString(array: countries) + " • " + arrayToString(array: genres)
     }
     
     private func configureFilmNameLabel(){

@@ -47,17 +47,18 @@ class RegistrationController: UIViewController {
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setAttributedTitle(NSAttributedString(
             string: "SIGN UP",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18)!]), for: .normal)
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18) as Any]), for: .normal)
         btn.backgroundColor = .black
         btn.addTarget(nil, action: #selector(registrationButton), for: .touchUpInside)
         return btn
     }()
     
     @objc private func registrationButton() {
-        if nicknameTF.text! == "" || loginTF.text! == "" || passwordTF.text! == "" {
+        guard let nicknameTF = nicknameTF.text, let loginTF = loginTF.text, let passwordTF = passwordTF.text, let email = email.text else { return }
+        if nicknameTF == "" || loginTF == "" || passwordTF == "" {
             self.present(getAllert(message: "Field nickname, login or password is empty"), animated: true)
         }
-        let currentUser = User(nickname: nicknameTF.text!, email: email.text!, login: loginTF.text!, password: passwordTF.text!, userHash: hashValue)
+        let currentUser = User(nickname: nicknameTF, email: email, login: loginTF, password: passwordTF, userHash: hashValue)
         if userService.registration(user: currentUser){
             self.navigationController?.pushViewController(TabBarController(networkService: NetworkService(),
                                                                            userService: UserService(userStotage: UserDefaultsBaseManager(), user: currentUser),
@@ -74,7 +75,7 @@ class RegistrationController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(
             string: "Already have an account?",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18)!])
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18) as Any])
         return label
     }()
     

@@ -30,18 +30,19 @@ class LoginController: UIViewController {
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setAttributedTitle(NSAttributedString(
             string: "LOGIN",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18)!]), for: .normal)
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18) as Any]), for: .normal)
         btn.backgroundColor = .black
         btn.addTarget(nil, action: #selector(login), for: .touchUpInside)
         return btn
     }()
     
     @objc private func login() {
-        if loginTF.text! == "" || passwordTF.text! == ""{
+        if loginTF.text == "" || passwordTF.text == ""{
             self.present(getAllert(message: "Field login or password are empty"), animated: true)
             return
         }
-        if !userService.login(userLogin: loginTF.text!, userPassword: passwordTF.text!){
+        guard let loginTF = loginTF.text, let passwordTF = passwordTF.text else { return }
+        if !userService.login(userLogin: loginTF, userPassword: passwordTF){
             self.present(getAllert(message: "User not found"), animated: true)
             return
         }
@@ -57,7 +58,7 @@ class LoginController: UIViewController {
         restore.translatesAutoresizingMaskIntoConstraints = false
         restore.setAttributedTitle(NSAttributedString(
             string: "Forgot your password?",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18)!]), for: .normal)
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18) as Any]), for: .normal)
         return restore
     }()
     
@@ -66,7 +67,7 @@ class LoginController: UIViewController {
         fbButton.translatesAutoresizingMaskIntoConstraints = false
         fbButton.setAttributedTitle(NSAttributedString(
             string: "LOGIN WITH FACEBOOK",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.blue, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18)!]), for: .normal)
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.blue, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18) as Any]), for: .normal)
         fbButton.backgroundColor = .white
         fbButton.layer.borderWidth = 1
         fbButton.layer.borderColor = UIColor.blue.cgColor
@@ -78,7 +79,7 @@ class LoginController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(
             string: "Don't have an account?",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18)!])
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18) as Any])
         return label
     }()
     

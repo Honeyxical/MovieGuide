@@ -5,7 +5,7 @@ func getTextField(plaseholder: String) -> UITextField {
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.attributedPlaceholder = NSAttributedString(
         string: plaseholder,
-        attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18)!])
+        attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray, NSAttributedString.Key.font: UIFont(name: "Arial", size: 18) as Any])
     textField.autocorrectionType = .no
     
     let line = UIView()

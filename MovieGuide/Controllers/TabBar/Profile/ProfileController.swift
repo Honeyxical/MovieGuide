@@ -16,7 +16,7 @@ class ProfileController: UIViewController {
 
     let container: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 251/255, green: 251/255, blue: 251/255, alpha: 1.0)
+        view.backgroundColor = UIColor(red: 251 / 255, green: 251 / 255, blue: 251 / 255, alpha: 1.0)
         return view
     }()
     
@@ -99,7 +99,7 @@ class ProfileController: UIViewController {
     private lazy var stackButtons: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [favoriteBtn, aboutBtn])
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
+        stack.backgroundColor = UIColor(red: 245 / 255.0, green: 245 / 255.0, blue: 245 / 255.0, alpha: 1.0)
         stack.layer.cornerRadius = 15
         stack.axis = .vertical
         return stack
@@ -123,7 +123,7 @@ class ProfileController: UIViewController {
         let separator = UIView()
         separator.translatesAutoresizingMaskIntoConstraints = false
         separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        separator.backgroundColor = UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1.0)
+        separator.backgroundColor = UIColor(red: 238 / 255, green: 238 / 255, blue: 238 / 255, alpha: 1.0)
         
         btn.addSubview(label)
         btn.addSubview(image)
@@ -277,7 +277,8 @@ class ProfileController: UIViewController {
         
         let attributedText = NSMutableAttributedString(string: user.nickname, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25)])
         attributedText.append(NSAttributedString(string: "\n" + user.email,
-                                                 attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .thin), NSAttributedString.Key.paragraphStyle: titleParagraphStyle]))
+                                                 attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .thin),
+                                                              NSAttributedString.Key.paragraphStyle: titleParagraphStyle]))
         attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: titleParagraphStyle, range: NSRange(location: 0, length: attributedText.length))
         
         return attributedText

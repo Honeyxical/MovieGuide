@@ -44,34 +44,41 @@ class TabBarController: UITabBarController {
     }
     
     func setupVCs() {
+            guard let homeUnselected = UIImage(systemName: TabBarUnselected.home.rawValue),
+                  let homeSelected = UIImage(systemName: TabBarSelected.home.rawValue),
+                  let randomUnselected = UIImage(systemName: TabBarUnselected.film.rawValue),
+                  let randomSelected = UIImage(systemName: TabBarSelected.film.rawValue),
+                  let searchUnselected = UIImage(systemName: TabBarUnselected.search.rawValue),
+                  let searchSelected = UIImage(systemName: TabBarSelected.search.rawValue),
+                  let profileUnselected = UIImage(systemName: TabBarUnselected.profile.rawValue),
+                  let profileSelected = UIImage(systemName: TabBarSelected.profile.rawValue) else { return }
+        
             viewControllers = [
                 createNavigationController(for: HomeController(networkService: networkService, userService: userService, user: user),
-                                           title: "Home", image: UIImage(systemName: TabBarUnselected.home.rawValue)!,
-                                           selectedImage: UIImage(systemName: TabBarSelected.home.rawValue)!),
+                                           title: "Home", image: homeUnselected,
+                                           selectedImage: homeSelected),
                 createNavigationController(for: FilmController(networkService: networkService, userService: userService, user: user),
                                            title: "Random film",
-                                           image: UIImage(systemName: TabBarUnselected.film.rawValue)!,
-                                           selectedImage: UIImage(systemName: TabBarSelected.film.rawValue)!),
+                                           image: randomUnselected,
+                                           selectedImage: randomSelected),
                 createNavigationController(for: SearchController(networkService: networkService, userService: userService, user: user),
                                            title: "Search",
-                                           image: UIImage(systemName: TabBarUnselected.search.rawValue)!,
-                                           selectedImage: UIImage(systemName: TabBarSelected.search.rawValue)!),
+                                           image: searchUnselected,
+                                           selectedImage: searchSelected),
                 createNavigationController(for: ProfileController(userService: userService, user: user),
                                            title: "Profile",
-                                           image: UIImage(systemName: TabBarUnselected.profile.rawValue)!,
-                                           selectedImage: UIImage(systemName: TabBarSelected.profile.rawValue)!)
+                                           image: profileUnselected,
+                                           selectedImage: profileSelected)
             ]
         }
     
-    fileprivate func createNavigationController(for viewController: UIViewController,
-                                         title: String,
-                                         image: UIImage, selectedImage: UIImage) -> UIViewController {
+    private func createNavigationController(for viewController: UIViewController, title: String, image: UIImage, selectedImage: UIImage) -> UIViewController {
         let navVC = viewController
         navVC.tabBarItem = UITabBarItem(title: title, image: image, selectedImage: selectedImage)
         return navVC
     }
     
-    fileprivate func setupTabBarLayout() {
+    private func setupTabBarLayout() {
         let island = UIView()
         
         island.translatesAutoresizingMaskIntoConstraints = false

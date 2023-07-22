@@ -76,7 +76,7 @@ class EditController: UIViewController {
     func showImagePickerOptions() {
         let alertVC = UIAlertController(title: "Pick a photo", message: "Choose a picture from Library or camera", preferredStyle: .actionSheet)
         
-        let cameraAction = UIAlertAction(title: "Camera", style: .default){ [weak self] (_) in
+        let cameraAction = UIAlertAction(title: "Camera", style: .default){ [weak self] _ in
             guard let self = self else {
                 return
             }
@@ -87,7 +87,7 @@ class EditController: UIViewController {
             }
         }
         
-        let libraryPicker = UIAlertAction(title: "Library", style: .default){ [weak self] (_) in
+        let libraryPicker = UIAlertAction(title: "Library", style: .default){ [weak self] _ in
             guard let self = self else {
                 return
             }
@@ -137,7 +137,8 @@ class EditController: UIViewController {
     
     @objc private func saveHandler() {
         if editPasswordField.text == repeatPasswordField.text || (editPasswordField.text == "" && repeatPasswordField.text == "") {
-            let editedUser = userService.dataEditing(tuple: (nickName: editNicknameField.text!, email: editEmailField.text!, password: editPasswordField.text!))
+            guard let editNicknameField = editNicknameField.text, let editEmailField = editEmailField.text, let editPasswordField = editPasswordField.text else { return }
+            let editedUser = userService.dataEditing(tuple: (nickName: editNicknameField, email: editEmailField, password: editPasswordField))
             userService.userStorage.saveCurrentUser(user: editedUser)
             navigationController?.popViewController(animated: true)
         } else {
